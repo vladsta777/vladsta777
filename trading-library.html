@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ru" style="background:#000;scrollbar-color:#333 #000">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOLOMIETSSA — Библиотека знаний трейдера</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --clr-bg: #000;
+      --clr-surface: #0d0d0d;
+      --clr-border: #1a1a1a;
+      --clr-text: #e8e8e8;
+      --clr-muted: #555;
+      --clr-accent: #c8a96e; /* gold */
+      --clr-accent2: #fff;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: var(--font-display);
+      overflow-x: hidden;
+    }
+
+    /* ── PRELOADER ── */
+    .preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .5s ease;
+    }
+    .preloader.hidden { opacity: 0; pointer-events: none; }
+    .preloader__word {
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      letter-spacing: .3em;
+      color: var(--clr-accent);
+      animation: pulse 1s ease infinite alternate;
+    }
+    @keyframes pulse { from { opacity: .3; } to { opacity: 1; } }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--clr-border);
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(12px);
+    }
+    .logo {
+      font-family: var(--font-mono);
+      font-size: .85rem;
+      letter-spacing: .3em;
+      color: var(--clr-accent);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    nav { display: flex; gap: 2rem; }
+    nav a {
+      font-size: .8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--clr-muted);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    nav a:hover { color: var(--clr-text); }
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #000;
+      background: var(--clr-accent);
+      border: none;
+      padding: .65rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .25s, transform .15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #e0bf85; transform: translateY(-1px); }
+    .btn-outline {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--clr-text);
+      background: transparent;
+      border: 1px solid var(--clr-border);
+      padding: .65rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .25s, color .25s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--clr-accent); color: var(--clr-accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 30%, rgba(200,169,110,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(200,169,110,.04) 0%, transparent 60%);
+    }
+    .hero__grid-lines {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero__ticker {
+      position: absolute; top: 50%; left: 0; right: 0;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200,169,110,.12);
+      letter-spacing: -.02em;
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+    }
+    .hero__eyebrow {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .hero__title {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      max-width: 14ch;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .hero__title em {
+      font-style: normal;
+      color: var(--clr-accent);
+    }
+    .hero__sub {
+      font-size: clamp(.9rem, 1.5vw, 1.1rem);
+      color: var(--clr-muted);
+      max-width: 50ch;
+      line-height: 1.7;
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .hero__actions { display: flex; gap: 1rem; position: relative; }
+    .hero__scroll {
+      position: absolute; right: 2.5rem; bottom: 2.5rem;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      font-family: var(--font-mono); font-size: .65rem;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--clr-muted);
+    }
+    .hero__scroll-line {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--clr-muted), transparent);
+      animation: scrollLine 1.5s ease infinite;
+    }
+    @keyframes scrollLine { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(.4);opacity:.4} }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+      padding: .8rem 0;
+      background: var(--clr-surface);
+    }
+    .marquee-track {
+      display: flex; gap: 4rem;
+      animation: marquee 18s linear infinite;
+      width: max-content;
+    }
+    .marquee-item {
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--clr-muted);
+      white-space: nowrap;
+    }
+    .marquee-item span { color: var(--clr-accent); }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 2.5rem; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 2rem; height: 1px;
+      background: var(--clr-accent);
+    }
+    h2.section-title {
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+    }
+
+    .course-card__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--clr-border);
+    }
+    .course-card__price {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--clr-accent);
+      letter-spacing: -.02em;
+    }
+
+    /* ── BUNDLE ── */
+    .pricing-wrap { display: flex; flex-direction: column; gap: 1px; background: var(--clr-border); }
+    .bundle-card {
+      background: #0a0a08;
+      border-top: 2px solid var(--clr-accent);
+      padding: 2.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .bundle-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 120% at 80% 50%, rgba(200,169,110,.05), transparent 70%);
+      pointer-events: none;
+    }
+    .bundle-card__badge {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #000;
+      background: var(--clr-accent);
+      padding: .3rem .7rem;
+      width: fit-content;
+      margin-bottom: 1rem;
+    }
+    .bundle-card__title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+    }
+    .bundle-card__includes {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+    }
+    .bundle-card__includes span {
+      font-size: .82rem;
+      color: var(--clr-muted);
+      font-family: var(--font-mono);
+    }
+    .bundle-card__includes .sep {
+      color: var(--clr-accent);
+      font-weight: 700;
+    }
+    .bundle-card__right {
+      flex-shrink: 0;
+      text-align: right;
+      min-width: 180px;
+    }
+    .bundle-card__old {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--clr-muted);
+      text-decoration: line-through;
+      margin-bottom: .25rem;
+    }
+    .bundle-card__price {
+      font-family: var(--font-mono);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--clr-accent);
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+    .bundle-card__save {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: #6dbf87;
+      margin-top: .3rem;
+    }
+
+    @media (max-width: 900px) {
+      .bundle-card { flex-direction: column; align-items: flex-start; }
+      .bundle-card__right { text-align: left; width: 100%; }
+    }
+
+    /* ── ADVANTAGES ── */
+    .advantages { background: var(--clr-surface); }
+    .advantages__intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--clr-border);
+      padding-bottom: 3rem;
+    }
+    .advantages__desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--clr-muted);
+      max-width: 48ch;
+    }
+    .advantages__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--clr-border);
+    }
+    .adv-card {
+      background: var(--clr-surface);
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: background .3s;
+    }
+    .adv-card:hover { background: #111; }
+    .adv-card__num {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .25em;
+      color: var(--clr-accent);
+      margin-bottom: 1.5rem;
+    }
+    .adv-card__title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      letter-spacing: -.01em;
+    }
+    .adv-card__text {
+      font-size: .88rem;
+      line-height: 1.7;
+      color: var(--clr-muted);
+    }
+
+    /* ── COURSES ── */
+    .courses__header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 3rem;
+    }
+    .courses__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--clr-border);
+      margin-bottom: 4rem;
+    }
+    .course-card {
+      background: var(--clr-bg);
+      padding: 2.5rem 2rem 3rem;
+      display: flex; flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .course-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--clr-border);
+      transition: background .3s;
+    }
+    .course-card:hover::before { background: var(--clr-accent); }
+    .course-card:hover { background: #050505; }
+    .course-card__num {
+      font-family: var(--font-mono);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(200,169,110,.12);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -.04em;
+    }
+    .course-card__tag {
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      border: 1px solid rgba(200,169,110,.3);
+      padding: .25rem .6rem;
+      width: fit-content;
+      margin-bottom: 1.2rem;
+    }
+    .course-card__title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .course-card__desc {
+      font-size: .88rem;
+      line-height: 1.75;
+      color: var(--clr-muted);
+      flex: 1;
+    }
+
+    /* ── RESULT ── */
+    .result {
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .result__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .result__visual {
+      aspect-ratio: 1/1;
+      border: 1px solid var(--clr-border);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .result__visual-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 80% at center, rgba(200,169,110,.08), transparent 70%);
+    }
+    .result__visual-text {
+      font-family: var(--font-mono);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(200,169,110,.4);
+      line-height: 1;
+      text-align: center;
+      position: relative;
+    }
+    .result__steps {
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .result-step {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .result-step:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-step__num {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .2em;
+      color: var(--clr-accent);
+      width: 2rem; flex-shrink: 0;
+      padding-top: .2rem;
+    }
+    .result-step__text {
+      font-size: .95rem;
+      line-height: 1.65;
+      color: var(--clr-muted);
+    }
+    .result-step__text strong { color: var(--clr-text); font-weight: 700; }
+
+    /* ── BONUS ── */
+    .bonus {
+      position: relative; overflow: hidden;
+    }
+    .bonus__bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(200,169,110,.05), transparent 70%);
+    }
+    .bonus__inner {
+      position: relative;
+      border: 1px solid var(--clr-border);
+      padding: 4rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+    .bonus__label {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--clr-accent);
+      margin-bottom: 1rem;
+    }
+    .bonus__title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 1.2rem;
+    }
+    .bonus__items {
+      list-style: none;
+      display: flex; flex-direction: column; gap: .6rem;
+    }
+    .bonus__items li {
+      font-size: .9rem;
+      color: var(--clr-muted);
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .bonus__items li::before {
+      content: '→';
+      color: var(--clr-accent);
+      font-family: var(--font-mono);
+      font-size: .8rem;
+    }
+    .bonus__cta { text-align: center; }
+    .bonus__cta-label {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: var(--clr-muted);
+      margin-top: 1rem;
+    }
+
+    /* ── DEMO CTA ── */
+    .demo {
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-border);
+    }
+    .demo__inner {
+      text-align: center;
+      max-width: 50ch;
+      margin: 0 auto;
+    }
+    .demo__title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 1.2rem;
+    }
+    .demo__title em {
+      font-style: normal;
+      color: var(--clr-accent);
+    }
+    .demo__text {
+      font-size: .95rem;
+      line-height: 1.75;
+      color: var(--clr-muted);
+      margin-bottom: 2.5rem;
+    }
+    .demo__actions { display: flex; gap: 1rem; justify-content: center; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem;
+      border-top: 1px solid var(--clr-border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer__copy {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--clr-muted);
+      letter-spacing: .1em;
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      header { padding: 1rem 1.5rem; }
+      nav { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 0 1.5rem 4rem; }
+      .advantages__intro { grid-template-columns: 1fr; }
+      .advantages__grid { grid-template-columns: 1fr; }
+      .courses__header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .courses__grid { grid-template-columns: 1fr; }
+      .result__inner { grid-template-columns: 1fr; }
+      .result__visual { display: none; }
+      .bonus__inner { grid-template-columns: 1fr; }
+      .bonus__inner { padding: 2rem; }
+      .demo__actions { flex-direction: column; align-items: center; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="preloader" id="preloader">
+  <div class="preloader__word">ЗАГРУЗКА</div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">KOLOMIETSSA</a>
+  <nav>
+    <a href="#advantages">Преимущества</a>
+    <a href="#courses">Курсы</a>
+    <a href="#result">Результат</a>
+    <a href="#bonus">Бонус</a>
+  </nav>
+  <a href="#demo" class="btn-primary">Демо-доступ</a>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero__bg"></div>
+  <div class="hero__grid-lines"></div>
+  <div class="hero__ticker">TRADING</div>
+
+  <div class="hero__eyebrow">Профессиональное обучение в записи</div>
+  <h1 class="hero__title reveal">
+    Библиотека<br>знаний<br><em>трейдера</em>
+  </h1>
+  <p class="hero__sub reveal">
+    Структурированная база знаний — от основ рыночных механизмов до реализации сложных торговых стратегий. Погружайтесь в материал в любое удобное время.
+  </p>
+  <div class="hero__actions reveal">
+    <a href="#courses" class="btn-primary">Смотреть курсы</a>
+    <a href="#demo" class="btn-outline">Демо-урок</a>
+  </div>
+
+  <div class="hero__scroll">
+    <div class="hero__scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Рынок США <span>·</span></span>
+    <span class="marquee-item">Технический анализ <span>·</span></span>
+    <span class="marquee-item">Мани-менеджмент <span>·</span></span>
+    <span class="marquee-item">Торговые стратегии <span>·</span></span>
+    <span class="marquee-item">Бессрочный доступ <span>·</span></span>
+    <span class="marquee-item">Реальный рынок <span>·</span></span>
+    <span class="marquee-item">Рынок США <span>·</span></span>
+    <span class="marquee-item">Технический анализ <span>·</span></span>
+    <span class="marquee-item">Мани-менеджмент <span>·</span></span>
+    <span class="marquee-item">Торговые стратегии <span>·</span></span>
+    <span class="marquee-item">Бессрочный доступ <span>·</span></span>
+    <span class="marquee-item">Реальный рынок <span>·</span></span>
+  </div>
+</div>
+
+<!-- ADVANTAGES -->
+<section class="advantages" id="advantages">
+  <div class="advantages__intro reveal">
+    <div>
+      <div class="section-label">Формат обучения</div>
+      <h2 class="section-title">Преимущества<br>обучения в записи</h2>
+    </div>
+    <p class="advantages__desc">
+      Формат видеоуроков позволяет глубоко погрузиться в материал в любое удобное время, возвращаясь к сложным темам столько раз, сколько потребуется.
+    </p>
+  </div>
+
+  <div class="advantages__grid">
+    <div class="adv-card reveal">
+      <div class="adv-card__num">01 —</div>
+      <div class="adv-card__title">Гибкий график</div>
+      <p class="adv-card__text">Учитесь без привязки к расписанию. Вы сами определяете интенсивность и время занятий — в любой точке мира.</p>
+    </div>
+    <div class="adv-card reveal">
+      <div class="adv-card__num">02 —</div>
+      <div class="adv-card__title">Концентрация опыта</div>
+      <p class="adv-card__text">Курсы лишены «воды» — только концентрированная методология, проверенная на реальном рынке США.</p>
+    </div>
+    <div class="adv-card reveal">
+      <div class="adv-card__num">03 —</div>
+      <div class="adv-card__title">Бессрочный доступ</div>
+      <p class="adv-card__text">Весь учебный материал остаётся с вами навсегда, включая обновления и дополнительные материалы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="courses__header reveal">
+    <div>
+      <div class="section-label">Программа</div>
+      <h2 class="section-title">3 курса —<br>одна система</h2>
+    </div>
+    <a href="#demo" class="btn-primary">Демо-доступ</a>
+  </div>
+
+  <div class="pricing-wrap">
+    <!-- 3 individual cards -->
+    <div class="courses__grid">
+      <div class="course-card reveal">
+        <div class="course-card__num">01</div>
+        <div class="course-card__tag">Базовый</div>
+        <div class="course-card__title">Начало в трейдинге</div>
+        <p class="course-card__desc">
+          Фундаментальное введение в финансовые рынки. Идеально для тех, кто хочет понять устройство биржи США, выбрать брокера и совершить свои первые осознанные сделки.
+        </p>
+        <div class="course-card__footer">
+          <div class="course-card__price">$100</div>
+          <a href="#" class="btn-outline" style="font-size:.7rem;padding:.5rem 1.1rem;">Купить</a>
+        </div>
+      </div>
+      <div class="course-card reveal">
+        <div class="course-card__num">02</div>
+        <div class="course-card__tag">Продвинутый</div>
+        <div class="course-card__title">Основные стратегии в трейдинге</div>
+        <p class="course-card__desc">
+          Прикладной технический анализ и готовые торговые модели. Обучение поиску прибыльных сетапов, пониманию трендов и использованию профессиональных инструментов анализа.
+        </p>
+        <div class="course-card__footer">
+          <div class="course-card__price">$100</div>
+          <a href="#" class="btn-outline" style="font-size:.7rem;padding:.5rem 1.1rem;">Купить</a>
+        </div>
+      </div>
+      <div class="course-card reveal">
+        <div class="course-card__num">03</div>
+        <div class="course-card__tag">Система</div>
+        <div class="course-card__title">Мани- и риск-менеджмент</div>
+        <p class="course-card__desc">
+          Система выживания и роста на дистанции. Глубокий разбор математики риска, управления капиталом и построения системы, которая защищает ваш депозит от критических потерь.
+        </p>
+        <div class="course-card__footer">
+          <div class="course-card__price">$100</div>
+          <a href="#" class="btn-outline" style="font-size:.7rem;padding:.5rem 1.1rem;">Купить</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bundle card -->
+    <div class="bundle-card reveal">
+      <div class="bundle-card__left">
+        <div class="bundle-card__badge">ЛУЧШЕЕ ПРЕДЛОЖЕНИЕ</div>
+        <div class="bundle-card__title">Все 3 курса — полная система трейдера</div>
+        <div class="bundle-card__includes">
+          <span>Начало в трейдинге</span>
+          <span class="sep">+</span>
+          <span>Основные стратегии</span>
+          <span class="sep">+</span>
+          <span>Мани-менеджмент</span>
+        </div>
+      </div>
+      <div class="bundle-card__right">
+        <div class="bundle-card__old">$300</div>
+        <div class="bundle-card__price">$250</div>
+        <div class="bundle-card__save">Экономия $50</div>
+        <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:.85rem 1.5rem;margin-top:1rem;">Купить все курсы</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section class="result" id="result">
+  <div class="result__inner">
+    <div>
+      <div class="section-label">Ваш результат</div>
+      <h2 class="section-title reveal">После<br>прохождения</h2>
+    </div>
+    <div class="result__visual reveal">
+      <div class="result__visual-bg"></div>
+      <div class="result__visual-text">100%<br>SYSTEM</div>
+    </div>
+  </div>
+
+  <div class="result__steps" style="margin-top: 3rem;">
+    <div class="result-step reveal">
+      <span class="result-step__num">01</span>
+      <p class="result-step__text">
+        <strong>Целостная торговая система.</strong> У вас больше не возникнет вопроса «что делать дальше?» — каждый курс является звеном одной цепи.
+      </p>
+    </div>
+    <div class="result-step reveal">
+      <span class="result-step__num">02</span>
+      <p class="result-step__text">
+        <strong>От понимания рынка</strong> до технического входа и жёсткого контроля рисков — путь выстроен последовательно и методично.
+      </p>
+    </div>
+    <div class="result-step reveal">
+      <span class="result-step__num">03</span>
+      <p class="result-step__text">
+        <strong>Профессиональный инструментарий</strong> для анализа рынка США, применимый на практике с первого дня.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- BONUS -->
+<section class="bonus" id="bonus">
+  <div class="bonus__bg"></div>
+  <div class="bonus__inner reveal">
+    <div>
+      <div class="bonus__label">Бонус к курсам</div>
+      <div class="bonus__title">К видеокурсам прилагаются</div>
+      <ul class="bonus__items">
+        <li>Методические материалы по каждому модулю</li>
+        <li>Чек-листы для самопроверки</li>
+        <li>Шаблоны торгового журнала</li>
+      </ul>
+    </div>
+    <div class="bonus__cta">
+      <a href="#demo" class="btn-primary" style="padding: 1rem 2rem; font-size: .85rem;">
+        Получить доступ
+      </a>
+      <div class="bonus__cta-label">Бессрочно · Обновления включены</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo" id="demo">
+  <div class="demo__inner">
+    <div class="section-label" style="justify-content:center; margin-bottom:1.5rem;">Демо-доступ</div>
+    <h2 class="demo__title reveal">
+      Оцените качество<br>подачи <em>материала</em>
+    </h2>
+    <p class="demo__text reveal">
+      Получите демо-доступ к первому уроку базового курса бесплатно — убедитесь в качестве контента перед покупкой.
+    </p>
+    <div class="demo__actions reveal">
+      <a href="#" class="btn-primary" style="padding: .9rem 2.5rem;">Получить демо-урок</a>
+      <a href="#" class="btn-outline" style="padding: .9rem 2.5rem;">Узнать подробнее</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer__copy">© 2026 KOLOMIETSSA. Все права защищены.</span>
+  <span class="footer__copy" style="color:#333">Методология проверена на реальном рынке США</span>
+</footer>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('preloader').classList.add('hidden');
+    }, 600);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
