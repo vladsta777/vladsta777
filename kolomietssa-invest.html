@@ -480,11 +480,106 @@
     .fc-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
 
     footer { padding:2rem 3rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:rgba(3,2,2,.9); }
-    .f-logo { font-family:var(--mono); font-size:.7rem; letter-spacing:.4em; color:var(--gold); }
-    .f-copy { font-family:var(--mono); font-size:.62rem; color:var(--t3); }
-    .f-links { display:flex; gap:1.5rem; }
-    .f-links a { font-family:var(--mono); font-size:.62rem; color:var(--t3); text-decoration:none; transition:color .2s; }
-    .f-links a:hover { color:var(--gold); }
+    /* ════════════════════════════════
+       SITE FOOTER — structured product links
+    ════════════════════════════════ */
+    .site-footer {
+      background: rgba(3,2,2,.97);
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 4rem;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 1px solid rgba(184,151,90,.08);
+    }
+
+    /* Brand */
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .75rem; letter-spacing: .45em;
+      color: var(--gold, #b8975a); text-transform: uppercase;
+    }
+    .footer-tagline {
+      font-size: .78rem; line-height: 1.7;
+      color: var(--text-3, #4a4640); font-weight: 300;
+    }
+    .footer-socials { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .footer-social {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-3, #4a4640); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-social:hover { color: var(--gold, #b8975a); }
+
+    /* Nav columns */
+    .footer-nav-cols {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
+    }
+    .footer-col {}
+    .footer-col-title {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .6rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--gold, #b8975a);
+      margin-bottom: 1.2rem;
+      padding-bottom: .7rem;
+      border-bottom: 1px solid rgba(184,151,90,.15);
+    }
+    .footer-col-title--cyan { color: #00d4ff; border-bottom-color: rgba(0,212,255,.2); }
+    .footer-col-links {
+      list-style: none; display: flex; flex-direction: column; gap: .6rem;
+    }
+    .footer-col-links li {}
+    .footer-col-links a {
+      font-size: .76rem; line-height: 1.5;
+      color: var(--text-3, #4a4640); text-decoration: none;
+      transition: color .2s, padding-left .2s;
+      display: block;
+    }
+    .footer-col-links a:hover { color: var(--text, #f0ede8); padding-left: .35rem; }
+
+    /* Bottom bar */
+    .footer-bottom {
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom-logo {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35);
+    }
+    .footer-bottom-copy {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .58rem; letter-spacing: .08em;
+      color: var(--text-3, #4a4640);
+    }
+    .footer-bottom-links {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .footer-bottom-links a {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-3, #4a4640); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-bottom-links a:hover { color: var(--gold, #b8975a); }
+
+    /* Mobile footer */
+    @media (max-width: 900px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2rem; }
+      .footer-nav-cols { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .footer-bottom { padding: 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: .8rem; }
+      .footer-bottom-links { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .footer-nav-cols { grid-template-columns: 1fr; }
+    }
 
     /* reveal */
     .rev { opacity:0; transform:translateY(28px); transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1); }
@@ -553,7 +648,6 @@
       .fc-actions{flex-direction:column; align-items:stretch}
       .fc-actions .btn-g,.fc-actions .btn-o{width:100%;justify-content:center;clip-path:none;display:flex}
       footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem}
-      .f-links{justify-content:center}
       .btn-o{clip-path:none}
       .inv-cta{clip-path:none}
       .inv-card:hover { transform: none; }
@@ -1086,10 +1180,186 @@
   </div>
 </section>
 
-<footer>
-  <div class="f-logo">KOLOMIETSSA</div>
-  <div class="f-links"><a href="#">Telegram</a><a href="#">Instagram</a><a href="#">YouTube</a></div>
-  <div class="f-copy">© 2026 KOLOMIETSSA</div>
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <div class="footer-logo">KOLOMIETSSA</div>
+      <p class="footer-tagline">
+        <span data-lang="ru" class="act">Трейдинг. Бизнес. Капитал.</span>
+        <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+        <span data-lang="en">Trading. Business. Capital.</span>
+      </p>
+      <div class="footer-socials">
+        <a href="https://t.me/kolomietssa" target="_blank" class="footer-social" aria-label="Telegram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          Telegram
+        </a>
+        <a href="#" class="footer-social" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="footer-social" aria-label="YouTube">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="black"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+
+    <!-- Nav columns -->
+    <div class="footer-nav-cols">
+
+      <!-- Col 1: Обучение -->
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="act">Обучение</span>
+          <span data-lang="ua">Навчання</span>
+          <span data-lang="en">Education</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-academy.html">
+            <span data-lang="ru" class="act">Академия трейдинга</span>
+            <span data-lang="ua">Академія трейдингу</span>
+            <span data-lang="en">Trading Academy</span>
+          </a></li>
+          <li><a href="kolomietssa-academy.html#promo-all">
+            <span data-lang="ru" class="act">Все 7 курсов — пакет</span>
+            <span data-lang="ua">Усі 7 курсів — пакет</span>
+            <span data-lang="en">All 7 Courses Bundle</span>
+          </a></li>
+          <li><a href="kolomietssa-academy.html#filter=base">
+            <span data-lang="ru" class="act">Базовые курсы</span>
+            <span data-lang="ua">Базові курси</span>
+            <span data-lang="en">Foundation Courses</span>
+          </a></li>
+          <li><a href="kolomietssa-academy.html#filter=adv">
+            <span data-lang="ru" class="act">Продвинутые курсы</span>
+            <span data-lang="ua">Просунуті курси</span>
+            <span data-lang="en">Advanced Courses</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Col 2: Сообщество -->
+      <div class="footer-col">
+        <div class="footer-col-title footer-col-title--cyan">
+          ◆ <span data-lang="ru" class="act">Клуб</span>
+          <span data-lang="ua">Клуб</span>
+          <span data-lang="en">Club</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-club.html">
+            Trading Insider &amp; Business Club
+          </a></li>
+          <li><a href="kolomietssa-club.html#inside">
+            <span data-lang="ru" class="act">Что внутри клуба</span>
+            <span data-lang="ua">Що всередині клубу</span>
+            <span data-lang="en">What's Inside</span>
+          </a></li>
+          <li><a href="kolomietssa-club.html#scoreboard">
+            <span data-lang="ru" class="act">Геймификация</span>
+            <span data-lang="ua">Геймифікація</span>
+            <span data-lang="en">Gamification</span>
+          </a></li>
+          <li><a href="kolomietssa-club.html#pricing">
+            <span data-lang="ru" class="act">Тарифы клуба</span>
+            <span data-lang="ua">Тарифи клубу</span>
+            <span data-lang="en">Club Pricing</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Услуги -->
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="act">Услуги</span>
+          <span data-lang="ua">Послуги</span>
+          <span data-lang="en">Services</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-services.html#mentorship">
+            <span data-lang="ru" class="act">Персональное наставничество</span>
+            <span data-lang="ua">Персональне наставництво</span>
+            <span data-lang="en">Personal Mentorship</span>
+          </a></li>
+          <li><a href="kolomietssa-services.html#premium">
+            <span data-lang="ru" class="act">Индивидуальные решения</span>
+            <span data-lang="ua">Індивідуальні рішення</span>
+            <span data-lang="en">Individual Solutions</span>
+          </a></li>
+          <li><a href="kolomietssa-services.html#tools">
+            <span data-lang="ru" class="act">Профессиональный софт</span>
+            <span data-lang="ua">Професійний софт</span>
+            <span data-lang="en">Pro Software</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Инвестиции -->
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="act">Инвестиции</span>
+          <span data-lang="ua">Інвестиції</span>
+          <span data-lang="en">Investments</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-invest.html#family-office">
+            Family Office · $1M+
+          </a></li>
+          <li><a href="kolomietssa-invest.html#fund">
+            <span data-lang="ru" class="act">Управляемый фонд</span>
+            <span data-lang="ua">Керований фонд</span>
+            <span data-lang="en">Managed Fund</span>
+          </a></li>
+          <li><a href="kolomietssa-invest.html#real-assets">
+            <span data-lang="ru" class="act">Реальные активы</span>
+            <span data-lang="ua">Реальні активи</span>
+            <span data-lang="en">Real Assets</span>
+          </a></li>
+          <li><a href="kolomietssa-invest.html#wealth-mgmt">
+            <span data-lang="ru" class="act">Wealth Management</span>
+            <span data-lang="ua">Wealth Management</span>
+            <span data-lang="en">Wealth Management</span>
+          </a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">KOLOMIETSSA</div>
+    <div class="footer-bottom-copy">© 2026 KOLOMIETSSA · Trading. Business. Capital.</div>
+    <div class="footer-bottom-links">
+      <a href="index.html">
+        <span data-lang="ru" class="act">Главная</span>
+        <span data-lang="ua">Головна</span>
+        <span data-lang="en">Home</span>
+      </a>
+      <a href="kolomietssa-academy.html">
+        <span data-lang="ru" class="act">Академия</span>
+        <span data-lang="ua">Академія</span>
+        <span data-lang="en">Academy</span>
+      </a>
+      <a href="kolomietssa-club.html">
+        <span data-lang="ru" class="act">Клуб</span>
+        <span data-lang="ua">Клуб</span>
+        <span data-lang="en">Club</span>
+      </a>
+      <a href="kolomietssa-services.html">
+        <span data-lang="ru" class="act">Услуги</span>
+        <span data-lang="ua">Послуги</span>
+        <span data-lang="en">Services</span>
+      </a>
+      <a href="kolomietssa-invest.html">
+        <span data-lang="ru" class="act">Инвестиции</span>
+        <span data-lang="ua">Інвестиції</span>
+        <span data-lang="en">Invest</span>
+      </a>
+    </div>
+  </div>
 </footer>
 
 <script>
