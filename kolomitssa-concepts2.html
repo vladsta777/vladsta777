@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOLOMITSSA CONCEPTS — 41 Investment Hero Designs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Grotesk:wght@300;400;500;700&family=Montserrat:wght@300;400;600;700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;700;800&family=Urbanist:wght@300;400;600;700;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=Newsreader:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Unbounded:wght@400;700;900&family=Bebas+Neue&family=Archivo+Black&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #0a0a0b;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .master-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,10,11,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #1a1a2e;
+    padding: 0 32px;
+    height: 56px;
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .master-nav::-webkit-scrollbar { display: none; }
+  .master-nav a {
+    color: #666; text-decoration: none;
+    font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+    padding: 0 14px; height: 56px;
+    display: flex; align-items: center; white-space: nowrap;
+    border-right: 1px solid #1a1a1a;
+    transition: color .2s;
+  }
+  .master-nav a:hover { color: #fff; }
+  .master-nav .nav-label {
+    font-size: 11px; color: #333; padding: 0 14px;
+    border-right: 1px solid #1a1a1a; white-space: nowrap;
+    display: flex; align-items: center; height: 56px;
+    text-transform: uppercase; letter-spacing: .1em;
+  }
+
+  .concept-section {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    scroll-margin-top: 56px;
+  }
+
+  .concept-label {
+    position: absolute; top: 24px; right: 24px; z-index: 10;
+    font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+    opacity: .4;
+  }
+
+  /* ════════════════════════════════════════════
+     SERIES A — ORIGINAL 10 (from Prompt 1)
+  ════════════════════════════════════════════ */
+
+  /* 01 — MIDNIGHT STEALTH */
+  #c01 {
+    background: #0A0A0B;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c01 .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,102,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,102,255,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  #c01 .glow {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,102,255,.15) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    animation: pulse01 4s ease-in-out infinite;
+  }
+  @keyframes pulse01 { 0%,100%{opacity:.6} 50%{opacity:1} }
+  #c01 .content { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 40px; }
+  #c01 .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: #0066FF; letter-spacing: .2em; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  #c01 h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(48px, 8vw, 96px); font-weight: 800;
+    line-height: .95; color: #fff; margin-bottom: 32px;
+    text-shadow: 0 0 80px rgba(0,102,255,.3);
+  }
+  #c01 h1 span { color: #0066FF; }
+  #c01 .glass-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(100,120,200,.2);
+    border-radius: 16px;
+    padding: 32px 40px; margin: 40px auto;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 40px 80px rgba(0,0,50,.6), 0 0 0 1px rgba(0,102,255,.1);
+    display: flex; gap: 60px; justify-content: center; flex-wrap: wrap;
+  }
+  #c01 .stat { text-align: center; }
+  #c01 .stat .num { font-size: 36px; font-weight: 700; color: #0066FF; }
+  #c01 .stat .desc { font-size: 12px; color: #666; margin-top: 4px; letter-spacing: .05em; }
+  #c01 .cta {
+    background: #0066FF; color: #fff;
+    padding: 16px 48px; border-radius: 8px; border: none;
+    font-size: 14px; font-weight: 600; letter-spacing: .08em;
+    cursor: pointer; margin-top: 32px;
+    box-shadow: 0 0 40px rgba(0,102,255,.4), 0 20px 40px rgba(0,0,50,.5);
+    transition: all .3s;
+  }
+  #c01 .cta:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(0,102,255,.6), 0 30px 60px rgba(0,0,50,.5); }
+
+  /* 02 — SWISS FINANCE */
+  #c02 {
+    background: #FFFFFF;
+    display: flex; align-items: stretch;
+  }
+  #c02 .left-block {
+    width: 55%; background: #fff; padding: 80px 60px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 3px solid #000;
+  }
+  #c02 .right-block {
+    width: 45%; background: #E63946;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px;
+  }
+  #c02 .tag {
+    font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    color: #E63946; font-weight: 700; margin-bottom: 16px;
+    border-top: 3px solid #E63946; padding-top: 12px; display: inline-block;
+  }
+  #c02 h1 {
+    font-size: clamp(56px, 9vw, 110px);
+    font-weight: 900; line-height: .9;
+    color: #0a0a0b; letter-spacing: -.04em;
+    margin-bottom: 40px;
+    font-family: 'Unbounded', sans-serif;
+  }
+  #c02 .metrics {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 2px solid #000;
+  }
+  #c02 .metric {
+    padding: 24px 0; border-right: 2px solid #000;
+    padding-right: 24px; margin-right: 24px;
+  }
+  #c02 .metric:last-child { border-right: none; }
+  #c02 .metric .n { font-size: 40px; font-weight: 900; color: #0a0a0b; font-family: 'Unbounded', sans-serif; }
+  #c02 .metric .l { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
+  #c02 .right-block h2 {
+    font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: #fff;
+    line-height: 1; margin-bottom: 32px;
+    font-family: 'Unbounded', sans-serif;
+  }
+  #c02 .right-block p { color: rgba(255,255,255,.8); font-size: 16px; line-height: 1.7; margin-bottom: 40px; }
+  #c02 .btn-swiss {
+    background: #fff; color: #E63946;
+    border: 3px solid #fff; padding: 16px 40px;
+    font-weight: 900; font-size: 14px;
+    letter-spacing: .1em; text-transform: uppercase;
+    cursor: pointer; transition: all .2s;
+  }
+  #c02 .btn-swiss:hover { background: transparent; color: #fff; }
+
+  /* 03 — LIQUID GOLD */
+  #c03 {
+    background: #0D0805;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c03 .mesh-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 50%, rgba(184,115,51,.2) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(255,215,100,.15) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 40% at 60% 80%, rgba(212,175,55,.1) 0%, transparent 50%);
+    animation: meshflow 8s ease-in-out infinite alternate;
+  }
+  @keyframes meshflow {
+    0% { opacity: .7; }
+    100% { opacity: 1; }
+  }
+  #c03 .content { position: relative; z-index: 2; text-align: center; padding: 60px 40px; max-width: 900px; }
+  #c03 .crown { font-size: 32px; margin-bottom: 24px; opacity: .8; }
+  #c03 h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 900; line-height: .95;
+    background: linear-gradient(135deg, #B87333 0%, #FFD700 40%, #FFF8DC 60%, #DAA520 80%, #B87333 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 28px;
+    animation: goldshine 3s linear infinite;
+    background-size: 200%;
+  }
+  @keyframes goldshine { 0%{background-position:0%} 100%{background-position:200%} }
+  #c03 p {
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(255,245,200,.7); font-size: 18px; line-height: 1.8; margin-bottom: 48px;
+  }
+  #c03 .gold-line {
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, #DAA520, transparent);
+    margin: 0 auto 48px;
+  }
+  #c03 .cta-gold {
+    border: 1px solid rgba(218,165,32,.4);
+    background: rgba(184,115,51,.15);
+    color: #FFD700; padding: 18px 56px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px; letter-spacing: .15em; text-transform: uppercase;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all .3s;
+  }
+  #c03 .cta-gold:hover { background: rgba(218,165,32,.3); box-shadow: 0 0 40px rgba(218,165,32,.2); }
+
+  /* 04 — CYBER WEALTH */
+  #c04 {
+    background: #020A06;
+    display: flex; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  #c04 .scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      to bottom, transparent 0px, transparent 3px,
+      rgba(46,229,157,.025) 3px, rgba(46,229,157,.025) 4px
+    );
+    pointer-events: none;
+  }
+  #c04 .ticker {
+    position: absolute; top: 80px; left: 0; right: 0;
+    font-size: 11px; color: rgba(46,229,157,.5);
+    display: flex; gap: 40px; padding: 8px 40px;
+    border-top: 1px solid rgba(46,229,157,.1);
+    border-bottom: 1px solid rgba(46,229,157,.1);
+    overflow: hidden;
+  }
+  #c04 .content {
+    position: relative; z-index: 2;
+    padding: 120px 80px 80px; max-width: 900px;
+  }
+  #c04 .prompt {
+    color: rgba(46,229,157,.6); font-size: 13px; margin-bottom: 24px;
+  }
+  #c04 h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800; line-height: .95;
+    color: #2EE59D; text-shadow: 0 0 40px rgba(46,229,157,.4);
+    margin-bottom: 24px;
+  }
+  #c04 h1 em { font-style: normal; color: #fff; }
+  #c04 .terminal-box {
+    background: rgba(46,229,157,.05);
+    border: 1px solid rgba(46,229,157,.2);
+    padding: 24px; margin: 32px 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  #c04 .t-stat .label { font-size: 10px; color: rgba(46,229,157,.5); letter-spacing: .1em; margin-bottom: 8px; }
+  #c04 .t-stat .value { font-size: 28px; color: #2EE59D; }
+  #c04 .t-stat .delta { font-size: 11px; color: #2EE59D; margin-top: 4px; }
+  #c04 .btn-cyber {
+    background: transparent; border: 1px solid #2EE59D;
+    color: #2EE59D; padding: 14px 40px; font-size: 12px;
+    letter-spacing: .15em; text-transform: uppercase; cursor: pointer;
+    margin-top: 16px; transition: all .3s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  #c04 .btn-cyber:hover { background: rgba(46,229,157,.1); box-shadow: 0 0 30px rgba(46,229,157,.2); }
+
+  /* 05 — QUIET LUXURY */
+  #c05 {
+    background: #F8F5EE;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c05 .grain {
+    position: absolute; inset: 0; opacity: .04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+  #c05 .thin-line {
+    position: absolute; top: 0; left: 50%; width: 1px; height: 100%;
+    background: rgba(0,66,37,.1);
+  }
+  #c05 .content { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 800px; }
+  #c05 .mono {
+    font-size: 10px; letter-spacing: .3em; text-transform: uppercase;
+    color: #004225; margin-bottom: 40px; opacity: .6;
+  }
+  #c05 h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 9vw, 110px);
+    font-weight: 300; line-height: .9;
+    color: #1a1a1a; margin-bottom: 40px; letter-spacing: -.02em;
+  }
+  #c05 h1 em { font-style: italic; color: #004225; }
+  #c05 .divider {
+    display: flex; align-items: center; gap: 24px; margin: 40px auto;
+    justify-content: center;
+  }
+  #c05 .divider span { width: 60px; height: 1px; background: rgba(0,66,37,.3); display: block; }
+  #c05 .divider svg { width: 16px; height: 16px; fill: none; stroke: #004225; stroke-width: 1; }
+  #c05 p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; color: #555; line-height: 1.9; margin-bottom: 48px; font-weight: 400;
+  }
+  #c05 .btn-quiet {
+    background: transparent; border: 1px solid rgba(0,66,37,.4);
+    color: #004225; padding: 16px 52px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+    cursor: pointer; transition: all .3s;
+  }
+  #c05 .btn-quiet:hover { background: #004225; color: #F8F5EE; }
+
+  /* 06 — DIGITAL MARBLE */
+  #c06 {
+    background: #F1F5F9;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #c06 .blob1, #c06 .blob2 {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: .5;
+  }
+  #c06 .blob1 { width: 600px; height: 600px; background: rgba(100,130,255,.15); top: -100px; right: -100px; }
+  #c06 .blob2 { width: 400px; height: 400px; background: rgba(30,41,59,.08); bottom: -100px; left: -100px; }
+  #c06 .content { position: relative; z-index: 2; padding: 80px 60px; max-width: 1100px; width: 100%; }
+  #c06 .bento-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+  #c06 .card {
+    background: #fff; border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(30,41,59,.08), 0 1px 3px rgba(30,41,59,.06);
+    padding: 40px;
+  }
+  #c06 .card.main { grid-row: 1 / 3; }
+  #c06 .card.main h1 {
+    font-size: clamp(36px, 5vw, 60px); font-weight: 700;
+    color: #1E293B; line-height: 1.1; margin-bottom: 24px;
+  }
+  #c06 .card.main p { color: #64748B; font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+  #c06 .pill {
+    background: #1E293B; color: #fff;
+    padding: 14px 32px; border-radius: 100px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    display: inline-block; transition: all .3s;
+  }
+  #c06 .pill:hover { transform: scale(1.05); }
+  #c06 .card.stat { display: flex; flex-direction: column; justify-content: space-between; }
+  #c06 .card.stat .big { font-size: 48px; font-weight: 700; color: #1E293B; }
+  #c06 .card.stat .lbl { font-size: 12px; color: #94A3B8; text-transform: uppercase; letter-spacing: .08em; }
+  #c06 .card.accent { background: #1E293B; }
+  #c06 .card.accent .big { color: #fff; }
+  #c06 .card.accent .lbl { color: rgba(255,255,255,.5); }
+
+  /* 07 — SOLAR FLARE */
+  #c07 {
+    background: #0A0A0A;
+    display: flex; align-items: center;
+  }
+  #c07 .flare {
+    position: absolute; right: -200px; top: 50%;
+    transform: translateY(-50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(255,100,0,.4) 0%, rgba(255,50,0,.2) 30%, transparent 70%);
+  }
+  #c07 .content { position: relative; z-index: 2; padding: 80px; max-width: 700px; }
+  #c07 .eyebrow-07 {
+    font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+    color: #FF6B00; margin-bottom: 24px; font-family: 'Archivo Black', sans-serif;
+  }
+  #c07 h1 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(56px, 10vw, 120px);
+    line-height: .9; color: #fff; margin-bottom: 32px;
+  }
+  #c07 h1 span { color: #FF6B00; }
+  #c07 p { color: rgba(255,255,255,.6); font-size: 18px; line-height: 1.7; margin-bottom: 48px; max-width: 500px; }
+  #c07 .btn-flare {
+    background: #FF6B00; color: #000;
+    padding: 20px 60px; border: none;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px; letter-spacing: .08em; text-transform: uppercase;
+    cursor: pointer; transition: all .2s;
+  }
+  #c07 .btn-flare:hover { background: #fff; transform: scale(1.02); }
+
+  /* 08 — OCEANIC DEPTH */
+  #c08 {
+    background: linear-gradient(160deg, #020B18 0%, #041C2C 40%, #043642 70%, #065161 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c08 .waves {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 300px;
+    background: linear-gradient(to top, rgba(0,200,180,.08), transparent);
+  }
+  #c08 .glass-panel {
+    position: relative; z-index: 2;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 28px;
+    backdrop-filter: blur(20px);
+    padding: 60px 80px; max-width: 900px; text-align: center;
+    margin: 60px 40px;
+  }
+  #c08 .eyebrow-08 {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+    color: #00C8B4; margin-bottom: 24px;
+  }
+  #c08 h1 {
+    font-family: 'Urbanist', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800; line-height: .95; color: #fff; margin-bottom: 24px;
+  }
+  #c08 h1 em { font-style: normal; color: #00C8B4; }
+  #c08 p { color: rgba(255,255,255,.6); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c08 .btn-ocean {
+    background: linear-gradient(135deg, #00A896, #00C8B4);
+    color: #000; padding: 18px 56px; border: none; border-radius: 100px;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 20px 40px rgba(0,200,180,.3);
+    transition: all .3s;
+  }
+  #c08 .btn-ocean:hover { transform: translateY(-3px); box-shadow: 0 30px 60px rgba(0,200,180,.4); }
+
+  /* 09 — TITANIUM & MONO */
+  #c09 {
+    background: #111111;
+    display: flex; align-items: center;
+  }
+  #c09 .metal-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #333, #888, #ccc, #888, #444, #999, #555);
+  }
+  #c09 .content { position: relative; z-index: 2; padding: 80px; }
+  #c09 .c09-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; width: 100%; max-width: 1200px; }
+  #c09 .left09 { padding-right: 80px; border-right: 1px solid #222; }
+  #c09 .right09 { padding-left: 80px; display: flex; flex-direction: column; justify-content: space-between; }
+  #c09 h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(52px, 7vw, 92px);
+    font-weight: 700; line-height: .95;
+    color: #D8D8D8; margin-bottom: 32px; letter-spacing: -.03em;
+    text-shadow: 2px 2px 0 rgba(255,255,255,.05);
+  }
+  #c09 .subline { color: #555; font-size: 16px; line-height: 1.7; max-width: 400px; }
+  #c09 .metal-btn {
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 40%, #4a4a4a 60%, #2a2a2a 100%);
+    color: #ccc; padding: 18px 48px; border: 1px solid #444;
+    font-size: 13px; letter-spacing: .15em; text-transform: uppercase;
+    cursor: pointer; margin-top: 40px; transition: all .3s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 4px 12px rgba(0,0,0,.4);
+  }
+  #c09 .metal-btn:hover { background: linear-gradient(135deg, #3a3a3a 0%, #5a5a5a 40%, #6a6a6a 60%, #3a3a3a 100%); }
+  #c09 .metal-stat { margin-bottom: 40px; }
+  #c09 .metal-stat .n { font-size: 56px; font-weight: 700; color: #888; font-family: 'Space Grotesk', sans-serif; }
+  #c09 .metal-stat .l { font-size: 11px; color: #444; letter-spacing: .15em; text-transform: uppercase; margin-top: 4px; }
+
+  /* 10 — ACID INVESTMENT */
+  #c10 {
+    background: #12022A;
+    display: flex; align-items: center; overflow: hidden;
+  }
+  #c10 .neon-bg {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,255,0,.15) 0%, transparent 70%);
+    right: 10%; top: 50%; transform: translateY(-50%);
+    animation: acidpulse 3s ease-in-out infinite;
+  }
+  @keyframes acidpulse { 0%,100%{transform:translateY(-50%) scale(1)} 50%{transform:translateY(-50%) scale(1.1)} }
+  #c10 .content { position: relative; z-index: 2; padding: 80px; max-width: 900px; }
+  #c10 .oversize-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(80px, 15vw, 200px);
+    font-weight: 800; line-height: .85; letter-spacing: -.05em;
+    color: transparent; -webkit-text-stroke: 1px rgba(200,255,0,.3);
+    position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none;
+    white-space: nowrap;
+  }
+  #c10 h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800; line-height: .95;
+    color: #fff; margin-bottom: 24px;
+    position: relative; z-index: 2;
+  }
+  #c10 h1 span {
+    color: #C8FF00;
+    text-shadow: 0 0 30px rgba(200,255,0,.5), 0 0 60px rgba(200,255,0,.2);
+  }
+  #c10 p {
+    color: rgba(255,255,255,.6); font-size: 18px; line-height: 1.7; margin-bottom: 48px;
+    position: relative; z-index: 2; max-width: 500px;
+  }
+  #c10 .acid-btn {
+    background: #C8FF00; color: #12022A;
+    padding: 18px 56px; border: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: .05em;
+    cursor: pointer; position: relative; z-index: 2;
+    box-shadow: 0 0 40px rgba(200,255,0,.3), 0 20px 40px rgba(0,0,0,.3);
+    transition: all .3s;
+  }
+  #c10 .acid-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 60px rgba(200,255,0,.5); }
+
+  /* ════════════════════════════════════════════
+     SERIES B — CAT A: PRIVATE BANKING (10)
+  ════════════════════════════════════════════ */
+
+  /* 11 — IVORY SILK */
+  #c11 {
+    background: #FFFDF5;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c11 .content { text-align: center; padding: 80px 60px; max-width: 800px; position: relative; z-index: 2; }
+  #c11 h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(60px, 10vw, 120px);
+    font-weight: 300; color: #2C1810; line-height: .9;
+    letter-spacing: -.02em; margin-bottom: 32px;
+  }
+  #c11 .gold-accent { color: #B8860B; font-style: italic; }
+  #c11 .silk-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #B8860B, transparent); margin: 32px auto; }
+  #c11 p { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #7a6a5a; line-height: 1.8; font-style: italic; margin-bottom: 48px; }
+  #c11 .btn11 { border: 1px solid #B8860B; color: #B8860B; padding: 16px 56px; background: transparent; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .25em; text-transform: uppercase; cursor: pointer; transition: all .3s; }
+  #c11 .btn11:hover { background: #B8860B; color: #FFFDF5; }
+
+  /* 12 — BRITISH RACING GREEN */
+  #c12 {
+    background: #002E1C;
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  #c12 .left12 { padding: 100px 60px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid rgba(184,115,51,.2); }
+  #c12 .right12 { background: rgba(255,255,255,.03); padding: 100px 60px; display: flex; align-items: center; }
+  #c12 h1 { font-family: 'Playfair Display', serif; font-size: clamp(48px,7vw,80px); font-weight: 700; color: #F0E8D8; line-height: 1; margin-bottom: 28px; letter-spacing: -.02em; }
+  #c12 h1 em { font-style: italic; color: #B87333; }
+  #c12 .tagline12 { color: rgba(240,232,216,.5); font-family: 'Montserrat', sans-serif; font-size: 15px; line-height: 1.8; margin-bottom: 48px; }
+  #c12 .btn12 { background: #B87333; color: #002E1C; padding: 16px 48px; border: none; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; display: inline-block; transition: all .3s; }
+  #c12 .btn12:hover { background: #D4956B; }
+  #c12 .leather-card { background: rgba(255,255,255,.04); border: 1px solid rgba(184,115,51,.15); padding: 40px; border-radius: 4px; width: 100%; }
+  #c12 .leather-card .num12 { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 700; color: #B87333; }
+  #c12 .leather-card .txt12 { color: rgba(240,232,216,.6); font-size: 15px; margin-top: 8px; font-family: 'Montserrat', sans-serif; }
+
+  /* 13 — DEEP ESPRESSO */
+  #c13 {
+    background: #1A120B;
+    display: flex; align-items: center;
+  }
+  #c13 .warm-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(180,140,80,.08) 0%, transparent 70%); right: -200px; top: 50%; transform: translateY(-50%); }
+  #c13 .content13 { position: relative; z-index: 2; padding: 80px; max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: center; }
+  #c13 h1 { font-family: 'Lora', serif; font-size: clamp(44px,6vw,76px); font-weight: 600; color: #E8D5B0; line-height: 1.1; margin-bottom: 28px; }
+  #c13 h1 em { font-style: italic; color: #C4A35A; }
+  #c13 p { font-family: 'Lora', serif; color: rgba(232,213,176,.5); font-size: 17px; line-height: 1.9; margin-bottom: 40px; font-style: italic; }
+  #c13 .btn13 { background: #C4A35A; color: #1A120B; padding: 16px 44px; border: none; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+  #c13 .espresso-stats { display: flex; flex-direction: column; gap: 32px; }
+  #c13 .e-stat { border-left: 2px solid rgba(196,163,90,.3); padding-left: 24px; }
+  #c13 .e-stat .en { font-size: 48px; font-weight: 700; color: #C4A35A; font-family: 'Lora', serif; }
+  #c13 .e-stat .el { font-size: 12px; color: rgba(232,213,176,.4); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+
+  /* 14 — BORDEAUX ARCHIVE */
+  #c14 {
+    background: #1A0808;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c14 .archive-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 100% 80% at 50% 100%, rgba(74,14,14,.8), transparent 60%), linear-gradient(to bottom, #0a0404, #1A0808); }
+  #c14 .content14 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 900px; }
+  #c14 .issue { font-family: 'Fraunces', serif; font-size: 11px; color: rgba(150,100,100,.5); letter-spacing: .3em; text-transform: uppercase; margin-bottom: 48px; }
+  #c14 h1 { font-family: 'Fraunces', serif; font-size: clamp(52px,9vw,108px); font-weight: 700; color: #F0E0D0; line-height: .9; margin-bottom: 40px; }
+  #c14 h1 span { color: #8B0000; }
+  #c14 .rule14 { display: flex; align-items: center; gap: 16px; margin: 0 auto 40px; justify-content: center; }
+  #c14 .rule14::before, #c14 .rule14::after { content:''; width: 80px; height: 1px; background: rgba(150,100,100,.3); display: block; }
+  #c14 .rule14 .diamond { width: 6px; height: 6px; background: #8B0000; transform: rotate(45deg); }
+  #c14 p { font-family: 'Fraunces', serif; font-size: 19px; color: rgba(240,224,208,.6); line-height: 1.8; font-style: italic; margin-bottom: 48px; }
+  #c14 .btn14 { border: 1px solid rgba(139,0,0,.5); color: #F0E0D0; padding: 16px 56px; background: transparent; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: all .3s; }
+  #c14 .btn14:hover { background: rgba(139,0,0,.3); }
+
+  /* 15 — CHAMPAGNE GLASS */
+  #c15 {
+    background: linear-gradient(145deg, #F5EFD6 0%, #EDE3C0 50%, #F0E8CC 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c15 .float-card {
+    background: rgba(255,255,255,.5);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 32px;
+    padding: 80px;
+    max-width: 800px;
+    box-shadow: 0 40px 100px rgba(180,150,80,.15), inset 0 1px 0 rgba(255,255,255,.9);
+    text-align: center; position: relative; z-index: 2; margin: 60px 40px;
+  }
+  #c15 .c15-icon { font-size: 48px; margin-bottom: 32px; }
+  #c15 h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px,7vw,88px); font-weight: 300; color: #3D2E0A; line-height: .95; margin-bottom: 28px; letter-spacing: -.02em; }
+  #c15 h1 em { font-style: italic; color: #8B7330; }
+  #c15 p { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: rgba(61,46,10,.6); line-height: 1.8; margin-bottom: 48px; font-style: italic; }
+  #c15 .btn15 { background: rgba(139,115,48,.15); border: 1px solid rgba(139,115,48,.4); color: #5A3E00; padding: 16px 56px; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; border-radius: 100px; transition: all .3s; }
+  #c15 .btn15:hover { background: rgba(139,115,48,.3); }
+
+  /* 16 — MIDNIGHT NAVY */
+  #c16 {
+    background: #000420;
+    display: flex; align-items: center;
+  }
+  #c16 .geo-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(192,192,210,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(192,192,210,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  #c16 .content16 { position: relative; z-index: 2; padding: 80px; max-width: 900px; }
+  #c16 .navy-badge { border: 1px solid rgba(192,192,192,.2); padding: 6px 16px; display: inline-block; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: rgba(192,192,192,.5); margin-bottom: 32px; }
+  #c16 h1 { font-size: clamp(52px,8vw,100px); font-weight: 300; color: #E8E8F0; line-height: .95; margin-bottom: 32px; letter-spacing: -.03em; }
+  #c16 h1 strong { font-weight: 700; color: #C0C0D8; }
+  #c16 p { color: rgba(232,232,240,.4); font-size: 17px; line-height: 1.8; margin-bottom: 48px; max-width: 500px; }
+  #c16 .silver-divider { width: 100%; height: 1px; background: linear-gradient(90deg, rgba(192,192,192,.3), transparent); margin-bottom: 40px; }
+  #c16 .btn16 { background: transparent; border: 1px solid rgba(192,192,192,.3); color: #C0C0D8; padding: 16px 48px; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: all .3s; }
+  #c16 .btn16:hover { border-color: rgba(192,192,192,.7); color: #E8E8F0; }
+
+  /* 17 — MARBLE DUST */
+  #c17 {
+    background: #F2F0EC;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c17 .marble-texture {
+    position: absolute; inset: 0; opacity: .06;
+    background: repeating-linear-gradient(
+      -45deg, transparent, transparent 2px,
+      rgba(0,0,0,.3) 2px, rgba(0,0,0,.3) 3px
+    );
+  }
+  #c17 .content17 { position: relative; z-index: 2; max-width: 900px; padding: 80px 60px; text-align: center; }
+  #c17 h1 { font-size: clamp(56px,9vw,112px); font-weight: 700; color: #1A1A1A; line-height: .9; margin-bottom: 40px; letter-spacing: -.04em; }
+  #c17 .thin-rule { width: 100%; height: 0.5px; background: #000; margin: 0 auto 40px; }
+  #c17 .stats17 { display: flex; justify-content: center; gap: 80px; margin-bottom: 48px; }
+  #c17 .s17 .n { font-size: 40px; font-weight: 700; color: #1A1A1A; }
+  #c17 .s17 .l { font-size: 11px; color: #888; letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+  #c17 .btn17 { border: 0.5px solid #000; color: #000; padding: 16px 56px; background: transparent; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+  #c17 .btn17:hover { background: #000; color: #F2F0EC; }
+
+  /* 18 — TRUFFLE BLACK */
+  #c18 {
+    background: #1C1917;
+    display: flex; align-items: center;
+  }
+  #c18 .warm-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(80,60,40,.15), transparent); }
+  #c18 .content18 { position: relative; z-index: 2; padding: 80px; max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  #c18 h1 { font-family: 'Newsreader', serif; font-size: clamp(48px,7vw,84px); font-weight: 600; color: #EDE0D4; line-height: .95; margin-bottom: 32px; }
+  #c18 h1 em { font-style: italic; color: #A8907A; }
+  #c18 p18 { color: rgba(237,224,212,.5); font-size: 16px; line-height: 1.9; font-family: 'Newsreader', serif; display: block; margin-bottom: 40px; }
+  #c18 .btn18 { background: #A8907A; color: #1C1917; padding: 16px 48px; border: none; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+  #c18 .right18 { padding-top: 80px; border-top: 1px solid rgba(168,144,122,.1); }
+  #c18 .t18 { font-size: 11px; color: rgba(237,224,212,.3); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 16px; }
+  #c18 .bignr18 { font-family: 'Newsreader', serif; font-size: 80px; font-weight: 600; color: #A8907A; line-height: 1; }
+  #c18 .subnr18 { font-size: 13px; color: rgba(237,224,212,.4); margin-top: 12px; }
+
+  /* 19 — ROYAL GRAPHITE */
+  #c19 {
+    background: #1A1A22;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c19 .grad-border-wrap {
+    position: relative; max-width: 900px; padding: 2px; border-radius: 16px;
+    background: linear-gradient(135deg, #6B5CE7, #A855F7, #3B82F6, #6B5CE7);
+    margin: 60px 40px;
+    background-size: 300%;
+    animation: gradmove 4s linear infinite;
+  }
+  @keyframes gradmove { 0%{background-position:0%} 100%{background-position:300%} }
+  #c19 .inner19 { background: #1A1A22; border-radius: 14px; padding: 80px; text-align: center; }
+  #c19 h1 { font-size: clamp(48px,7vw,88px); font-weight: 700; color: #E8E8F5; line-height: .95; margin-bottom: 28px; letter-spacing: -.03em; }
+  #c19 h1 span { background: linear-gradient(135deg, #A855F7, #6B5CE7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  #c19 p { color: rgba(232,232,245,.5); font-size: 17px; line-height: 1.8; margin-bottom: 48px; }
+  #c19 .btn19 { background: linear-gradient(135deg, #6B5CE7, #A855F7); color: #fff; padding: 16px 56px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .3s; }
+  #c19 .btn19:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(107,92,231,.3); }
+
+  /* 20 — OLD MONEY PAPER */
+  #c20 {
+    background: #F4EDD8;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c20 .paper-texture {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(0,0,0,.02) 30px, rgba(0,0,0,.02) 31px),
+      repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(0,0,0,.015) 80px, rgba(0,0,0,.015) 81px);
+  }
+  #c20 .content20 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 800px; }
+  #c20 .stamp { display: inline-block; border: 2px solid rgba(100,80,30,.4); padding: 4px 12px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: rgba(100,80,30,.6); margin-bottom: 40px; transform: rotate(-1deg); }
+  #c20 h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(56px,9vw,112px); font-weight: 400; color: #2A1F0A; line-height: .9; margin-bottom: 40px; letter-spacing: -.02em; }
+  #c20 .inset-box { background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.08); box-shadow: inset 0 2px 8px rgba(0,0,0,.06); padding: 32px 48px; margin-bottom: 40px; }
+  #c20 .inset-box p { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: rgba(42,31,10,.7); font-style: italic; line-height: 1.7; }
+  #c20 .btn20 { border: 1px solid rgba(100,80,30,.4); color: rgba(42,31,10,.8); padding: 16px 56px; background: transparent; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; font-family: 'Montserrat', sans-serif; transition: all .3s; }
+  #c20 .btn20:hover { background: rgba(100,80,30,.08); }
+
+  /* ════════════════════════════════════════════
+     SERIES C — CAT B: TECH-DRIVEN (10)
+  ════════════════════════════════════════════ */
+
+  /* 21 — CYBER LIME */
+  #c21 {
+    background: #111310;
+    display: flex; align-items: center;
+  }
+  #c21 .noise-layer {
+    position: absolute; inset: 0; opacity: .04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  #c21 .lime-glow { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(223,255,0,.12) 0%, transparent 70%); right: 5%; top: 50%; transform: translateY(-50%); }
+  #c21 .content21 { position: relative; z-index: 2; padding: 80px; max-width: 900px; }
+  #c21 .tag21 { font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: #DFFF00; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 24px; opacity: .8; }
+  #c21 h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(52px,8vw,96px); font-weight: 700; color: #F5F5F5; line-height: .9; margin-bottom: 28px; letter-spacing: -.04em; }
+  #c21 h1 em { font-style: normal; color: #DFFF00; text-shadow: 0 0 30px rgba(223,255,0,.4); }
+  #c21 p { color: rgba(245,245,245,.5); font-size: 17px; line-height: 1.8; margin-bottom: 40px; max-width: 480px; }
+  #c21 .btn21 { background: #DFFF00; color: #111310; padding: 16px 48px; border: none; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: .02em; transition: all .3s; }
+  #c21 .btn21:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(223,255,0,.3); }
+
+  /* 22 — NEON COBALT */
+  #c22 {
+    background: #050510;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c22 .cobalt-glow {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,100,255,.2) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    animation: cobaltpulse 3s ease-in-out infinite;
+  }
+  @keyframes cobaltpulse { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.15)} }
+  #c22 .content22 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 800px; }
+  #c22 h1 { font-size: clamp(52px,8vw,96px); font-weight: 900; color: #fff; line-height: .9; margin-bottom: 32px; letter-spacing: -.04em; }
+  #c22 h1 span { color: #2563EB; text-shadow: 0 0 20px rgba(37,99,235,.8), 0 0 60px rgba(37,99,235,.4), 0 0 100px rgba(37,99,235,.2); }
+  #c22 p { color: rgba(255,255,255,.5); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c22 .btn22 { background: transparent; border: 2px solid #2563EB; color: #fff; padding: 18px 56px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 4px; box-shadow: 0 0 30px rgba(37,99,235,.3), inset 0 0 30px rgba(37,99,235,.05); transition: all .3s; }
+  #c22 .btn22:hover { background: rgba(37,99,235,.2); box-shadow: 0 0 60px rgba(37,99,235,.5); }
+
+  /* 23 — MATRIX VOID */
+  #c23 {
+    background: #000805;
+    display: flex; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  #c23 .matrix-rain {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 50%;
+    background: linear-gradient(90deg, #000805 0%, transparent 20%);
+    z-index: 1;
+  }
+  #c23 .rain-chars {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 50%;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: rgba(0,255,100,.2); overflow: hidden;
+    display: flex; flex-wrap: wrap; align-content: flex-start;
+    padding: 20px; line-height: 1.6;
+    letter-spacing: .1em;
+  }
+  #c23 .content23 { position: relative; z-index: 2; padding: 80px; max-width: 650px; }
+  #c23 .sys-line { font-size: 11px; color: rgba(0,255,100,.4); margin-bottom: 32px; }
+  #c23 h1 { font-family: 'JetBrains Mono', monospace; font-size: clamp(40px,6vw,72px); font-weight: 700; color: #00FF64; text-shadow: 0 0 20px rgba(0,255,100,.3); line-height: 1; margin-bottom: 28px; }
+  #c23 .cursor23 { display: inline-block; width: 3px; height: .9em; background: #00FF64; vertical-align: middle; animation: blink23 1s step-end infinite; }
+  @keyframes blink23 { 0%,100%{opacity:1} 50%{opacity:0} }
+  #c23 p { color: rgba(0,255,100,.5); font-size: 14px; line-height: 1.9; margin-bottom: 40px; }
+  #c23 .btn23 { border: 1px solid rgba(0,255,100,.4); color: #00FF64; padding: 14px 40px; background: transparent; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all .3s; }
+  #c23 .btn23:hover { background: rgba(0,255,100,.08); box-shadow: 0 0 20px rgba(0,255,100,.15); }
+
+  /* 24 — SOLAR FLARE (Cat B) */
+  #c24 {
+    background: #0D0020;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #c24 .mesh24 {
+    position: absolute; inset: -200px;
+    background:
+      radial-gradient(ellipse 60% 80% at 30% 50%, rgba(255,100,0,.25) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 60% at 70% 30%, rgba(130,0,255,.3) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 40% at 60% 80%, rgba(255,50,150,.15) 0%, transparent 50%);
+    animation: mesh24 6s ease-in-out infinite alternate;
+  }
+  @keyframes mesh24 { 0%{opacity:.7} 100%{opacity:1} }
+  #c24 .content24 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 800px; }
+  #c24 h1 { font-size: clamp(52px,8vw,96px); font-weight: 900; color: #fff; line-height: .9; margin-bottom: 32px; letter-spacing: -.04em; }
+  #c24 h1 span { background: linear-gradient(135deg, #FF6B00, #FF4500, #FF8C00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  #c24 p { color: rgba(255,255,255,.6); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c24 .btn24 { background: linear-gradient(135deg, #FF6B00, #FF4500); color: #fff; padding: 18px 56px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; border-radius: 6px; box-shadow: 0 20px 40px rgba(255,100,0,.3); transition: all .3s; }
+  #c24 .btn24:hover { transform: translateY(-3px); box-shadow: 0 30px 60px rgba(255,100,0,.4); }
+
+  /* 25 — HOLOGRAPHIC LIQUID */
+  #c25 {
+    background: #FAFAFA;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c25 .holo-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 20% 20%, rgba(200,100,255,.06) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 60% at 80% 80%, rgba(0,150,255,.06) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 40% at 60% 40%, rgba(0,255,200,.04) 0%, transparent 50%);
+  }
+  #c25 .content25 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 1000px; }
+  #c25 h1 { font-size: clamp(52px,8vw,96px); font-weight: 800; color: #111; line-height: .9; margin-bottom: 40px; letter-spacing: -.04em; }
+  #c25 h1 span { background: linear-gradient(135deg, #A855F7, #3B82F6, #06B6D4, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; background-size: 200%; animation: holograph 3s linear infinite; }
+  @keyframes holograph { 0%{background-position:0%} 100%{background-position:200%} }
+  #c25 .holo-cards { display: flex; gap: 16px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+  #c25 .holo-card { background: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.9); border-radius: 20px; padding: 28px 32px; backdrop-filter: blur(10px); box-shadow: 0 4px 24px rgba(0,0,0,.05); flex: 1; min-width: 160px; max-width: 200px; }
+  #c25 .holo-card .hc-n { font-size: 36px; font-weight: 700; color: #111; }
+  #c25 .holo-card .hc-l { font-size: 12px; color: #888; margin-top: 4px; }
+  #c25 .btn25 { background: #111; color: #fff; padding: 16px 56px; border: none; border-radius: 100px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .3s; }
+  #c25 .btn25:hover { transform: scale(1.05); }
+
+  /* 26 — TITANIUM MESH */
+  #c26 {
+    background: #1A1A1A;
+    display: flex; align-items: center;
+  }
+  #c26 .mesh-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  #c26 .orange-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, #FF6B1A, #FF8C42, #FF6B1A, transparent); }
+  #c26 .content26 { position: relative; z-index: 2; padding: 80px; max-width: 1100px; width: 100%; display: grid; grid-template-columns: 1.5fr 1fr; gap: 80px; align-items: center; }
+  #c26 h1 { font-size: clamp(48px,7vw,84px); font-weight: 700; color: #C8C8C8; line-height: .95; margin-bottom: 28px; letter-spacing: -.03em; }
+  #c26 h1 em { font-style: normal; color: #FF6B1A; }
+  #c26 p26 { color: rgba(200,200,200,.5); font-size: 16px; line-height: 1.8; margin-bottom: 40px; display: block; max-width: 480px; }
+  #c26 .btn26 { background: #FF6B1A; color: #fff; padding: 16px 48px; border: none; font-size: 14px; font-weight: 700; letter-spacing: .05em; cursor: pointer; transition: all .3s; }
+  #c26 .btn26:hover { background: #FF8C42; transform: translateY(-2px); }
+  #c26 .right26 { padding: 40px; border: 1px solid rgba(255,107,26,.2); background: rgba(255,107,26,.05); }
+  #c26 .r26-label { font-size: 10px; color: rgba(255,107,26,.5); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 16px; }
+  #c26 .r26-big { font-size: 72px; font-weight: 700; color: #FF6B1A; line-height: 1; }
+  #c26 .r26-sub { font-size: 13px; color: rgba(200,200,200,.5); margin-top: 8px; }
+
+  /* 27 — QUANTUM VIOLET */
+  #c27 {
+    background: #0E0015;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #c27 .quantum-bg {
+    position: absolute; inset: -100px;
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 40%, rgba(180,0,255,.15) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 80% at 70% 60%, rgba(255,0,150,.1) 0%, transparent 50%);
+  }
+  #c27 .bezier-lines {
+    position: absolute; inset: 0; opacity: .1;
+  }
+  #c27 .content27 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 800px; }
+  #c27 h1 { font-size: clamp(52px,8vw,96px); font-weight: 700; color: #fff; line-height: .9; margin-bottom: 32px; letter-spacing: -.04em; }
+  #c27 h1 span { background: linear-gradient(135deg, #C026D3, #9333EA, #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  #c27 p { color: rgba(255,255,255,.5); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c27 .btn27 { background: transparent; border: 1px solid rgba(180,0,255,.5); color: #fff; padding: 18px 56px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 100px; box-shadow: 0 0 40px rgba(180,0,255,.2), inset 0 0 20px rgba(180,0,255,.05); transition: all .3s; }
+  #c27 .btn27:hover { background: rgba(180,0,255,.15); box-shadow: 0 0 60px rgba(180,0,255,.4); }
+
+  /* 28 — DATA STREAM */
+  #c28 {
+    background: #010D04;
+    display: flex; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+  }
+  #c28 .streams {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+    display: flex; gap: 20px; padding: 0 40px;
+    overflow: hidden;
+  }
+  #c28 .stream-col {
+    display: flex; flex-direction: column; gap: 8px;
+    animation: streamdown 10s linear infinite;
+    font-size: 12px; color: rgba(0,200,50,.2);
+    white-space: nowrap;
+  }
+  #c28 .stream-col:nth-child(2) { animation-delay: -3s; }
+  #c28 .stream-col:nth-child(3) { animation-delay: -7s; }
+  @keyframes streamdown { 0%{transform:translateY(-50%)} 100%{transform:translateY(0)} }
+  #c28 .content28 { position: relative; z-index: 2; padding: 80px; max-width: 650px; }
+  #c28 .sys28 { font-size: 11px; color: rgba(0,200,50,.4); margin-bottom: 32px; }
+  #c28 h1 { font-family: 'JetBrains Mono', monospace; font-size: clamp(36px,5vw,64px); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 28px; }
+  #c28 h1 em { font-style: normal; color: #00C832; }
+  #c28 p { color: rgba(255,255,255,.4); font-size: 14px; line-height: 1.9; margin-bottom: 40px; }
+  #c28 .btn28 { background: #00C832; color: #010D04; padding: 14px 44px; border: none; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all .3s; }
+  #c28 .btn28:hover { transform: translateX(4px); }
+
+  /* 29 — ARTIFICIAL INTELLIGENCE */
+  #c29 {
+    background: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c29 .neural-bg {
+    position: absolute; inset: 0; opacity: .04;
+    background-image:
+      radial-gradient(circle 1px at 10% 20%, #1E40AF 100%, transparent 100%),
+      radial-gradient(circle 1px at 50% 50%, #1E40AF 100%, transparent 100%),
+      radial-gradient(circle 1px at 80% 30%, #1E40AF 100%, transparent 100%);
+    background-size: 200px 200px;
+  }
+  #c29 .content29 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 900px; }
+  #c29 .ai-badge { display: inline-block; background: linear-gradient(135deg, #EEF2FF, #E0E7FF); border: 1px solid #C7D2FE; border-radius: 100px; padding: 6px 20px; font-size: 12px; color: #4338CA; letter-spacing: .05em; margin-bottom: 32px; font-weight: 500; }
+  #c29 h1 { font-size: clamp(52px,8vw,96px); font-weight: 800; color: #111827; line-height: .9; margin-bottom: 32px; letter-spacing: -.04em; }
+  #c29 h1 span { background: linear-gradient(135deg, #1E40AF, #3B82F6, #60A5FA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  #c29 p { color: #6B7280; font-size: 18px; line-height: 1.7; margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto; }
+  #c29 .btn29 { background: #1E40AF; color: #fff; padding: 18px 56px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 20px 40px rgba(30,64,175,.2); transition: all .3s; }
+  #c29 .btn29:hover { transform: translateY(-3px); box-shadow: 0 30px 60px rgba(30,64,175,.3); }
+
+  /* 30 — GLASS OBSIDIAN */
+  #c30 {
+    background: #000000;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #c30 .obsidian-reflect {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.03) 0%, transparent 50%, rgba(255,255,255,.02) 100%);
+  }
+  #c30 .reflect-card {
+    position: relative; z-index: 2;
+    background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.02) 100%);
+    border: 1px solid rgba(255,255,255,.1);
+    border-top: 1px solid rgba(255,255,255,.2);
+    border-left: 1px solid rgba(255,255,255,.15);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 80px;
+    max-width: 800px;
+    margin: 60px 40px;
+    text-align: center;
+    box-shadow: 0 40px 100px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.1);
+  }
+  #c30 h1 { font-size: clamp(48px,7vw,88px); font-weight: 700; color: #fff; line-height: .9; margin-bottom: 32px; letter-spacing: -.04em; }
+  #c30 .mirror-line { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent); margin: 40px 0; }
+  #c30 p { color: rgba(255,255,255,.4); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c30 .btn30 { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: 18px 56px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all .3s; backdrop-filter: blur(10px); }
+  #c30 .btn30:hover { background: rgba(255,255,255,.18); box-shadow: 0 0 40px rgba(255,255,255,.1); }
+
+  /* ════════════════════════════════════════════
+     SERIES D — CAT C: BOLD & MODERN (10)
+  ════════════════════════════════════════════ */
+
+  /* 31 — VIBRANT SWISS */
+  #c31 {
+    background: #FFFFFF;
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  #c31 .left31 { background: #000; padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
+  #c31 .right31 { background: #FF0000; padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
+  #c31 h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(72px,12vw,150px); line-height: .85; color: #fff; letter-spacing: -.02em; margin-bottom: 32px; }
+  #c31 .left31 h1 span { color: #FF0000; }
+  #c31 .sub31 { font-size: 13px; color: rgba(255,255,255,.5); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 40px; }
+  #c31 .btn31 { background: #fff; color: #000; padding: 16px 40px; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: .1em; cursor: pointer; display: inline-block; transition: all .2s; }
+  #c31 .btn31:hover { transform: scale(1.03); }
+  #c31 .right31 .big31 { font-family: 'Bebas Neue', sans-serif; font-size: 120px; color: #fff; line-height: 1; margin-bottom: 8px; }
+  #c31 .right31 .label31 { font-size: 14px; color: rgba(255,255,255,.7); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 32px; }
+  #c31 .right31 p { font-size: 16px; color: rgba(255,255,255,.8); line-height: 1.7; }
+
+  /* 32 — BAUHAUS STYLE */
+  #c32 {
+    background: #D4C5A9;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #c32 .geo-shapes {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  #c32 .circle-b { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: #E8B000; opacity: .6; right: -100px; top: -100px; }
+  #c32 .rect-b { position: absolute; width: 200px; height: 400px; background: #1560B0; opacity: .5; bottom: -80px; left: 10%; }
+  #c32 .tri-b { position: absolute; width: 0; height: 0; border-left: 200px solid transparent; border-right: 200px solid transparent; border-bottom: 350px solid rgba(200,0,0,.4); top: 20%; left: 40%; }
+  #c32 .content32 { position: relative; z-index: 2; padding: 80px; max-width: 700px; }
+  #c32 h1 { font-family: 'Unbounded', sans-serif; font-size: clamp(44px,7vw,80px); font-weight: 900; color: #1A1A1A; line-height: .95; margin-bottom: 28px; letter-spacing: -.03em; }
+  #c32 p { font-size: 17px; color: rgba(26,26,26,.7); line-height: 1.7; margin-bottom: 40px; max-width: 440px; }
+  #c32 .bauhaus-btns { display: flex; gap: 0; }
+  #c32 .bb { padding: 18px 36px; font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all .2s; }
+  #c32 .bb.y { background: #E8B000; color: #000; }
+  #c32 .bb.b { background: #1560B0; color: #fff; }
+  #c32 .bb:hover { filter: brightness(1.1); }
+
+  /* 33 — ELECTRIC YELLOW */
+  #c33 {
+    background: #0A0A0A;
+    display: flex; align-items: center;
+  }
+  #c33 .yellow-slash {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 40%;
+    background: #FFE000;
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  #c33 .content33 { position: relative; z-index: 2; padding: 80px; max-width: 700px; }
+  #c33 h1 { font-family: 'Archivo Black', sans-serif; font-size: clamp(60px,10vw,128px); line-height: .85; color: #fff; margin-bottom: 32px; letter-spacing: -.03em; }
+  #c33 h1 span { color: #FFE000; }
+  #c33 p { color: rgba(255,255,255,.5); font-size: 18px; line-height: 1.7; margin-bottom: 48px; max-width: 440px; }
+  #c33 .btn33 { background: #FFE000; color: #0A0A0A; padding: 20px 60px; border: none; font-family: 'Archivo Black', sans-serif; font-size: 18px; cursor: pointer; transition: all .2s; }
+  #c33 .btn33:hover { background: #fff; }
+
+  /* 34 — NORDIC CLEAN */
+  #c34 {
+    background: linear-gradient(160deg, #E8F4F8 0%, #F0F8FF 50%, #EAF4FB 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c34 .content34 { text-align: center; padding: 80px 60px; max-width: 800px; position: relative; z-index: 2; }
+  #c34 .line-icon { margin: 0 auto 32px; width: 64px; height: 64px; border: 1.5px solid #2E9BCA; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  #c34 .line-icon svg { width: 28px; height: 28px; stroke: #2E9BCA; stroke-width: 1.5; fill: none; }
+  #c34 h1 { font-size: clamp(48px,7vw,88px); font-weight: 700; color: #1A3344; line-height: .9; margin-bottom: 28px; letter-spacing: -.03em; }
+  #c34 h1 span { color: #2E9BCA; }
+  #c34 p { color: rgba(26,51,68,.6); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c34 .btn34 { background: #2E9BCA; color: #fff; padding: 16px 56px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .3s; }
+  #c34 .btn34:hover { background: #1A7BA0; transform: translateY(-2px); }
+
+  /* 35 — CONCRETE JUNGLE */
+  #c35 {
+    background: #2A2A2A;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  #c35 .concrete-texture {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,.015) 8px, rgba(255,255,255,.015) 9px),
+      repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(0,0,0,.05) 8px, rgba(0,0,0,.05) 9px);
+  }
+  #c35 .fuchsia-stripe { position: absolute; top: 0; bottom: 0; right: 60px; width: 6px; background: #FF006E; }
+  #c35 .content35 { position: relative; z-index: 2; padding: 80px; max-width: 900px; }
+  #c35 h1 { font-size: clamp(52px,8vw,100px); font-weight: 900; color: #FFFFFF; line-height: .9; margin-bottom: 28px; letter-spacing: -.04em; }
+  #c35 h1 em { font-style: normal; color: #FF006E; }
+  #c35 p { color: rgba(255,255,255,.5); font-size: 18px; line-height: 1.7; margin-bottom: 40px; max-width: 520px; }
+  #c35 .btn35 { background: #FF006E; color: #fff; padding: 18px 56px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; transition: all .3s; }
+  #c35 .btn35:hover { background: #FF1A80; box-shadow: 0 0 40px rgba(255,0,110,.4); }
+
+  /* 36 — MONOCHROME PRO */
+  #c36 {
+    background: #F8F8F8;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c36 .mono-shadow { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,0,0,.1), transparent); }
+  #c36 .content36 { position: relative; z-index: 2; padding: 80px 60px; max-width: 1000px; width: 100%; }
+  #c36 .mono-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; align-items: center; }
+  #c36 h1 { font-size: clamp(52px,8vw,100px); font-weight: 900; color: #000; line-height: .9; margin-bottom: 32px; letter-spacing: -.05em; }
+  #c36 p { color: #555; font-size: 18px; line-height: 1.7; margin-bottom: 40px; }
+  #c36 .btn36 { background: #000; color: #fff; padding: 18px 48px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .3s; }
+  #c36 .btn36:hover { background: #222; }
+  #c36 .right36 { display: flex; flex-direction: column; gap: 24px; }
+  #c36 .grey-box { padding: 24px; background: #EFEFEF; }
+  #c36 .grey-box .gn { font-size: 44px; font-weight: 900; color: #333; }
+  #c36 .grey-box .gl { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; }
+  #c36 .grey-box.dark { background: #1A1A1A; }
+  #c36 .grey-box.dark .gn { color: #E0E0E0; }
+  #c36 .grey-box.dark .gl { color: #555; }
+
+  /* 37 — SKYLINE SUNSET */
+  #c37 {
+    background: linear-gradient(180deg, #0A0015 0%, #1A0030 20%, #4A0060 40%, #8B1C5A 60%, #D4603A 80%, #FF8C42 100%);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding-bottom: 0;
+  }
+  #c37 .skyline {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+    background: #000;
+    clip-path: polygon(
+      0% 100%, 0% 60%, 3% 60%, 3% 40%, 5% 40%, 5% 50%, 7% 50%, 7% 30%, 10% 30%, 10% 50%, 12% 50%, 12% 25%, 15% 25%, 15% 45%, 18% 45%, 18% 20%, 20% 20%, 20% 40%, 22% 40%, 22% 15%, 25% 15%, 25% 35%, 28% 35%, 28% 10%, 30% 10%, 30% 30%, 33% 30%, 33% 18%, 35% 18%, 35% 38%, 38% 38%, 38% 22%, 40% 22%, 40% 8%, 42% 8%, 42% 30%, 45% 30%, 45% 20%, 48% 20%, 48% 40%, 50% 40%, 50% 18%, 52% 18%, 52% 35%, 55% 35%, 55% 15%, 58% 15%, 58% 35%, 60% 35%, 60% 25%, 62% 25%, 62% 45%, 65% 45%, 65% 20%, 68% 20%, 68% 40%, 70% 40%, 70% 30%, 72% 30%, 72% 50%, 75% 50%, 75% 25%, 78% 25%, 78% 45%, 80% 45%, 80% 30%, 82% 30%, 82% 50%, 85% 50%, 85% 40%, 88% 40%, 88% 55%, 90% 55%, 90% 60%, 93% 60%, 93% 65%, 96% 65%, 96% 60%, 100% 60%, 100% 100%
+    );
+  }
+  #c37 .content37 { position: relative; z-index: 2; text-align: center; padding: 80px 60px 200px; max-width: 800px; }
+  #c37 h1 { font-size: clamp(48px,7vw,88px); font-weight: 900; color: #fff; line-height: .9; margin-bottom: 28px; letter-spacing: -.04em; text-shadow: 0 4px 40px rgba(0,0,0,.4); }
+  #c37 h1 span { color: #FF8C42; }
+  #c37 p { color: rgba(255,255,255,.7); font-size: 18px; line-height: 1.7; margin-bottom: 48px; text-shadow: 0 2px 20px rgba(0,0,0,.3); }
+  #c37 .btn37 { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.4); color: #fff; padding: 18px 56px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 100px; backdrop-filter: blur(10px); transition: all .3s; }
+  #c37 .btn37:hover { background: rgba(255,255,255,.25); }
+
+  /* 38 — TERRACOTTA EARTH */
+  #c38 {
+    background: #C17A4A;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  #c38 .blob38a { position: absolute; width: 700px; height: 700px; background: rgba(200,120,60,.4); border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; top: -200px; right: -200px; }
+  #c38 .blob38b { position: absolute; width: 500px; height: 500px; background: rgba(160,100,40,.3); border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; bottom: -150px; left: -100px; }
+  #c38 .content38 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 800px; }
+  #c38 h1 { font-size: clamp(52px,8vw,96px); font-weight: 700; color: #FFF5E0; line-height: .9; margin-bottom: 28px; letter-spacing: -.03em; }
+  #c38 h1 em { font-style: italic; color: #FFF5E0; opacity: .7; }
+  #c38 p { color: rgba(255,245,224,.7); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c38 .btn38 { background: #FFF5E0; color: #8B4513; padding: 18px 56px; border: none; border-radius: 100px; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .3s; }
+  #c38 .btn38:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,.2); }
+
+  /* 39 — TECHNO ORANGE */
+  #c39 {
+    background: #1E1E1E;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #c39 .nm-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 50%, #252525 0%, #1A1A1A 60%, #111 100%); }
+  #c39 .content39 { position: relative; z-index: 2; text-align: center; padding: 80px 60px; max-width: 900px; }
+  #c39 h1 { font-size: clamp(52px,8vw,96px); font-weight: 700; color: #E0E0E0; line-height: .9; margin-bottom: 32px; letter-spacing: -.04em; }
+  #c39 h1 em { font-style: normal; color: #FF6B1A; }
+  #c39 p { color: rgba(224,224,224,.5); font-size: 18px; line-height: 1.7; margin-bottom: 48px; }
+  #c39 .nm-btn {
+    background: linear-gradient(145deg, #272727, #1A1A1A);
+    box-shadow: 5px 5px 15px #111, -5px -5px 15px #2D2D2D;
+    color: #FF6B1A; padding: 20px 60px; border: none;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    border-radius: 12px; letter-spacing: .05em;
+    transition: all .3s;
+  }
+  #c39 .nm-btn:hover {
+    box-shadow: 3px 3px 8px #111, -3px -3px 8px #2D2D2D, 0 0 30px rgba(255,107,26,.15);
+  }
+  #c39 .nm-cards { display: flex; gap: 20px; margin-bottom: 48px; justify-content: center; flex-wrap: wrap; }
+  #c39 .nc { background: linear-gradient(145deg, #272727, #1A1A1A); box-shadow: 4px 4px 12px #111, -4px -4px 12px #2D2D2D; padding: 28px 36px; border-radius: 16px; min-width: 140px; }
+  #c39 .nc .nn { font-size: 40px; font-weight: 700; color: #FF6B1A; }
+  #c39 .nc .nl { font-size: 11px; color: rgba(224,224,224,.4); margin-top: 4px; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* 40 — ACID PURPLE */
+  #c40 {
+    background: #1A0040;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  #c40 .acid-glow40 {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,255,0,.12) 0%, transparent 70%);
+    right: -100px; top: 50%; transform: translateY(-50%);
+    animation: acidpulse 3s ease-in-out infinite;
+  }
+  #c40 .marker-line { position: absolute; top: 50%; left: 0; right: 0; height: 3px; background: rgba(200,255,0,.06); transform: translateY(-50%); }
+  #c40 .content40 { position: relative; z-index: 2; padding: 80px; max-width: 900px; }
+  #c40 .tag40 { font-family: 'Syne', sans-serif; font-size: 12px; background: #C8FF00; color: #1A0040; padding: 4px 16px; display: inline-block; font-weight: 700; letter-spacing: .05em; margin-bottom: 32px; }
+  #c40 h1 { font-family: 'Syne', sans-serif; font-size: clamp(52px,8vw,96px); font-weight: 800; color: #fff; line-height: .9; margin-bottom: 28px; letter-spacing: -.04em; }
+  #c40 h1 em { font-style: normal; color: #C8FF00; }
+  #c40 p { color: rgba(255,255,255,.5); font-size: 18px; line-height: 1.7; margin-bottom: 48px; max-width: 520px; }
+  #c40 .btn40 { background: transparent; border: 2px solid #C8FF00; color: #C8FF00; padding: 18px 56px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all .3s; }
+  #c40 .btn40:hover { background: #C8FF00; color: #1A0040; }
+
+  /* ════════════════════════════════════════════
+     CONCEPT 41 — FOREST GOLD (SIGNATURE)
+     Dark Emerald × Liquid Gold
+  ════════════════════════════════════════════ */
+  #c41 {
+    background: #0A1A0F;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  #c41 .forest-mesh {
+    position: absolute; inset: -200px;
+    background:
+      radial-gradient(ellipse 70% 80% at 15% 60%, rgba(10,80,30,.6) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(184,140,20,.08) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 60% at 60% 90%, rgba(5,60,20,.5) 0%, transparent 50%);
+  }
+  #c41 .gold-veins {
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(
+        -35deg,
+        transparent 0px, transparent 80px,
+        rgba(184,140,20,.02) 80px, rgba(184,140,20,.02) 81px
+      );
+  }
+  #c41 .content41 {
+    position: relative; z-index: 2;
+    padding: 80px 80px 80px 100px;
+    max-width: 1200px; width: 100%;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; align-items: center;
+  }
+  #c41 .left41 {}
+  #c41 .right41 { display: flex; flex-direction: column; gap: 20px; }
+
+  #c41 .kicker41 {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 32px;
+  }
+  #c41 .kicker-dot { width: 6px; height: 6px; background: #B8A020; border-radius: 50%; }
+  #c41 .kicker-text {
+    font-size: 11px; color: rgba(184,160,32,.7);
+    letter-spacing: .2em; text-transform: uppercase;
+  }
+
+  #c41 h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 400;
+    line-height: 1.0;
+    color: #E8F0E2;
+    margin-bottom: 28px;
+    letter-spacing: -.02em;
+  }
+  #c41 h1 em {
+    font-style: italic;
+    background: linear-gradient(135deg, #8B7010 0%, #D4A820 35%, #F5D060 55%, #C8980C 75%, #9A7C18 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200%;
+    animation: goldvein 4s linear infinite;
+  }
+  @keyframes goldvein { 0%{background-position:0%} 100%{background-position:200%} }
+
+  #c41 .desc41 {
+    font-size: 17px; color: rgba(220,235,215,.55);
+    line-height: 1.85; margin-bottom: 48px;
+    max-width: 460px;
+  }
+
+  #c41 .btns41 { display: flex; gap: 16px; align-items: center; }
+
+  #c41 .btn-primary41 {
+    background: linear-gradient(135deg, #9A7C18, #D4A820, #F5D060, #C8980C);
+    background-size: 200%;
+    animation: goldvein 3s linear infinite;
+    color: #0A1A0F;
+    padding: 16px 44px; border: none;
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px; font-weight: 400;
+    letter-spacing: .04em; cursor: pointer;
+    border-radius: 2px;
+    box-shadow: 0 16px 48px rgba(180,140,20,.25), 0 4px 12px rgba(0,0,0,.3);
+    transition: all .4s;
+  }
+  #c41 .btn-primary41:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 64px rgba(200,160,30,.35), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  #c41 .btn-ghost41 {
+    background: transparent; border: 1px solid rgba(184,160,32,.3);
+    color: rgba(220,215,180,.6); padding: 16px 36px;
+    font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+    cursor: pointer; border-radius: 2px; transition: all .4s;
+  }
+  #c41 .btn-ghost41:hover { border-color: rgba(184,160,32,.6); color: rgba(220,215,180,.9); }
+
+  #c41 .forest-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(184,160,32,.1);
+    border-radius: 4px;
+    padding: 28px 32px;
+    backdrop-filter: blur(8px);
+    transition: all .4s;
+  }
+  #c41 .forest-card:hover { border-color: rgba(184,160,32,.25); background: rgba(255,255,255,.04); }
+  #c41 .forest-card .fc-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px; font-weight: 400;
+    background: linear-gradient(135deg, #8B7010, #D4A820, #F5D060);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1;
+    margin-bottom: 8px;
+  }
+  #c41 .forest-card .fc-label {
+    font-size: 11px; color: rgba(220,235,215,.35);
+    letter-spacing: .15em; text-transform: uppercase;
+  }
+  #c41 .forest-card .fc-desc {
+    font-size: 14px; color: rgba(220,235,215,.5);
+    margin-top: 10px; line-height: 1.6;
+  }
+
+  /* ── concept label colors ── */
+  .cl-dark { color: rgba(255,255,255,.3); }
+  .cl-light { color: rgba(0,0,0,.3); }
+
+  /* ── SECTION DIVIDERS ── */
+  .series-header {
+    background: #0A0A0B; padding: 60px 80px 20px;
+    border-bottom: 1px solid #1a1a1a;
+    scroll-margin-top: 56px;
+  }
+  .series-header h2 {
+    font-size: 11px; letter-spacing: .25em; text-transform: uppercase; color: #444;
+    margin-bottom: 8px;
+  }
+  .series-header p { font-size: 24px; color: #fff; font-weight: 300; }
+
+</style>
+</head>
+<body>
+
+<!-- MASTER NAV -->
+<nav class="master-nav">
+  <span class="nav-label">KOLOMITSSA</span>
+  <a href="#series-a">Series A</a>
+  <a href="#c01">01</a><a href="#c02">02</a><a href="#c03">03</a><a href="#c04">04</a>
+  <a href="#c05">05</a><a href="#c06">06</a><a href="#c07">07</a><a href="#c08">08</a>
+  <a href="#c09">09</a><a href="#c10">10</a>
+  <a href="#series-b">Series B</a>
+  <a href="#c11">11</a><a href="#c12">12</a><a href="#c13">13</a><a href="#c14">14</a>
+  <a href="#c15">15</a><a href="#c16">16</a><a href="#c17">17</a><a href="#c18">18</a>
+  <a href="#c19">19</a><a href="#c20">20</a>
+  <a href="#series-c">Series C</a>
+  <a href="#c21">21</a><a href="#c22">22</a><a href="#c23">23</a><a href="#c24">24</a>
+  <a href="#c25">25</a><a href="#c26">26</a><a href="#c27">27</a><a href="#c28">28</a>
+  <a href="#c29">29</a><a href="#c30">30</a>
+  <a href="#series-d">Series D</a>
+  <a href="#c31">31</a><a href="#c32">32</a><a href="#c33">33</a><a href="#c34">34</a>
+  <a href="#c35">35</a><a href="#c36">36</a><a href="#c37">37</a><a href="#c38">38</a>
+  <a href="#c39">39</a><a href="#c40">40</a>
+  <a href="#series-sig">★ Signature</a>
+  <a href="#c41">41</a>
+</nav>
+
+<!-- SERIES A HEADER -->
+<div id="series-a" class="series-header" style="padding-top:96px">
+  <h2>Series A — Original 10</h2>
+  <p>Modern Dark · Neo-Brutalism · Luxury · Cyber · Old Money</p>
+</div>
+
+<!-- 01 MIDNIGHT STEALTH -->
+<section id="c01" class="concept-section">
+  <div class="bg-grid"></div>
+  <div class="glow"></div>
+  <div class="content">
+    <div class="eyebrow">// Investment Ecosystem — v2.0</div>
+    <h1>Capital<br>Moves in<br><span>Silence</span></h1>
+    <div class="glass-card">
+      <div class="stat"><div class="num">$4.8B</div><div class="desc">Assets Under Management</div></div>
+      <div class="stat"><div class="num">340%</div><div class="desc">3-Year Returns</div></div>
+      <div class="stat"><div class="num">12K+</div><div class="desc">Active Investors</div></div>
+    </div>
+    <button class="cta">ACCESS THE PLATFORM →</button>
+  </div>
+  <span class="concept-label cl-dark">01 · MIDNIGHT STEALTH</span>
+</section>
+
+<!-- 02 SWISS FINANCE -->
+<section id="c02" class="concept-section" style="min-height:100vh">
+  <div class="left-block">
+    <span class="tag">Swiss Finance · Est. 2019</span>
+    <h1>INVEST<br>WITH<br>PRECI<br>SION</h1>
+    <div class="metrics">
+      <div class="metric"><div class="n">$2.1B</div><div class="l">Total Volume</div></div>
+      <div class="metric"><div class="n">99.7%</div><div class="l">Uptime</div></div>
+    </div>
+  </div>
+  <div class="right-block">
+    <h2>YOUR MONEY.<br>YOUR RULES.</h2>
+    <p>A professional-grade investment platform built for those who refuse to compromise on quality, speed, or precision.</p>
+    <button class="btn-swiss">START INVESTING</button>
+  </div>
+  <span class="concept-label cl-dark">02 · SWISS FINANCE</span>
+</section>
+
+<!-- 03 LIQUID GOLD -->
+<section id="c03" class="concept-section">
+  <div class="mesh-bg"></div>
+  <div class="content">
+    <div class="crown">◆</div>
+    <h1>Wealth<br>Beyond<br>Measure</h1>
+    <div class="gold-line"></div>
+    <p>Where capital meets artistry. A bespoke investment ecosystem for discerning individuals who understand that true wealth is a legacy.</p>
+    <button class="cta-gold">DISCOVER YOUR PORTFOLIO</button>
+  </div>
+  <span class="concept-label cl-dark">03 · LIQUID GOLD</span>
+</section>
+
+<!-- 04 CYBER WEALTH -->
+<section id="c04" class="concept-section">
+  <div class="scanlines"></div>
+  <div class="ticker">
+    <span>AAPL +2.3%</span><span>BTC +4.1%</span><span>ETH +3.8%</span>
+    <span>NVDA +1.9%</span><span>TSLA -0.4%</span><span>SPX +0.7%</span>
+    <span>GOLD +0.2%</span><span>EUR/USD 1.089</span>
+  </div>
+  <div class="content">
+    <div class="prompt">$ kolomitssa --init portfolio --mode=aggressive</div>
+    <h1><em>Next-Gen</em><br>Investment<br>Terminal</h1>
+    <div class="terminal-box">
+      <div class="t-stat"><div class="label">PORTFOLIO_VALUE</div><div class="value">$847K</div><div class="delta">▲ +12.4%</div></div>
+      <div class="t-stat"><div class="label">ACTIVE_POSITIONS</div><div class="value">34</div><div class="delta">● LIVE</div></div>
+      <div class="t-stat"><div class="label">RISK_SCORE</div><div class="value">7.2</div><div class="delta">■ MODERATE</div></div>
+    </div>
+    <button class="btn-cyber">[ ENTER PLATFORM ]</button>
+  </div>
+  <span class="concept-label cl-dark">04 · CYBER WEALTH</span>
+</section>
+
+<!-- 05 QUIET LUXURY -->
+<section id="c05" class="concept-section">
+  <div class="grain"></div>
+  <div class="thin-line"></div>
+  <div class="content">
+    <p class="mono">Kolomitssa Investment Group · Est. MMXIX</p>
+    <h1>The Art of<br><em>Quiet</em><br>Growth</h1>
+    <div class="divider">
+      <span></span>
+      <svg viewBox="0 0 16 16"><path d="M8 0 L8 16 M0 8 L16 8"/></svg>
+      <span></span>
+    </div>
+    <p>Generational wealth is not built through noise. It is cultivated through patience, wisdom, and the courage to act decisively.</p>
+    <button class="btn-quiet">Request Private Access</button>
+  </div>
+  <span class="concept-label cl-light">05 · QUIET LUXURY</span>
+</section>
+
+<!-- 06 DIGITAL MARBLE -->
+<section id="c06" class="concept-section">
+  <div class="blob1"></div>
+  <div class="blob2"></div>
+  <div class="content">
+    <div class="bento-grid">
+      <div class="card main">
+        <h1>Invest Smarter. Grow Faster.</h1>
+        <p>A modern investment ecosystem designed for the next generation of wealth builders. Clean, transparent, and relentlessly optimized.</p>
+        <span class="pill">Get Started →</span>
+      </div>
+      <div class="card stat">
+        <div>
+          <div class="big">$2.4B</div>
+          <div class="lbl">Managed Assets</div>
+        </div>
+        <div>
+          <div style="font-size:24px;font-weight:700;color:#1E293B">+18.7%</div>
+          <div class="lbl">Avg. Annual Return</div>
+        </div>
+      </div>
+      <div class="card accent stat">
+        <div>
+          <div class="big">50K+</div>
+          <div class="lbl" style="color:rgba(255,255,255,.4)">Investors</div>
+        </div>
+        <div>
+          <div style="font-size:24px;font-weight:700;color:rgba(255,255,255,.7)">148 Countries</div>
+          <div class="lbl" style="color:rgba(255,255,255,.3)">Global Reach</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="concept-label cl-light">06 · DIGITAL MARBLE</span>
+</section>
+
+<!-- 07 SOLAR FLARE -->
+<section id="c07" class="concept-section">
+  <div class="flare"></div>
+  <div class="content">
+    <div class="eyebrow-07">High Performance Investing</div>
+    <h1>BURN<br>BRIGHT.<br><span>EARN</span><br>MORE.</h1>
+    <p>Aggressive returns for bold investors. Our platform is engineered for maximum performance, minimum friction.</p>
+    <button class="btn-flare">START NOW</button>
+  </div>
+  <span class="concept-label cl-dark">07 · SOLAR FLARE</span>
+</section>
+
+<!-- 08 OCEANIC DEPTH -->
+<section id="c08" class="concept-section">
+  <div class="waves"></div>
+  <div class="glass-panel">
+    <div class="eyebrow-08">Oceanic Investment Platform</div>
+    <h1>Navigate<br>Your <em>Financial</em><br>Future</h1>
+    <p>Deep market intelligence, fluid user experience, and crystal-clear transparency. Your wealth, your horizon.</p>
+    <button class="btn-ocean">Explore the Platform</button>
+  </div>
+  <span class="concept-label cl-dark">08 · OCEANIC DEPTH</span>
+</section>
+
+<!-- 09 TITANIUM & MONO -->
+<section id="c09" class="concept-section">
+  <div class="metal-bar"></div>
+  <div class="content">
+    <div class="c09-grid">
+      <div class="left09">
+        <h1>HARD<br>ASSETS.<br>HARDER<br>RETURNS.</h1>
+        <p class="subline">Industrial-grade investment infrastructure. No decoration, no compromise. Just performance.</p>
+        <button class="metal-btn">ACCESS PLATFORM</button>
+      </div>
+      <div class="right09">
+        <div class="metal-stat"><div class="n">$6.2B</div><div class="l">Total Volume Traded</div></div>
+        <div class="metal-stat"><div class="n">99.4%</div><div class="l">Platform Uptime</div></div>
+        <div class="metal-stat"><div class="n">2,800+</div><div class="l">Institutional Clients</div></div>
+      </div>
+    </div>
+  </div>
+  <span class="concept-label cl-dark">09 · TITANIUM & MONO</span>
+</section>
+
+<!-- 10 ACID INVESTMENT -->
+<section id="c10" class="concept-section">
+  <div class="neon-bg"></div>
+  <div class="oversize-tag">INVEST</div>
+  <div class="content">
+    <h1>Break<br>Every<br><span>Rule.</span></h1>
+    <p>The anti-establishment investment platform. Built for those who see opportunity where others see chaos.</p>
+    <button class="acid-btn">ENTER THE VOID →</button>
+  </div>
+  <span class="concept-label cl-dark">10 · ACID INVESTMENT</span>
+</section>
+
+<!-- SERIES B HEADER -->
+<div id="series-b" class="series-header">
+  <h2>Series B — Category A: Private Banking & Quiet Luxury</h2>
+  <p>Ivory Silk · Racing Green · Espresso · Bordeaux · Champagne · Navy · Marble · Truffle · Graphite · Paper</p>
+</div>
+
+<!-- 11 IVORY SILK -->
+<section id="c11" class="concept-section" style="background:#FFFDF5">
+  <div class="content">
+    <h1 class="gold-accent" style="font-family:'Cormorant Garamond',serif;font-size:clamp(60px,10vw,120px);font-weight:300;color:#2C1810;line-height:.9;letter-spacing:-.02em;margin-bottom:32px;position:relative;z-index:2;text-align:center"><em>Ivory</em><br>Capital</h1>
+    <div class="silk-line"></div>
+    <p>Crafted for those who have arrived. A private investment sanctuary where discretion meets sophistication.</p>
+    <button class="btn11">Request Membership</button>
+  </div>
+  <span class="concept-label cl-light">11 · IVORY SILK</span>
+</section>
+
+<!-- 12 BRITISH RACING GREEN -->
+<section id="c12" class="concept-section" style="background:#002E1C;display:grid;grid-template-columns:1fr 1fr">
+  <div class="left12">
+    <h1>Wealth<br>Runs <em>Deep</em></h1>
+    <p class="tagline12">Since 2019, we have served those who understand that true investment is a marathon, not a sprint. For those who think in decades.</p>
+    <button class="btn12">PRIVATE ACCESS</button>
+  </div>
+  <div class="right12">
+    <div class="leather-card">
+      <div class="num12">£1.8B</div>
+      <div class="txt12">Assets Under Management</div>
+      <div style="margin-top:24px;padding-top:24px;border-top:1px solid rgba(184,115,51,.2)">
+        <div class="num12" style="font-size:48px">+24.6%</div>
+        <div class="txt12">5-Year Compound Annual Growth</div>
+      </div>
+    </div>
+  </div>
+  <span class="concept-label cl-dark">12 · BRITISH RACING GREEN</span>
+</section>
+
+<!-- 13 DEEP ESPRESSO -->
+<section id="c13" class="concept-section" style="background:#1A120B">
+  <div class="warm-glow"></div>
+  <div class="content13">
+    <div>
+      <h1>Rich Returns<br>Demand<br><em>Patience.</em></h1>
+      <p>Like the finest espresso, exceptional returns require time, craft, and an uncompromising standard of quality.</p>
+      <button class="btn13">EXPLORE INVESTMENTS</button>
+    </div>
+    <div class="espresso-stats">
+      <div class="e-stat"><div class="en">$940M</div><div class="el">Private Equity Holdings</div></div>
+      <div class="e-stat"><div class="en">16yrs</div><div class="el">Track Record</div></div>
+      <div class="e-stat"><div class="en">4.2×</div><div class="el">Average Return Multiple</div></div>
+    </div>
+  </div>
+  <span class="concept-label cl-dark">13 · DEEP ESPRESSO</span>
+</section>
+
+<!-- 14 BORDEAUX ARCHIVE -->
+<section id="c14" class="concept-section" style="background:#1A0808">
+  <div class="archive-bg"></div>
+  <div class="content14">
+    <div class="issue">Kolomitssa Archive · Volume XII</div>
+    <h1>A <span>Legacy</span><br>of Returns</h1>
+    <div class="rule14"><div class="diamond"></div></div>
+    <p>Investment strategy refined over decades. Not for the impatient, not for the ordinary — for those who understand the difference.</p>
+    <button class="btn14">Enter the Archive</button>
+  </div>
+  <span class="concept-label cl-dark">14 · BORDEAUX ARCHIVE</span>
+</section>
+
+<!-- 15 CHAMPAGNE GLASS -->
+<section id="c15" class="concept-section" style="background:linear-gradient(145deg,#F5EFD6,#EDE3C0,#F0E8CC)">
+  <div class="float-card">
+    <div class="c15-icon">🥂</div>
+    <h1>Celebrate<br>Every <em>Milestone</em></h1>
+    <p>Investment is a celebration of vision. We help you turn ambition into legacy, one portfolio at a time.</p>
+    <button class="btn15">Begin Your Journey</button>
+  </div>
+  <span class="concept-label cl-light">15 · CHAMPAGNE GLASS</span>
+</section>
+
+<!-- 16 MIDNIGHT NAVY -->
+<section id="c16" class="concept-section" style="background:#000420">
+  <div class="geo-bg"></div>
+  <div class="content16">
+    <div class="navy-badge">PRIVATE BANKING · EST. 2019</div>
+    <h1>Precision<br><strong>Capital</strong><br>Management</h1>
+    <div class="silver-divider"></div>
+    <p>The strictest governance. The clearest strategy. For those who demand institutional quality in a private setting.</p>
+    <button class="btn16">Request Appointment</button>
+  </div>
+  <span class="concept-label cl-dark">16 · MIDNIGHT NAVY</span>
+</section>
+
+<!-- 17 MARBLE DUST -->
+<section id="c17" class="concept-section" style="background:#F2F0EC">
+  <div class="marble-texture"></div>
+  <div class="content17">
+    <h1>MARBLE.<br>DUST.<br>GOLD.</h1>
+    <div class="thin-rule"></div>
+    <div class="stats17">
+      <div class="s17"><div class="n">$3.1B</div><div class="l">Under Management</div></div>
+      <div class="s17"><div class="n">22%</div><div class="l">Avg. Return</div></div>
+      <div class="s17"><div class="n">15yrs</div><div class="l">Experience</div></div>
+    </div>
+    <button class="btn17">ACCESS PLATFORM</button>
+  </div>
+  <span class="concept-label cl-light">17 · MARBLE DUST</span>
+</section>
+
+<!-- 18 TRUFFLE BLACK -->
+<section id="c18" class="concept-section" style="background:#1C1917">
+  <div class="warm-overlay"></div>
+  <div class="content18">
+    <div>
+      <h1>Where <em>Taste</em><br>Meets Capital</h1>
+      <p18>For those with a discerning palate for both culture and commerce. Invest with the same sophistication you live with.</p18>
+      <button class="btn18">PRIVATE CONSULTATION</button>
+    </div>
+    <div class="right18">
+      <div class="t18">Portfolio Highlight</div>
+      <div class="bignr18">+31%</div>
+      <div class="subnr18">Annual return, Truffle Premium Portfolio, 2024</div>
+    </div>
+  </div>
+  <span class="concept-label cl-dark">18 · TRUFFLE BLACK</span>
+</section>
+
+<!-- 19 ROYAL GRAPHITE -->
+<section id="c19" class="concept-section" style="background:#1A1A22">
+  <div class="grad-border-wrap">
+    <div class="inner19">
+      <h1>Invest at the<br><span>Edge of Now</span></h1>
+      <p>Royal Graphite. Where institutional discipline meets the energy of next-generation markets. Your capital, amplified.</p>
+      <button class="btn19">Enter the Platform</button>
+    </div>
+  </div>
+  <span class="concept-label cl-dark">19 · ROYAL GRAPHITE</span>
+</section>
+
+<!-- 20 OLD MONEY PAPER -->
+<section id="c20" class="concept-section" style="background:#F4EDD8">
+  <div class="paper-texture"></div>
+  <div class="content20">
+    <div class="stamp">Established 2019</div>
+    <h1>The Weight<br>of Wealth</h1>
+    <div class="inset-box">
+      <p>True capital is not measured in currency but in the depth of one's conviction and the patience of one's vision.</p>
+    </div>
+    <button class="btn20">Request Prospectus</button>
+  </div>
+  <span class="concept-label cl-light">20 · OLD MONEY PAPER</span>
+</section>
+
+<!-- SERIES C HEADER -->
+<div id="series-c" class="series-header">
+  <h2>Series C — Category B: Tech-Driven & AI Future</h2>
+  <p>Cyber Lime · Neon Cobalt · Matrix · Solar Mesh · Holographic · Titanium Mesh · Quantum · Data Stream · AI · Obsidian</p>
+</div>
+
+<!-- 21 CYBER LIME -->
+<section id="c21" class="concept-section" style="background:#111310">
+  <div class="noise-layer"></div>
+  <div class="lime-glow"></div>
+  <div class="content21">
+    <div class="tag21">Next-Gen Investment OS</div>
+    <h1>The Future<br>is <em>Liquid.</em></h1>
+    <p>Real-time portfolio intelligence powered by machine learning. Trade with the precision of an algorithm, the intuition of a veteran.</p>
+    <button class="btn21">LAUNCH PLATFORM →</button>
+  </div>
+  <span class="concept-label cl-dark">21 · CYBER LIME</span>
+</section>
+
+<!-- 22 NEON COBALT -->
+<section id="c22" class="concept-section" style="background:#050510">
+  <div class="cobalt-glow"></div>
+  <div class="content22">
+    <h1>Power Your<br><span>Portfolio</span></h1>
+    <p>Institutional-grade infrastructure. Neon-fast execution. Your investments, amplified by the power of deep technology.</p>
+    <button class="btn22">ACCESS THE GRID →</button>
+  </div>
+  <span class="concept-label cl-dark">22 · NEON COBALT</span>
+</section>
+
+<!-- 23 MATRIX VOID -->
+<section id="c23" class="concept-section" style="background:#000805;font-family:'JetBrains Mono',monospace">
+  <div class="rain-chars">10110010 01101001 11000110 01010011 10110010 01101001 11000110 01010011 10110010 01101001 11000110 01010011 10110010 01101001 11000110 01010011 10110010 01101001 11000110 01010011 10110010 01101001 11000110 01010011 10110010 01101001 11000110 01010011</div>
+  <div class="matrix-rain"></div>
+  <div class="content23">
+    <div class="sys-line">[SYS] kolomitssa_core v3.1 — INITIALIZED</div>
+    <h1>WEALTH<br>IS CODE<span class="cursor23"></span></h1>
+    <p>// Every portfolio is an algorithm. Every trade, a function call. We speak the language of markets fluently.</p>
+    <button class="btn23">./enter_matrix</button>
+  </div>
+  <span class="concept-label cl-dark">23 · MATRIX VOID</span>
+</section>
+
+<!-- 24 SOLAR FLARE (Cat B) -->
+<section id="c24" class="concept-section" style="background:#0D0020">
+  <div class="mesh24"></div>
+  <div class="content24">
+    <h1>Ignite Your<br><span>Capital</span></h1>
+    <p>Where dark matter meets burning ambition. An investment platform engineered for maximum energy and maximum returns.</p>
+    <button class="btn24">IGNITE NOW →</button>
+  </div>
+  <span class="concept-label cl-dark">24 · SOLAR FLARE</span>
+</section>
+
+<!-- 25 HOLOGRAPHIC LIQUID -->
+<section id="c25" class="concept-section" style="background:#FAFAFA">
+  <div class="holo-bg"></div>
+  <div class="content25">
+    <h1>Invest in<br><span>Tomorrow</span></h1>
+    <div class="holo-cards">
+      <div class="holo-card"><div class="hc-n">$1.2B</div><div class="hc-l">Assets</div></div>
+      <div class="holo-card"><div class="hc-n">+28%</div><div class="hc-l">Annual Return</div></div>
+      <div class="holo-card"><div class="hc-n">40K+</div><div class="hc-l">Investors</div></div>
+      <div class="holo-card"><div class="hc-n">AAA</div><div class="hc-l">Rating</div></div>
+    </div>
+    <button class="btn25">Enter the Future →</button>
+  </div>
+  <span class="concept-label cl-light">25 · HOLOGRAPHIC LIQUID</span>
+</section>
+
+<!-- 26 TITANIUM MESH -->
+<section id="c26" class="concept-section" style="background:#1A1A1A">
+  <div class="mesh-grid"></div>
+  <div class="orange-bar"></div>
+  <div class="content26">
+    <div>
+      <h1>Built for<br><em>Impact.</em><br>Designed for<br>Returns.</h1>
+      <p26>Industrial-strength portfolio management meets precision engineering. Where serious money meets serious technology.</p26>
+      <button class="btn26">ACCESS PLATFORM</button>
+    </div>
+    <div class="right26">
+      <div class="r26-label">Platform Performance</div>
+      <div class="r26-big">+44%</div>
+      <div class="r26-sub">Top-performing industrial fund, FY 2024</div>
+    </div>
+  </div>
+  <span class="concept-label cl-dark">26 · TITANIUM MESH</span>
+</section>
+
+<!-- 27 QUANTUM VIOLET -->
+<section id="c27" class="concept-section" style="background:#0E0015">
+  <div class="quantum-bg"></div>
+  <div class="content27">
+    <h1>Quantum<br><span>Wealth</span></h1>
+    <p>Beyond classical investing. Quantum-inspired portfolio optimization that finds the paths others cannot see.</p>
+    <button class="btn27">Enter Superposition →</button>
+  </div>
+  <span class="concept-label cl-dark">27 · QUANTUM VIOLET</span>
+</section>
+
+<!-- 28 DATA STREAM -->
+<section id="c28" class="concept-section" style="background:#010D04">
+  <div class="streams">
+    <div class="stream-col">
+      01001000 01100101 01110011 01110100 01101111 01001000 01100101 01110011 01110100 01101111 01001000 01100101
+    </div>
+    <div class="stream-col">
+      10110010 11000110 01010011 10110010 01101001 10110010 11000110 01010011 10110010 01101001 10110010 11000110
+    </div>
+    <div class="stream-col">
+      11111010 00101011 10011100 11111010 00101011 11111010 00101011 10011100 11111010 00101011 11111010 00101011
+    </div>
+  </div>
+  <div class="content28">
+    <div class="sys28">[STREAM_ACTIVE] markets.kolomitssa.io</div>
+    <h1>Every<br>Data Point.<br><em>Every Edge.</em></h1>
+    <p>Real-time data streams. Machine-speed execution. Human-level wisdom encoded into every decision.</p>
+    <button class="btn28">TAP THE STREAM →</button>
+  </div>
+  <span class="concept-label cl-dark">28 · DATA STREAM</span>
+</section>
+
+<!-- 29 ARTIFICIAL INTELLIGENCE -->
+<section id="c29" class="concept-section" style="background:#FFFFFF">
+  <div class="neural-bg"></div>
+  <div class="content29">
+    <div class="ai-badge">✦ AI-Powered Investment Intelligence</div>
+    <h1>Invest with<br><span>Intelligence</span></h1>
+    <p>Neural networks that never sleep. Deep learning models trained on 20 years of market data. The future of portfolio management is here.</p>
+    <button class="btn29">Experience AI Investing</button>
+  </div>
+  <span class="concept-label cl-light">29 · ARTIFICIAL INTELLIGENCE</span>
+</section>
+
+<!-- 30 GLASS OBSIDIAN -->
+<section id="c30" class="concept-section" style="background:#000">
+  <div class="obsidian-reflect"></div>
+  <div class="reflect-card">
+    <h1>See Your<br>Wealth Clearly</h1>
+    <div class="mirror-line"></div>
+    <p>Obsidian clarity. A platform so transparent you can see every move before you make it. Invest with perfect information.</p>
+    <button class="btn30">Look Inside →</button>
+  </div>
+  <span class="concept-label cl-dark">30 · GLASS OBSIDIAN</span>
+</section>
+
+<!-- SERIES D HEADER -->
+<div id="series-d" class="series-header">
+  <h2>Series D — Category C: Bold & Modern Business</h2>
+  <p>Vibrant Swiss · Bauhaus · Electric Yellow · Nordic · Concrete · Monochrome · Sunset · Terracotta · Techno Orange · Acid Purple</p>
+</div>
+
+<!-- 31 VIBRANT SWISS -->
+<section id="c31" class="concept-section" style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr">
+  <div class="left31">
+    <h1>PROFIT<br>IS <span>NOT</span><br>A DIRTY<br>WORD</h1>
+    <div class="sub31">Kolomitssa Investment Platform</div>
+    <button class="btn31">START NOW</button>
+  </div>
+  <div class="right31">
+    <div class="big31">+318%</div>
+    <div class="label31">5-Year Portfolio Return</div>
+    <p>The numbers speak louder than any pitch deck. Join the platform that delivers results, not promises.</p>
+  </div>
+  <span class="concept-label cl-dark">31 · VIBRANT SWISS</span>
+</section>
+
+<!-- 32 BAUHAUS STYLE -->
+<section id="c32" class="concept-section" style="background:#D4C5A9">
+  <div class="geo-shapes">
+    <div class="circle-b"></div>
+    <div class="rect-b"></div>
+    <div class="tri-b"></div>
+  </div>
+  <div class="content32">
+    <h1>FORM.<br>FUNCTION.<br>WEALTH.</h1>
+    <p>Investment as art form. Platform as architecture. Bauhaus principles applied to the science of capital growth.</p>
+    <div class="bauhaus-btns">
+      <button class="bb y">INVEST NOW</button>
+      <button class="bb b">LEARN MORE</button>
+    </div>
+  </div>
+  <span class="concept-label cl-light">32 · BAUHAUS STYLE</span>
+</section>
+
+<!-- 33 ELECTRIC YELLOW -->
+<section id="c33" class="concept-section" style="background:#0A0A0A">
+  <div class="yellow-slash"></div>
+  <div class="content33">
+    <h1>HIGH<br>VOLT<br>AGE<br><span>RETURNS</span></h1>
+    <p>Maximum energy. Maximum returns. The investment platform that never lets up.</p>
+    <button class="btn33">PLUG IN →</button>
+  </div>
+  <span class="concept-label cl-dark">33 · ELECTRIC YELLOW</span>
+</section>
+
+<!-- 34 NORDIC CLEAN -->
+<section id="c34" class="concept-section" style="background:linear-gradient(160deg,#E8F4F8,#F0F8FF)">
+  <div class="content34">
+    <div class="line-icon">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="12" x2="16" y2="14"/></svg>
+    </div>
+    <h1>Clear.<br>Simple.<br><span>Profitable.</span></h1>
+    <p>Nordic clarity meets global ambition. An investment platform built on transparency, simplicity, and consistent growth.</p>
+    <button class="btn34">Start Investing →</button>
+  </div>
+  <span class="concept-label cl-light">34 · NORDIC CLEAN</span>
+</section>
+
+<!-- 35 CONCRETE JUNGLE -->
+<section id="c35" class="concept-section" style="background:#2A2A2A">
+  <div class="concrete-texture"></div>
+  <div class="fuchsia-stripe"></div>
+  <div class="content35">
+    <h1>URBAN.<br>BOLD.<br><em>INVESTED.</em></h1>
+    <p>Born in the concrete jungle. Built for those who thrive in the chaos and find profit where others find noise.</p>
+    <button class="btn35">JOIN THE JUNGLE →</button>
+  </div>
+  <span class="concept-label cl-dark">35 · CONCRETE JUNGLE</span>
+</section>
+
+<!-- 36 MONOCHROME PRO -->
+<section id="c36" class="concept-section" style="background:#F8F8F8">
+  <div class="mono-shadow"></div>
+  <div class="content36">
+    <div class="mono-grid">
+      <div>
+        <h1>Only<br>Results<br>Matter</h1>
+        <p>No color. No noise. Just the purest expression of investment performance, stripped to its essential truth.</p>
+        <button class="btn36">Access Platform</button>
+      </div>
+      <div class="right36">
+        <div class="grey-box dark">
+          <div class="gn">+22%</div>
+          <div class="gl">Annual Return</div>
+        </div>
+        <div class="grey-box">
+          <div class="gn">$5B</div>
+          <div class="gl">Under Management</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="concept-label cl-light">36 · MONOCHROME PRO</span>
+</section>
+
+<!-- 37 SKYLINE SUNSET -->
+<section id="c37" class="concept-section" style="min-height:100vh">
+  <div class="skyline"></div>
+  <div class="content37">
+    <h1>Own the<br><span>Skyline</span></h1>
+    <p>When the sun sets on one market, it rises on another. Never stop investing. Never stop growing.</p>
+    <button class="btn37">Rise with Us →</button>
+  </div>
+  <span class="concept-label cl-dark">37 · SKYLINE SUNSET</span>
+</section>
+
+<!-- 38 TERRACOTTA EARTH -->
+<section id="c38" class="concept-section" style="background:#C17A4A">
+  <div class="blob38a"></div>
+  <div class="blob38b"></div>
+  <div class="content38">
+    <h1>Rooted.<br><em>Grounded.</em><br>Growing.</h1>
+    <p>Like clay shaped by skilled hands, your portfolio is molded by intention, patience, and the wisdom of the earth.</p>
+    <button class="btn38">Grow With Us →</button>
+  </div>
+  <span class="concept-label cl-dark">38 · TERRACOTTA EARTH</span>
+</section>
+
+<!-- 39 TECHNO ORANGE -->
+<section id="c39" class="concept-section" style="background:#1E1E1E">
+  <div class="nm-bg"></div>
+  <div class="content39">
+    <h1>Engineer<br>Your <em>Wealth</em></h1>
+    <div class="nm-cards">
+      <div class="nc"><div class="nn">$2.8B</div><div class="nl">Managed</div></div>
+      <div class="nc"><div class="nn">+38%</div><div class="nl">Returns</div></div>
+      <div class="nc"><div class="nn">99.9%</div><div class="nl">Uptime</div></div>
+    </div>
+    <button class="nm-btn">LAUNCH PLATFORM</button>
+  </div>
+  <span class="concept-label cl-dark">39 · TECHNO ORANGE</span>
+</section>
+
+<!-- 40 ACID PURPLE -->
+<section id="c40" class="concept-section" style="background:#1A0040">
+  <div class="acid-glow40"></div>
+  <div class="marker-line"></div>
+  <div class="content40">
+    <div class="tag40">DIGITAL MAGAZINE · FINANCE</div>
+    <h1>Invest Like<br>You <em>Mean It</em></h1>
+    <p>Purple vision. Acid precision. A digital-first investment platform for the generation that refuses to play it safe.</p>
+    <button class="btn40">ENTER THE MAGAZINE →</button>
+  </div>
+  <span class="concept-label cl-dark">40 · ACID PURPLE</span>
+</section>
+
+<!-- SIGNATURE HEADER -->
+<div id="series-sig" class="series-header" style="background: linear-gradient(90deg, #0A1A0F, #0f1f10)">
+  <h2 style="color:rgba(184,160,32,.4)">★ Signature Concept — Forest Gold</h2>
+  <p style="background:linear-gradient(135deg,#8B7010,#D4A820,#F5D060);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Dark Emerald × Liquid Gold — Authored by Senior Creative Direction</p>
+</div>
+
+<!-- 41 FOREST GOLD (SIGNATURE) -->
+<section id="c41" class="concept-section" style="background:#0A1A0F">
+  <div class="forest-mesh"></div>
+  <div class="gold-veins"></div>
+
+  <div class="content41">
+    <div class="left41">
+      <div class="kicker41">
+        <div class="kicker-dot"></div>
+        <span class="kicker-text">Private Investment — Kolomitssa</span>
+      </div>
+
+      <h1>
+        Where Forests<br>
+        Grow into<br>
+        <em>Empires</em>
+      </h1>
+
+      <p class="desc41">
+        Not every asset class is visible on a screen. The most enduring wealth grows slowly, rooted in fundamentals as deep and patient as old-growth timber — and as luminous as refined gold.
+      </p>
+
+      <div class="btns41">
+        <button class="btn-primary41">Private Access</button>
+        <button class="btn-ghost41">View Strategy</button>
+      </div>
+    </div>
+
+    <div class="right41">
+      <div class="forest-card">
+        <div class="fc-num">$3.4B</div>
+        <div class="fc-label">Assets Under Management</div>
+        <div class="fc-desc">Across real assets, private equity, and alternative investments</div>
+      </div>
+      <div class="forest-card">
+        <div class="fc-num">+26%</div>
+        <div class="fc-label">5-Year CAGR</div>
+        <div class="fc-desc">Compounded annual growth rate, net of all fees</div>
+      </div>
+      <div class="forest-card">
+        <div class="fc-num">148</div>
+        <div class="fc-label">Bespoke Client Portfolios</div>
+        <div class="fc-desc">Each structured uniquely. Zero off-the-shelf solutions.</div>
+      </div>
+    </div>
+  </div>
+
+  <span class="concept-label cl-dark">41 · FOREST GOLD — SIGNATURE</span>
+</section>
+
+<!-- FOOTER -->
+<div style="background:#050505;padding:60px 80px;border-top:1px solid #0f0f0f;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px">
+  <div>
+    <div style="font-size:18px;font-weight:700;color:#fff;letter-spacing:.05em">KOLOMITSSA CONCEPTS</div>
+    <div style="font-size:12px;color:#333;margin-top:4px;letter-spacing:.1em;text-transform:uppercase">41 Investment Hero Designs · Complete Collection</div>
+  </div>
+  <div style="display:flex;gap:32px;flex-wrap:wrap">
+    <span style="font-size:11px;color:#333;letter-spacing:.1em;text-transform:uppercase">Series A: 01–10</span>
+    <span style="font-size:11px;color:#333;letter-spacing:.1em;text-transform:uppercase">Series B: 11–20</span>
+    <span style="font-size:11px;color:#333;letter-spacing:.1em;text-transform:uppercase">Series C: 21–30</span>
+    <span style="font-size:11px;color:#333;letter-spacing:.1em;text-transform:uppercase">Series D: 31–40</span>
+    <span style="font-size:11px;color:rgba(184,160,32,.5);letter-spacing:.1em;text-transform:uppercase">★ Signature: 41</span>
+  </div>
+</div>
+
+<script>
+// Smooth scroll for nav
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Concept 23 — matrix rain
+const rainChars = document.querySelector('#c23 .rain-chars');
+if(rainChars){
+  let s='';
+  const chars = '01アイウエオカキクケコサシスセソ';
+  for(let i=0;i<800;i++) s+=chars[Math.floor(Math.random()*chars.length)]+(i%30===0?'<br>':'');
+  rainChars.innerHTML=s;
+}
+
+// Subtle parallax on scroll for concept labels
+const sections = document.querySelectorAll('.concept-section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+// Highlight active nav link
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  sections.forEach(s => {
+    const top = s.offsetTop - 80;
+    const bottom = top + s.offsetHeight;
+    if(scrollY >= top && scrollY < bottom) {
+      const id = s.id;
+      document.querySelectorAll('.master-nav a').forEach(a => {
+        a.style.color = a.getAttribute('href') === '#'+id ? '#fff' : '';
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>
