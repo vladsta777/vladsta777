@@ -667,11 +667,12 @@
 <header id="hdr">
   <a href="index.html" class="logo"><span class="logo-dot"></span>KOLOMIETSSA</a>
   <nav>
-    <a href="index.html"><span data-lang="ru" class="act">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
     <a href="kolomietssa-services.html" class="cur"><span data-lang="ru" class="act">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
     <a href="kolomietssa-club.html" class="nav-club-gold">◆ <span data-lang="ru" class="act">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
     <a href="kolomietssa-academy.html"><span data-lang="ru" class="act">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
     <a href="kolomietssa-invest.html"><span data-lang="ru" class="act">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="kolomietssa-blog.html"><span data-lang="ru" class="act">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="kolomietssa-news.html"><span data-lang="ru" class="act">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
   </nav>
   <div style="display:flex;align-items:center;gap:.7rem;">
     <div class="ldrop" id="ldrop">
@@ -685,9 +686,9 @@
         <button class="lopt" onclick="setL('en')">EN</button>
       </div>
     </div>
-    <a href="#cta" class="btn-g">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      <span data-lang="ru" class="act">Записаться</span><span data-lang="ua">Записатись</span><span data-lang="en">Book Now</span>
+<a href="kolomietssa-login.html" class="btn-g" id="hdr-auth-btn">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="act auth-label-ru">Войти</span><span data-lang="ua" class="auth-label-ua">Увійти</span><span data-lang="en" class="auth-label-en">Sign In</span>
     </a>
     <div class="h-burger" id="h-burger" onclick="toggleMob()">
       <span></span><span></span><span></span>
@@ -703,7 +704,12 @@
     <a href="kolomietssa-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="act">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
     <a href="kolomietssa-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
     <a href="kolomietssa-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="kolomietssa-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="kolomietssa-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
   </nav>
+  <a id="mob-auth-btn" href="kolomietssa-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;margin-top:.5rem;">
+    <span class="mob-auth-ru">Войти</span><span class="mob-auth-ua" style="display:none;">Увійти</span><span class="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
   <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
 </div>
 
@@ -1466,6 +1472,39 @@
   const mob = document.getElementById('mob-menu');
   function toggleMob() { mob.style.display = mob.style.display === 'flex' ? 'none' : 'flex'; }
   function closeMob()  { mob.style.display = 'none'; }
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      btn.querySelector('.auth-label-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      btn.querySelector('.auth-label-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      btn.querySelector('.auth-label-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      var svgPath = btn.querySelector('svg path');
+      if (svgPath) svgPath.setAttribute('d', isLogged
+        ? 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9'
+        : 'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3');
+      if (isLogged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.reload(); };
+      } else { btn.onclick = null; }
+    }
+    if (mobBtn) {
+      mobBtn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      mobBtn.querySelector('.mob-auth-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      mobBtn.querySelector('.mob-auth-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      mobBtn.querySelector('.mob-auth-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        mobBtn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.reload(); };
+      } else { mobBtn.onclick = null; }
+    }
+  }
+  setAuthUI(!!logged);
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Policy — KOLOMIETSSA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b8975a; --gold-bright: #d4b278; --gold-dim: rgba(184,151,90,.12);
+      --text: #f0ede8; --text-2: #9a9488; --text-3: #4a4640;
+      --border: rgba(184,151,90,.14);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Outfit', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #050403; overflow-x: hidden; }
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 9500; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(5,4,3,.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .45em; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: .6rem; }
+    .logo-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+    .h-nav { display: flex; gap: 2rem; align-items: center; }
+    .h-nav a { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); text-decoration: none; transition: color .2s; }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav-club { border: 1px solid rgba(184,151,90,.3); padding: .28rem .8rem; color: var(--gold) !important; }
+    .h-cta { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: #000; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); padding: .65rem 1.4rem; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition: opacity .2s; }
+    .h-cta:hover { opacity: .85; }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; background: none; border: none; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); }
+    @media(max-width:900px) { .h-nav { display: none; } .h-burger { display: flex; } header { padding: .9rem 1.2rem; } }
+    .page-hero { padding: 9rem 3rem 4rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(184,151,90,.06), transparent 65%); pointer-events: none; }
+    .hero-label { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
+    .hero-subtitle { font-size: .85rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .hero-meta { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+    .hero-meta-item { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-3); }
+    .hero-meta-item span { color: var(--text-2); }
+    @media(max-width:900px) { .page-hero { padding: 7rem 1.4rem 3rem; } }
+    .legal-layout { display: grid; grid-template-columns: 240px 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 6rem; }
+    @media(max-width:900px) { .legal-layout { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.4rem 4rem; } }
+    .toc { position: sticky; top: 7rem; align-self: start; }
+    .toc-title { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+    .toc-list a { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; color: var(--text-3); text-decoration: none; padding: .3rem .5rem; display: block; border-left: 1px solid transparent; transition: color .2s, border-color .2s, padding-left .2s; }
+    .toc-list a:hover { color: var(--gold); border-left-color: var(--gold); padding-left: .8rem; }
+    @media(max-width:900px) { .toc { position: static; background: rgba(184,151,90,.04); border: 1px solid var(--border); padding: 1.2rem; } }
+    .legal-content section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(184,151,90,.07); }
+    .legal-content section:last-child { border-bottom: none; }
+    .section-num { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: .6rem; }
+    .section-title { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; margin-bottom: 1.4rem; line-height: 1.2; }
+    .legal-content p { font-size: .9rem; line-height: 1.85; color: rgba(240,237,232,.78); margin-bottom: 1rem; }
+    .legal-content p:last-child { margin-bottom: 0; }
+    .legal-content h4 { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); margin: 1.6rem 0 .7rem; }
+    .legal-content ul, .legal-content ol { padding-left: 1.4rem; margin-bottom: 1rem; }
+    .legal-content li { font-size: .88rem; line-height: 1.8; color: rgba(240,237,232,.75); margin-bottom: .4rem; }
+    .callout { background: rgba(184,151,90,.06); border: 1px solid rgba(184,151,90,.2); border-left: 3px solid var(--gold); padding: 1.2rem 1.4rem; margin: 1.4rem 0; }
+    .callout p { font-size: .84rem; color: var(--text-2); margin: 0; }
+    .callout strong { color: var(--gold); }
+
+    /* Policy summary cards */
+    .policy-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin: 1.6rem 0; }
+    @media(max-width:700px) { .policy-grid { grid-template-columns: 1fr; } }
+    .policy-card { border: 1px solid var(--border); padding: 1.4rem; background: rgba(184,151,90,.03); }
+    .policy-card-type { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+    .policy-card-rule { font-size: .9rem; font-weight: 500; color: var(--text); margin-bottom: .5rem; }
+    .policy-card-note { font-size: .78rem; color: var(--text-2); line-height: 1.5; }
+    .policy-eligible { border-color: rgba(80,180,80,.25); background: rgba(80,180,80,.04); }
+    .policy-eligible .policy-card-type { color: #80c880; }
+    .policy-ineligible { border-color: rgba(184,151,90,.35); background: rgba(184,151,90,.05); }
+
+    /* Process steps */
+    .steps { display: flex; flex-direction: column; gap: 0; margin: 1.4rem 0; }
+    .step { display: flex; gap: 1.2rem; padding: 1rem 0; border-bottom: 1px solid rgba(184,151,90,.07); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-mono); font-size: .9rem; color: var(--gold); font-weight: 500; flex-shrink: 0; width: 24px; line-height: 1.6; }
+    .step-content { flex: 1; }
+    .step-title { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); margin-bottom: .35rem; }
+    .step-desc { font-size: .86rem; color: rgba(240,237,232,.72); line-height: 1.65; }
+
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-bottom { padding: 1.6rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } }
+    #mob-menu { display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem; }
+    #mob-menu nav { display:flex;flex-direction:column;align-items:center;gap:1.8rem; }
+    #mob-menu nav a { font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none; }
+    #mob-menu nav a.club-link { color:#b8975a;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem; }
+    #mob-close { font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer; }
+  
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-risk { padding: 1.2rem 3rem; border-top: 1px solid rgba(184,151,90,.08); }
+    .footer-risk-text { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em; line-height: 1.8; color: var(--text-3); max-width: 1100px; }
+    .footer-risk-text a { color: rgba(184,151,90,.4); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom { padding: 1.4rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid var(--border); }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } .footer-risk { padding: 1rem 1.4rem; } }
+  </style>
+</head>
+<body>
+
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="kolomietssa-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="kolomietssa-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="kolomietssa-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="kolomietssa-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="kolomietssa-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="kolomietssa-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="kolomietssa-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    KOLOMIETSSA
+  </a>
+
+  <nav class="h-nav">
+    <a href="kolomietssa-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="kolomietssa-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="kolomietssa-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="kolomietssa-invest.html">
+      <span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="kolomietssa-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="kolomietssa-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <!-- Language dropdown -->
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <a href="kolomietssa-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+
+
+<div class="page-hero">
+  <div class="hero-label">Legal Documentation</div>
+  <h1 class="hero-title">Refund Policy</h1>
+  <p class="hero-subtitle">Clear, fair, and straightforward refund terms for all KOLOMIETSSA digital products and subscriptions. We aim to resolve all issues quickly and transparently.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Effective Date: <span>1 January 2025</span></div>
+    <div class="hero-meta-item">Last Updated: <span>1 March 2026</span></div>
+    <div class="hero-meta-item">Contact: <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e5c4b485b404a5d6e4541424143474b5a5d5d4f004d4143">[email&#160;protected]</a></span></div>
+  </div>
+</div>
+
+<div class="legal-layout">
+  <aside class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#rf1">1. Policy Overview</a></li>
+      <li><a href="#rf2">2. Digital Courses (Academy)</a></li>
+      <li><a href="#rf3">3. Club Subscriptions</a></li>
+      <li><a href="#rf4">4. Consulting Services</a></li>
+      <li><a href="#rf5">5. Technical Failures</a></li>
+      <li><a href="#rf6">6. Non-Refundable Items</a></li>
+      <li><a href="#rf7">7. Refund Process</a></li>
+      <li><a href="#rf8">8. Stripe &amp; Processing</a></li>
+      <li><a href="#rf9">9. EU Consumer Rights</a></li>
+      <li><a href="#rf10">10. Disputes</a></li>
+    </ul>
+  </aside>
+
+  <article class="legal-content">
+
+    <section id="rf1">
+      <div class="section-num">Section 01</div>
+      <h2 class="section-title">Policy Overview</h2>
+      <p>KOLOMIETSSA is committed to providing high-quality digital educational products. We stand behind everything we offer and aim to ensure every client receives genuine value. This Refund Policy sets out the specific conditions under which refunds are granted for each product category.</p>
+      <p>Because all KOLOMIETSSA products are delivered digitally, special rules apply. The following summary provides a quick-reference guide:</p>
+      <div class="policy-grid">
+        <div class="policy-card policy-eligible">
+          <div class="policy-card-type">Academy Courses</div>
+          <div class="policy-card-rule">7-day satisfaction window</div>
+          <div class="policy-card-note">Full refund if less than 20% of course consumed and requested within 7 days of purchase</div>
+        </div>
+        <div class="policy-card policy-eligible">
+          <div class="policy-card-type">Club Subscription</div>
+          <div class="policy-card-rule">Cancel anytime</div>
+          <div class="policy-card-note">No mid-period refunds. Access continues until end of billing cycle. Annual plans: 30-day refund window</div>
+        </div>
+        <div class="policy-card policy-ineligible">
+          <div class="policy-card-type">Consulting Services</div>
+          <div class="policy-card-rule">Non-refundable</div>
+          <div class="policy-card-note">Once a session has taken place or consulting work has commenced, fees are non-refundable</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rf2">
+      <div class="section-num">Section 02</div>
+      <h2 class="section-title">Digital Courses — Academy</h2>
+      <p>KOLOMIETSSA Academy courses are individual digital products delivered with immediate access upon payment confirmation. The following refund terms apply.</p>
+      <h4>2.1 Standard 7-Day Satisfaction Period</h4>
+      <p>If you are not satisfied with an Academy course purchase, you may request a full refund within 7 calendar days of your purchase date, provided that:</p>
+      <ul>
+        <li>Your refund request is submitted within 7 calendar days of the original purchase date;</li>
+        <li>You have consumed less than 20% of the total course content (measured by video completion percentage tracked within the Platform);</li>
+        <li>You have not downloaded a significant portion of the accompanying course materials (including PDFs, templates, or resource files);</li>
+        <li>You have not used the course content to participate in any live sessions, group calls, or workshops included with the course;</li>
+        <li>Your account is in good standing and has not previously received a refund for the same or related course material.</li>
+      </ul>
+      <h4>2.2 Bundle Purchases</h4>
+      <p>For multi-course bundle purchases (including the All 7 Courses package), the 7-day refund window applies to the bundle as a whole. Partial refunds for individual courses within a bundle are not available unless the bundle is priced at the sum of individual course prices, in which case the standard per-course terms apply.</p>
+      <h4>2.3 Course Retirement</h4>
+      <p>If KOLOMIETSSA permanently retires a course you have purchased and does not provide an equivalent replacement, you are entitled to a pro-rata credit or, if requested, a full refund regardless of consumption level, provided you have held the course for fewer than 12 months.</p>
+      <div class="callout">
+        <p><strong>Waiver of Withdrawal Right:</strong> By purchasing a digital course and confirming at checkout that delivery commences immediately, EU consumers acknowledge they waive their 14-day statutory right of withdrawal under Directive 2011/83/EU. Our 7-day satisfaction period is a separate voluntary consumer-friendly commitment that functions independently of this waiver.</p>
+      </div>
+    </section>
+
+    <section id="rf3">
+      <div class="section-num">Section 03</div>
+      <h2 class="section-title">Club Subscriptions</h2>
+      <p>Club subscriptions operate on a recurring billing model. The following refund terms govern subscription payments:</p>
+      <h4>3.1 Monthly Subscriptions</h4>
+      <p>Monthly Club subscriptions are non-refundable once the billing period has commenced. You may cancel at any time and retain access to Club features until the end of the current billing period. No partial refunds are issued for unused days within a monthly billing cycle.</p>
+      <h4>3.2 Annual Subscriptions — 30-Day Refund Window</h4>
+      <p>Annual Club subscriptions carry a 30-calendar-day full refund window from the date of annual payment. To qualify for a full annual subscription refund, your request must be:</p>
+      <ul>
+        <li>Submitted within 30 calendar days of the annual payment date;</li>
+        <li>The first refund request for that annual subscription period.</li>
+      </ul>
+      <p>After the 30-day window, annual subscriptions are non-refundable for the remainder of the annual term. You may still cancel to prevent future renewal charges.</p>
+      <h4>3.3 Subscription Upgrades &amp; Downgrades</h4>
+      <p>Subscription tier upgrades take effect immediately, with the price difference billed on a pro-rata basis for the remainder of the current billing cycle. Downgrades take effect at the start of the next billing period. Credit for the difference is applied to the next invoice.</p>
+      <h4>3.4 Free Trial Periods</h4>
+      <p>Where a free trial period is offered, no charge is made until the trial expires. If you cancel before the trial end date, you will not be charged. KOLOMIETSSA reserves the right to limit free trial eligibility to one per person.</p>
+    </section>
+
+    <section id="rf4">
+      <div class="section-num">Section 04</div>
+      <h2 class="section-title">Consulting &amp; Individual Services</h2>
+      <p>Consulting services, including personal mentorship packages, wealth management consultations, individual coaching sessions, and bespoke strategy services, are subject to separate cancellation and refund terms specified in the individual service agreement.</p>
+      <h4>General Consulting Refund Principles</h4>
+      <ul>
+        <li><strong>Cancellation before commencement:</strong> A full refund is available if the service is cancelled no less than 48 hours before the scheduled first session or delivery date;</li>
+        <li><strong>Cancellation within 48 hours:</strong> A 50% cancellation fee applies if the service is cancelled within 48 hours of the scheduled start;</li>
+        <li><strong>Post-commencement:</strong> Once a consulting session has taken place or a deliverable has been prepared, the associated fees are non-refundable;</li>
+        <li><strong>Package services:</strong> For multi-session packages, unused sessions may be refunded on a pro-rata basis if cancelled within the package validity period, subject to a 15% administration fee.</li>
+      </ul>
+    </section>
+
+    <section id="rf5">
+      <div class="section-num">Section 05</div>
+      <h2 class="section-title">Technical Failures &amp; Service Disruptions</h2>
+      <p>If you are unable to access purchased content due to a demonstrable technical failure on KOLOMIETSSA's side (not attributable to your own device, browser, or internet connection), we will:</p>
+      <ol>
+        <li>Prioritise restoring your access as quickly as technically possible;</li>
+        <li>Where access cannot be restored within 5 business days, offer a full refund for the affected product regardless of consumption level;</li>
+        <li>Extend subscription periods to compensate for verified downtime exceeding 48 continuous hours.</li>
+      </ol>
+      <p>Technical issues must be reported to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="23505653534c515763484c4f4c4e4a46575050420d404c4e">[email&#160;protected]</a> with sufficient detail to allow diagnosis. KOLOMIETSSA is not responsible for access issues attributable to your own equipment, browser incompatibility, internet service provider, or regional network restrictions.</p>
+    </section>
+
+    <section id="rf6">
+      <div class="section-num">Section 06</div>
+      <h2 class="section-title">Non-Refundable Items</h2>
+      <p>The following purchases are non-refundable under any circumstances other than those explicitly described elsewhere in this policy:</p>
+      <ul>
+        <li>Completed consulting sessions or coaching calls, regardless of the outcome;</li>
+        <li>Course purchases where more than 20% of the content has been accessed or where the 7-day window has passed;</li>
+        <li>Monthly subscription fees for any portion of a billing period that has already commenced;</li>
+        <li>Annual subscription fees after the 30-day refund window has expired;</li>
+        <li>Promotional, discounted, or flash-sale purchases where a non-refundable condition was explicitly stated at checkout;</li>
+        <li>Add-on purchases, digital downloads, or supplementary materials purchased separately from core course or subscription products.</li>
+      </ul>
+    </section>
+
+    <section id="rf7">
+      <div class="section-num">Section 07</div>
+      <h2 class="section-title">How to Request a Refund</h2>
+      <p>To request a refund, please follow these steps:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <div class="step-title">Email Our Support Team</div>
+            <div class="step-desc">Send a refund request to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="65170003100b0116250e0a090a080c00111616044b060a08">[email&#160;protected]</a></strong> from the email address registered to your account. Include your order number, the product(s) for which you are requesting a refund, and a brief reason for your request.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <div class="step-title">Review &amp; Verification</div>
+            <div class="step-desc">Our team will review your request against the applicable policy terms within 3 business days. We may request additional information if necessary to process your request.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <div class="step-title">Refund Decision</div>
+            <div class="step-desc">You will receive written confirmation of the refund decision via email. If approved, the refund will be initiated via Stripe to your original payment method within 5–10 business days.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <div class="step-title">Funds Return</div>
+            <div class="step-desc">Refund processing times vary by payment method and card issuer. Stripe typically processes refunds within 5–10 business days. Bank processing time may add an additional 2–5 business days.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rf8">
+      <div class="section-num">Section 08</div>
+      <h2 class="section-title">Stripe Payment Processing</h2>
+      <p>All refunds are processed through Stripe, the payment processor used for all KOLOMIETSSA transactions. Upon approval of your refund request:</p>
+      <ul>
+        <li>Stripe will reverse the charge to your original payment method;</li>
+        <li>You will receive a Stripe-generated refund confirmation to your registered email address;</li>
+        <li>Refunds can only be issued to the original payment method used at the time of purchase;</li>
+        <li>If the original payment method is no longer valid, our team will work with you to arrange an alternative solution.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Currency:</strong> Refunds are processed in the original transaction currency (EUR). If your bank account is in a different currency, exchange rate fluctuations between the date of purchase and the date of refund may result in a different amount being received in your local currency. KOLOMIETSSA is not responsible for currency conversion losses.</p>
+      </div>
+    </section>
+
+    <section id="rf9">
+      <div class="section-num">Section 09</div>
+      <h2 class="section-title">EU Consumer Rights</h2>
+      <p>This Refund Policy is intended to comply with applicable EU consumer protection legislation, including EU Directive 2011/83/EU on consumer rights, and does not diminish any statutory rights you may have under the laws of your country of residence.</p>
+      <p>EU consumers have the right to lodge complaints with their national consumer protection authority if they believe their statutory rights have been violated. EU residents may also use the European Commission's Online Dispute Resolution platform.</p>
+      <p>Where applicable law grants consumers more generous refund or cancellation rights than those described in this policy, those statutory rights shall prevail.</p>
+    </section>
+
+    <section id="rf10">
+      <div class="section-num">Section 10</div>
+      <h2 class="section-title">Disputes &amp; Chargebacks</h2>
+      <p>We strongly encourage customers to contact us directly at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98eafdfeedf6fcebd8f3f7f4f7f5f1fdecebebf9b6fbf7f5">[email&#160;protected]</a> before initiating a chargeback with their bank or card issuer. In the vast majority of cases, we can resolve disputes quickly and fairly without the need for formal chargeback proceedings.</p>
+      <p>Initiating a chargeback for a purchase that does not qualify for a refund under this policy, or for an amount already refunded by KOLOMIETSSA, constitutes fraudulent misrepresentation and may result in account termination and legal action to recover the disputed funds and associated costs.</p>
+      <p>For any refund enquiries or disputes, please contact: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3644535043585245765d595a595b5f53424545571855595b">[email&#160;protected]</a></strong></p>
+    </section>
+
+  </article>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="kolomietssa-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="kolomietssa-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="kolomietssa-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">KOLOMIETSSA</div>
+    <div class="footer-bottom-copy">
+      © 2026 KOLOMIETSSA ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="index.html"><span data-lang="ru" class="active">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
+      <a href="kolomietssa-terms.html">Terms</a>
+      <a href="kolomietssa-privacy.html">Privacy</a>
+      <a href="kolomietssa-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="kolomietssa-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="kolomietssa-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function closeMob() {
+    var m = document.getElementById('mob-menu');
+    if(m){ m.style.display='none'; m.style.flexDirection=''; }
+  }
+  function toggleMob() {
+    var m = document.getElementById('mob-menu');
+    if(!m) return;
+    var open = m.style.display === 'flex';
+    m.style.display = open ? 'none' : 'flex';
+    if(!open) m.style.flexDirection = 'column';
+  }
+  function setLang(lang) {
+    localStorage.setItem('ksa_lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+    var ldrop = document.getElementById('lang-drop');
+    if(ldrop) ldrop.classList.remove('open');
+  }
+  function toggleLang(e) {
+    e.stopPropagation();
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.remove('open');
+  });
+  (function initLang() {
+    var lang = localStorage.getItem('ksa_lang') || 'ru';
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+  })();
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      document.getElementById('auth-label-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      document.getElementById('auth-label-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      document.getElementById('auth-label-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.href='inde

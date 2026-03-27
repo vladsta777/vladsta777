@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Новости — KOLOMIETSSA · Trading. Business. Capital.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:        #b8975a;
+      --gold-bright: #d4b278;
+      --gold-pale:   #e8d4a8;
+      --gold-dim:    rgba(184,151,90,.15);
+      --text:        #f0ede8;
+      --text-2:      #9a9488;
+      --text-3:      #4a4640;
+      --border:      rgba(184,151,90,.14);
+      --border-2:    rgba(255,255,255,.06);
+      --surface:     rgba(10,9,8,.82);
+      --font-serif:  'Cormorant Garamond', Georgia, serif;
+      --font-sans:   'Outfit', sans-serif;
+      --font-mono:   'DM Mono', monospace;
+      --up:   #5dbf8a;
+      --down: #cf6060;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse 100% 60% at 0% 0%,   rgba(184,151,90,.06) 0%, transparent 55%),
+        radial-gradient(ellipse 80%  70% at 100% 40%, rgba(184,151,90,.04) 0%, transparent 55%),
+        radial-gradient(ellipse 60%  80% at 30% 100%, rgba(184,151,90,.035) 0%, transparent 55%),
+        #050403;
+      background-attachment: fixed;
+      cursor: none;
+    }
+
+    .cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, opacity .2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(184,151,90,.5); border-radius: 50%;
+      pointer-events: none; z-index: 99998;
+      transform: translate(-50%,-50%);
+      transition: width .35s ease, height .35s ease;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+    #grid {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.013) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.013) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    #preloader {
+      position: fixed; inset: 0; z-index: 99999; background: #050403;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      transition: opacity .8s ease;
+    }
+    #preloader.out { opacity: 0; pointer-events: none; }
+    .pre-logo { font-family: var(--font-mono); font-size: clamp(.85rem,2vw,1rem); letter-spacing: .5em; color: var(--gold); animation: flicker 1.4s ease infinite alternate; }
+    .pre-line { width: 180px; height: 1px; background: var(--border); overflow: hidden; }
+    .pre-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); animation: fill 1.2s ease forwards; }
+    @keyframes fill { from{width:0} to{width:100%} }
+    @keyframes flicker { from{opacity:.25} to{opacity:1} }
+
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9500;
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,4,3,.88); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: padding .3s;
+    }
+    header.scrolled { padding: 1rem 3rem; }
+    .h-logo { font-family: var(--font-mono); font-size: .8rem; letter-spacing: .45em; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: .75rem; }
+    .h-logo-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+
+    .h-nav { display: flex; align-items: center; gap: 2.5rem; }
+    .h-nav a { font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); text-decoration: none; transition: color .25s; position: relative; }
+    .h-nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width .3s ease; }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav a:hover::after { width: 100%; }
+    .h-nav a.active { color: var(--gold); }
+    .h-nav a.active::after { width: 100%; }
+    .h-nav-club { border: 1px solid rgba(184,151,90,.35) !important; padding: .3rem .85rem !important; background: rgba(184,151,90,.05) !important; color: var(--gold) !important; transition: border-color .2s, background .2s, box-shadow .2s !important; }
+    .h-nav-club::after { display: none !important; }
+    .h-nav-club:hover { border-color: var(--gold) !important; background: rgba(184,151,90,.12) !important; }
+
+    .lang-drop { position: relative; }
+    .lang-current { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(184,151,90,.3); padding: .7rem 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: .5rem; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition: border-color .2s, background .2s; user-select: none; }
+    .lang-current:hover { border-color: var(--gold); background: rgba(184,151,90,.06); }
+    .lang-current svg { width: 10px; height: 10px; transition: transform .25s; }
+    .lang-drop.open .lang-current svg { transform: rotate(180deg); }
+    .lang-menu { position: absolute; top: calc(100% + .5rem); right: 0; background: rgba(8,7,6,.95); backdrop-filter: blur(16px); border: 1px solid var(--border); clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease; min-width: 80px; }
+    .lang-drop.open .lang-menu { opacity: 1; pointer-events: all; transform: none; }
+    .lang-opt { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: var(--text-3); background: none; border: none; border-bottom: 1px solid var(--border); width: 100%; padding: .6rem 1rem; cursor: pointer; text-align: left; transition: color .15s, background .15s; display: block; }
+    .lang-opt:last-child { border-bottom: none; }
+    .lang-opt:hover { color: var(--gold); background: rgba(184,151,90,.06); }
+
+    .h-cta { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: #000; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); border: none; padding: .7rem 1.6rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition: opacity .2s, transform .15s; }
+    .h-cta:hover { opacity: .85; transform: translateY(-1px); }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); }
+
+    [data-lang] { display: none; }
+    [data-lang].active { display: block; }
+    span[data-lang] { display: none; }
+    span[data-lang].active { display: inline; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 10rem 3rem 5rem;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .page-hero-orb {
+      position: absolute; top: -30%; right: -5%;
+      width: clamp(300px,50vw,700px); height: clamp(300px,50vw,700px);
+      background: radial-gradient(circle, rgba(184,151,90,.06) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .ph-eyebrow { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .45em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
+    .ph-eyebrow::before { content:''; width: 2rem; height: 1px; background: var(--gold); }
+    .ph-title { font-family: var(--font-serif); font-size: clamp(3rem,7vw,6rem); font-weight: 300; line-height: .95; letter-spacing: -.02em; margin-bottom: 1.5rem; }
+    .ph-title em { font-style: italic; color: var(--gold); }
+    .ph-sub { font-size: clamp(.9rem,1.4vw,1rem); color: var(--text-2); max-width: 50ch; line-height: 1.85; font-weight: 300; }
+
+    /* ── MARKET STRIP ── */
+    .market-strip {
+      display: grid; grid-template-columns: repeat(5,1fr);
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,4,3,.8);
+    }
+    .ms-item {
+      padding: 1.2rem 1.8rem;
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: .3rem;
+    }
+    .ms-item:last-child { border-right: none; }
+    .ms-ticker { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-3); }
+    .ms-price { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 300; }
+    .ms-change { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; }
+    .ms-change.up   { color: var(--up); }
+    .ms-change.down { color: var(--down); }
+
+    /* ── LIVE BADGE ── */
+    .live-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--up);
+      padding: .25rem .7rem; border: 1px solid rgba(93,191,138,.25);
+      background: rgba(93,191,138,.06);
+    }
+    .live-dot { width: 5px; height: 5px; background: var(--up); border-radius: 50%; animation: pulse-dot 1.2s ease infinite; }
+
+    /* ── NEWS LAYOUT ── */
+    .news-section { padding: 4rem 3rem; }
+    .news-layout { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
+
+    /* Main column */
+    .news-main {}
+    .news-section-title {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 2rem; padding-bottom: .7rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* Hero news card */
+    .news-hero-card {
+      border: 1px solid var(--border);
+      background: rgba(12,11,9,.85);
+      position: relative; overflow: hidden;
+      margin-bottom: 2rem;
+      transition: border-color .3s;
+    }
+    .news-hero-card:hover { border-color: rgba(184,151,90,.3); }
+    .news-hero-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+    }
+    .nhc-inner { padding: 2.5rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
+    .nhc-left {}
+    .nhc-meta { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .nhc-tag {
+      font-family: var(--font-mono); font-size: .57rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(184,151,90,.25); padding: .2rem .6rem; background: rgba(184,151,90,.04);
+    }
+    .nhc-date { font-family: var(--font-mono); font-size: .57rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+    .nhc-title { font-family: var(--font-serif); font-size: clamp(1.5rem,2.5vw,2.1rem); font-weight: 300; line-height: 1.2; letter-spacing: -.01em; margin-bottom: 1rem; }
+    .nhc-excerpt { font-size: .88rem; line-height: 1.82; color: var(--text-2); font-weight: 300; margin-bottom: 1.2rem; }
+    .nhc-link { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: gap .2s; }
+    .nhc-link svg { width: 11px; height: 11px; }
+    .nhc-link:hover { gap: .8rem; }
+    .nhc-right { text-align: right; flex-shrink: 0; }
+    .nhc-symbol { font-family: var(--font-serif); font-size: 6rem; font-weight: 300; line-height: 1; color: rgba(184,151,90,.08); user-select: none; }
+
+    /* News feed list */
+    .news-feed { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); background: rgba(10,9,8,.7); }
+    .news-item {
+      display: grid; grid-template-columns: auto 1fr auto;
+      gap: 1.2rem; padding: 1.4rem 1.6rem;
+      border-bottom: 1px solid var(--border-2);
+      align-items: start;
+      transition: background .2s;
+      text-decoration: none; color: inherit;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-item:hover { background: rgba(184,151,90,.03); }
+    .ni-index { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; color: var(--text-3); padding-top: .15rem; min-width: 22px; }
+    .ni-body {}
+    .ni-meta { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); margin-bottom: .4rem; display: flex; gap: .6rem; align-items: center; }
+    .ni-tag-dot { width: 3px; height: 3px; background: var(--text-3); border-radius: 50%; }
+    .ni-tag-color { color: var(--gold); }
+    .ni-title { font-size: .9rem; font-weight: 400; line-height: 1.4; color: var(--text); }
+    .ni-arrow { color: var(--text-3); padding-top: .15rem; font-size: .8rem; transition: color .2s, transform .2s; }
+    .news-item:hover .ni-arrow { color: var(--gold); transform: translateX(3px); }
+
+    /* Sidebar */
+    .news-sidebar { display: flex; flex-direction: column; gap: 2rem; position: sticky; top: 6rem; }
+
+    /* Market recap */
+    .sb-block { border: 1px solid var(--border); background: rgba(10,9,8,.7); padding: 1.8rem; }
+    .sb-title { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem; padding-bottom: .7rem; border-bottom: 1px solid var(--border); }
+
+    .market-table { display: flex; flex-direction: column; gap: 0; }
+    .mt-row { display: flex; justify-content: space-between; align-items: center; padding: .65rem 0; border-bottom: 1px solid var(--border-2); }
+    .mt-row:last-child { border-bottom: none; }
+    .mt-name { font-size: .82rem; font-weight: 400; }
+    .mt-ticker { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; color: var(--text-3); display: block; }
+    .mt-right { text-align: right; }
+    .mt-price { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .05em; }
+    .mt-chg { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .08em; }
+    .up   { color: var(--up); }
+    .down { color: var(--down); }
+
+    /* upcoming events */
+    .events-list { display: flex; flex-direction: column; gap: .1rem; }
+    .event-item { padding: .9rem 0; border-bottom: 1px solid var(--border-2); display: grid; grid-template-columns: 40px 1fr; gap: .8rem; align-items: start; }
+    .event-item:last-child { border-bottom: none; }
+    .event-day { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .08em; color: var(--gold); text-align: center; }
+    .event-day span { display: block; font-size: .5rem; color: var(--text-3); letter-spacing: .1em; text-transform: uppercase; }
+    .event-title { font-size: .82rem; font-weight: 400; line-height: 1.35; margin-bottom: .2rem; }
+    .event-meta { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+    .event-imp { font-family: var(--font-mono); font-size: .52rem; letter-spacing: .1em; }
+    .imp-high { color: var(--down); }
+    .imp-med  { color: #d4a017; }
+    .imp-low  { color: var(--text-3); }
+
+    /* ── REGIONS ROW ── */
+    .regions-section { padding: 0 3rem 5rem; }
+    .regions-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .region-card {
+      border: 1px solid var(--border); background: rgba(10,9,8,.75);
+      padding: 2rem; position: relative; overflow: hidden;
+      transition: border-color .3s, transform .4s cubic-bezier(.22,.68,0,1.2);
+    }
+    .region-card:hover { border-color: rgba(184,151,90,.3); transform: translateY(-4px); }
+    .region-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(184,151,90,.3) 50%,transparent); opacity:0; transition:opacity .3s; }
+    .region-card:hover::before { opacity:1; }
+    .rc-region { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .rc-headline { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 400; line-height: 1.3; margin-bottom: .7rem; }
+    .rc-text { font-size: .82rem; line-height: 1.75; color: var(--text-2); font-weight: 300; }
+    .rc-tag { margin-top: 1.2rem; font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); }
+
+    /* ── TICKER ── */
+    .hero-ticker-wrap {
+      overflow: hidden; border-bottom: 1px solid var(--border);
+      background: rgba(5,4,3,.6);
+    }
+    .hero-ticker-track { display: flex; width: max-content; animation: ticker 28s linear infinite; }
+    .hero-ticker-item { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .2em; white-space: nowrap; padding: .45rem 2rem; border-right: 1px solid var(--border); }
+    .ticker-up   { color: #5dbf8a; }
+    .ticker-down { color: #cf6060; }
+    .ticker-neu  { color: var(--text-3); }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── MARQUEE ── */
+    .marquee { overflow: hidden; padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(5,4,3,.75); }
+    .mq-track { display: flex; width: max-content; animation: mq 25s linear infinite; }
+    .mq-item { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .35em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; padding: 0 3rem; border-right: 1px solid var(--border); }
+    .mq-item.g { color: var(--gold); }
+    @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── FOOTER ── */
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); display: block; }
+    .footer-inner { display: grid; grid-template-columns: 200px 1fr; gap: 3.5rem; padding: 4rem 3rem 3rem; border-bottom: 1px solid rgba(184,151,90,.08); max-width: 1440px; }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .45em; color: var(--gold); text-transform: uppercase; }
+    .footer-logo-link { text-decoration: none; }
+    .footer-tagline { font-size: .78rem; line-height: 1.7; color: var(--text-3); font-weight: 300; }
+    .footer-socials { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .footer-social { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-social:hover { color: var(--gold); }
+    .footer-nav-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; align-content: start; }
+    .footer-col-title { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: .7rem; border-bottom: 1px solid rgba(184,151,90,.15); }
+    .footer-col-title--cyan { color: #00d4ff; border-bottom-color: rgba(0,212,255,.2); }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col-links a { font-size: .76rem; line-height: 1.5; color: var(--text-3); text-decoration: none; display: block; transition: color .2s, padding-left .2s; }
+    .footer-col-links a:hover { color: var(--text); padding-left: .35rem; }
+    .footer-risk { display: block; padding: 1.2rem 3rem; border-top: 1px solid rgba(184,151,90,.08); }
+    .footer-risk-text { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em; line-height: 1.8; color: var(--text-3); max-width: 1100px; }
+    .footer-risk-text a { color: rgba(184,151,90,.4); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 1.2rem 3rem; border-top: 1px solid var(--border); }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .06em; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+
+    @media (max-width: 900px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      header { padding: .9rem 1.2rem; }
+      .h-nav { display: none; }
+      .h-cta { display: none; }
+      .h-burger { display: flex; }
+      .page-hero { padding: 8rem 1.5rem 3.5rem; }
+      .market-strip { grid-template-columns: repeat(2,1fr); }
+      .ms-item:nth-child(4) { border-right: none; }
+      .ms-item:nth-child(5) { grid-column: 1/-1; }
+      .news-section { padding: 3rem 1.5rem; }
+      .news-layout { grid-template-columns: 1fr; }
+      .news-sidebar { position: static; }
+      .nhc-inner { grid-template-columns: 1fr; }
+      .nhc-symbol { display: none; }
+      .regions-section { padding: 0 1.5rem 4rem; }
+      .regions-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2rem; }
+      .footer-nav-cols { grid-template-columns: repeat(2,1fr) !important; gap: 1.8rem; }
+      .footer-risk { padding: 1rem 1.5rem; }
+      .footer-bottom { padding: 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: .8rem; }
+      .footer-bottom-links { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .market-strip { grid-template-columns: 1fr; }
+      .footer-nav-cols { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="grid"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<div id="preloader">
+  <div class="pre-logo">KOLOMIETSSA</div>
+  <div class="pre-line"><div class="pre-fill"></div></div>
+</div>
+
+<!-- Mobile menu -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="kolomietssa-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="kolomietssa-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="kolomietssa-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="kolomietssa-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="kolomietssa-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="kolomietssa-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="kolomietssa-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;margin-top:.5rem;">
+    <span class="mob-auth-ru">Войти</span><span class="mob-auth-ua" style="display:none;">Увійти</span><span class="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    KOLOMIETSSA
+  </a>
+  <nav class="h-nav">
+    <a href="kolomietssa-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="kolomietssa-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="kolomietssa-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="kolomietssa-invest.html">
+      <span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="kolomietssa-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="kolomietssa-news.html" class="active">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+    <a href="kolomietssa-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active auth-label-ru">Войти</span><span data-lang="ua" class="auth-label-ua">Увійти</span><span data-lang="en" class="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-orb"></div>
+  <div class="ph-eyebrow">
+    <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+    &nbsp;
+    <span data-lang="ru" class="active">Финансовые рынки · Экономика · Геополитика</span>
+    <span data-lang="ua">Фінансові ринки · Економіка · Геополітика</span>
+    <span data-lang="en">Financial Markets · Economics · Geopolitics</span>
+  </div>
+  <h1 class="ph-title">
+    <span data-lang="ru" class="active">Новости<br><em>рынков</em></span>
+    <span data-lang="ua">Новини<br><em>ринків</em></span>
+    <span data-lang="en">Market<br><em>News</em></span>
+  </h1>
+  <p class="ph-sub">
+    <span data-lang="ru" class="active">Актуальные события на мировых рынках, разобранные через призму трейдера и инвестора — без информационного шума.</span>
+    <span data-lang="ua">Актуальні події на світових ринках, розібрані через призму трейдера та інвестора — без інформаційного шуму.</span>
+    <span data-lang="en">Current events on global markets, analysed through the lens of a trader and investor — without information noise.</span>
+  </p>
+</section>
+
+<!-- TICKER -->
+<div class="hero-ticker-wrap">
+  <div class="hero-ticker-track">
+    <span class="hero-ticker-item ticker-up">S&amp;P 500 &nbsp;5,847 &nbsp;+0.62%</span>
+    <span class="hero-ticker-item ticker-down">NASDAQ &nbsp;18,432 &nbsp;−0.34%</span>
+    <span class="hero-ticker-item ticker-up">DOW &nbsp;43,218 &nbsp;+0.45%</span>
+    <span class="hero-ticker-item ticker-up">GOLD &nbsp;$3,041 &nbsp;+1.1%</span>
+    <span class="hero-ticker-item ticker-down">BTC &nbsp;$84,200 &nbsp;−2.3%</span>
+    <span class="hero-ticker-item ticker-up">EUR/USD &nbsp;1.0812 &nbsp;+0.18%</span>
+    <span class="hero-ticker-item ticker-down">OIL &nbsp;$71.4 &nbsp;−0.8%</span>
+    <span class="hero-ticker-item ticker-up">NVDA &nbsp;+3.15%</span>
+    <span class="hero-ticker-item ticker-neu">VIX &nbsp;18.4 &nbsp;−</span>
+    <span class="hero-ticker-item ticker-up">S&amp;P 500 &nbsp;5,847 &nbsp;+0.62%</span>
+    <span class="hero-ticker-item ticker-down">NASDAQ &nbsp;18,432 &nbsp;−0.34%</span>
+    <span class="hero-ticker-item ticker-up">DOW &nbsp;43,218 &nbsp;+0.45%</span>
+    <span class="hero-ticker-item ticker-up">GOLD &nbsp;$3,041 &nbsp;+1.1%</span>
+    <span class="hero-ticker-item ticker-down">BTC &nbsp;$84,200 &nbsp;−2.3%</span>
+    <span class="hero-ticker-item ticker-up">EUR/USD &nbsp;1.0812 &nbsp;+0.18%</span>
+    <span class="hero-ticker-item ticker-down">OIL &nbsp;$71.4 &nbsp;−0.8%</span>
+    <span class="hero-ticker-item ticker-up">NVDA &nbsp;+3.15%</span>
+    <span class="hero-ticker-item ticker-neu">VIX &nbsp;18.4 &nbsp;−</span>
+  </div>
+</div>
+
+<!-- MARKET STRIP -->
+<div class="market-strip">
+  <div class="ms-item">
+    <div class="ms-ticker">S&P 500</div>
+    <div class="ms-price">5,847.34</div>
+    <div class="ms-change up">▲ +0.62%</div>
+  </div>
+  <div class="ms-item">
+    <div class="ms-ticker">NASDAQ</div>
+    <div class="ms-price">18,432.10</div>
+    <div class="ms-change down">▼ −0.34%</div>
+  </div>
+  <div class="ms-item">
+    <div class="ms-ticker">GOLD / OZ</div>
+    <div class="ms-price">$3,041</div>
+    <div class="ms-change up">▲ +1.1%</div>
+  </div>
+  <div class="ms-item">
+    <div class="ms-ticker">BTC/USD</div>
+    <div class="ms-price">$84,200</div>
+    <div class="ms-change down">▼ −2.3%</div>
+  </div>
+  <div class="ms-item">
+    <div class="ms-ticker">EUR/USD</div>
+    <div class="ms-price">1.0812</div>
+    <div class="ms-change up">▲ +0.18%</div>
+  </div>
+</div>
+
+<!-- NEWS SECTION -->
+<section class="news-section">
+  <div class="news-layout">
+
+    <!-- Main -->
+    <div class="news-main">
+
+      <!-- Hero news card -->
+      <div class="news-section-title">
+        <span>
+          <span data-lang="ru" class="active">Главное сегодня</span>
+          <span data-lang="ua">Головне сьогодні</span>
+          <span data-lang="en">Top Story Today</span>
+        </span>
+        <span class="live-badge"><span class="live-dot"></span>25 MAR 2026</span>
+      </div>
+
+      <article class="news-hero-card reveal">
+        <div class="nhc-inner">
+          <div class="nhc-left">
+            <div class="nhc-meta">
+              <span class="nhc-tag">
+                <span data-lang="ru" class="active">ФРС / Монетарная политика</span>
+                <span data-lang="ua">ФРС / Монетарна політика</span>
+                <span data-lang="en">Fed / Monetary Policy</span>
+              </span>
+              <span class="nhc-date">25 March 2026 · 09:15</span>
+            </div>
+            <h2 class="nhc-title">
+              <span data-lang="ru" class="active">ФРС сохранила ставку на уровне 4.5% — Пауэлл намекает на два снижения в 2026 году</span>
+              <span data-lang="ua">ФРС зберегла ставку на рівні 4.5% — Пауелл натякає на два зниження у 2026 році</span>
+              <span data-lang="en">Fed Holds Rates at 4.5% — Powell Hints at Two Cuts in 2026</span>
+            </h2>
+            <p class="nhc-excerpt">
+              <span data-lang="ru" class="active">На мартовском заседании FOMC ФРС единогласно сохранила ставку по федеральным фондам в диапазоне 4.25%–4.5%. В сопроводительном заявлении регулятор указал на устойчивость рынка труда при сохраняющейся инфляции выше целевого уровня 2%. Председатель ФРС Джером Пауэлл на пресс-конференции дал понять, что при продолжении дезинфляции возможны два снижения ставки во второй половине 2026 года. Рынок отреагировал ростом: S&P 500 закрылся в плюсе на 0.6%, доходность 10-летних трежерис снизилась до 4.28%.</span>
+              <span data-lang="ua">На березневому засіданні FOMC ФРС одноголосно зберегла ставку за федеральними фондами в діапазоні 4.25%–4.5%. У супровідній заяві регулятор вказав на стійкість ринку праці при збереженні інфляції вище цільового рівня 2%.</span>
+              <span data-lang="en">At the March FOMC meeting, the Fed unanimously kept the federal funds rate in the 4.25%–4.5% range. The accompanying statement highlighted labour market resilience alongside inflation remaining above the 2% target. Chairman Jerome Powell signalled at the press conference that two rate cuts in H2 2026 are possible if disinflation continues. Markets rallied: S&P 500 closed up 0.6%, 10-year Treasury yields fell to 4.28%.</span>
+            </p>
+            <a href="#" class="nhc-link">
+              <span data-lang="ru" class="active">Читать разбор</span>
+              <span data-lang="ua">Читати розбір</span>
+              <span data-lang="en">Read analysis</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="nhc-right">
+            <div class="nhc-symbol">%</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- News feed -->
+      <div class="news-section-title" style="margin-top:2.5rem;">
+        <span>
+          <span data-lang="ru" class="active">Лента новостей</span>
+          <span data-lang="ua">Стрічка новин</span>
+          <span data-lang="en">News Feed</span>
+        </span>
+      </div>
+
+      <div class="news-feed reveal">
+        <a href="#" class="news-item">
+          <div class="ni-index">01</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Крипто</span><span data-lang="ua">Крипто</span><span data-lang="en">Crypto</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>25 Mar · 11:40</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">Bitcoin скорректировался к $84K на фоне усиления регуляторного давления в США</span>
+              <span data-lang="ua">Bitcoin скоригувався до $84K на тлі посилення регуляторного тиску в США</span>
+              <span data-lang="en">Bitcoin Corrects to $84K Amid Intensifying US Regulatory Pressure</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">02</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Акции</span><span data-lang="ua">Акції</span><span data-lang="en">Equities</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>25 Mar · 10:15</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">NVIDIA установила новый рекорд капитализации: $3.8 трлн после презентации Blackwell Ultra</span>
+              <span data-lang="ua">NVIDIA встановила новий рекорд капіталізації: $3.8 трлн після презентації Blackwell Ultra</span>
+              <span data-lang="en">NVIDIA Sets New Market Cap Record at $3.8 Trillion After Blackwell Ultra Reveal</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">03</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Сырьё</span><span data-lang="ua">Сировина</span><span data-lang="en">Commodities</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>25 Mar · 08:30</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">Золото достигло $3,041 за унцию — спрос со стороны центральных банков остаётся рекордным</span>
+              <span data-lang="ua">Золото досягло $3,041 за унцію — попит з боку центральних банків залишається рекордним</span>
+              <span data-lang="en">Gold Reaches $3,041/oz — Central Bank Demand Remains at Record Levels</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">04</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Макро</span><span data-lang="ua">Макро</span><span data-lang="en">Macro</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>24 Mar · 18:00</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">ЕЦБ: инфляция в еврозоне замедляется до 2.3% — сигнал о снижении ставки в апреле усиливается</span>
+              <span data-lang="ua">ЄЦБ: інфляція в єврозоні сповільнюється до 2.3% — сигнал про зниження ставки у квітні посилюється</span>
+              <span data-lang="en">ECB: Eurozone Inflation Slows to 2.3% — April Rate Cut Signal Strengthens</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">05</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Акции</span><span data-lang="ua">Акції</span><span data-lang="en">Equities</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>24 Mar · 15:40</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">Apple анонсировала buyback на $110 млрд — крупнейший в истории компании</span>
+              <span data-lang="ua">Apple анонсувала buyback на $110 млрд — найбільший в історії компанії</span>
+              <span data-lang="en">Apple Announces $110B Buyback — Largest in Company History</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">06</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Геополитика</span><span data-lang="ua">Геополітика</span><span data-lang="en">Geopolitics</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>24 Mar · 12:00</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">Торговая война США–Китай: новые тарифы на чипы обрушили акции полупроводниковых компаний</span>
+              <span data-lang="ua">Торгова війна США–Китай: нові тарифи на чіпи обвалили акції напівпровідникових компаній</span>
+              <span data-lang="en">US–China Trade War: New Chip Tariffs Hammer Semiconductor Stocks</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">07</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Облигации</span><span data-lang="ua">Облігації</span><span data-lang="en">Bonds</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>23 Mar · 20:15</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">Инверсия кривой доходности завершилась: 10Y трежерис снова выше 2Y — что это значит для рынков</span>
+              <span data-lang="ua">Інверсія кривої дохідності завершилась: 10Y трежеріс знову вище 2Y — що це означає для ринків</span>
+              <span data-lang="en">Yield Curve Inversion Ends: 10Y Treasuries Again Above 2Y — What This Means for Markets</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+        <a href="#" class="news-item">
+          <div class="ni-index">08</div>
+          <div class="ni-body">
+            <div class="ni-meta">
+              <span class="ni-tag-color">
+                <span data-lang="ru" class="active">Крипто</span><span data-lang="ua">Крипто</span><span data-lang="en">Crypto</span>
+              </span>
+              <span class="ni-tag-dot"></span>
+              <span>23 Mar · 17:30</span>
+            </div>
+            <div class="ni-title">
+              <span data-lang="ru" class="active">SEC одобрила первый Ethereum ETF с возможностью стейкинга — рынок отреагировал ростом ETH на 8%</span>
+              <span data-lang="ua">SEC схвалила перший Ethereum ETF з можливістю стейкінгу — ринок відреагував зростанням ETH на 8%</span>
+              <span data-lang="en">SEC Approves First Ethereum ETF with Staking — Market Reacts with 8% ETH Rally</span>
+            </div>
+          </div>
+          <div class="ni-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="news-sidebar">
+
+      <!-- Market snapshot -->
+      <div class="sb-block">
+        <div class="sb-title">
+          <span data-lang="ru" class="active">Срез рынка</span>
+          <span data-lang="ua">Зріз ринку</span>
+          <span data-lang="en">Market Snapshot</span>
+        </div>
+        <div class="market-table">
+          <div class="mt-row">
+            <div class="mt-name">S&P 500 <span class="mt-ticker">SPY</span></div>
+            <div class="mt-right">
+              <div class="mt-price">5,847</div>
+              <div class="mt-chg up">▲ +0.62%</div>
+            </div>
+          </div>
+          <div class="mt-row">
+            <div class="mt-name">NASDAQ <span class="mt-ticker">QQQ</span></div>
+            <div class="mt-right">
+              <div class="mt-price">18,432</div>
+              <div class="mt-chg down">▼ −0.34%</div>
+            </div>
+          </div>
+          <div class="mt-row">
+            <div class="mt-name">Gold <span class="mt-ticker">XAU/USD</span></div>
+            <div class="mt-right">
+              <div class="mt-price">$3,041</div>
+              <div class="mt-chg up">▲ +1.1%</div>
+            </div>
+          </div>
+          <div class="mt-row">
+            <div class="mt-name">Bitcoin <span class="mt-ticker">BTC/USD</span></div>
+            <div class="mt-right">
+              <div class="mt-price">$84,200</div>
+              <div class="mt-chg down">▼ −2.3%</div>
+            </div>
+          </div>
+          <div class="mt-row">
+            <div class="mt-name">Oil Brent <span class="mt-ticker">CL1!</span></div>
+            <div class="mt-right">
+              <div class="mt-price">$71.40</div>
+              <div class="mt-chg down">▼ −0.8%</div>
+            </div>
+          </div>
+          <div class="mt-row">
+            <div class="mt-name">EUR/USD <span class="mt-ticker">FX</span></div>
+            <div class="mt-right">
+              <div class="mt-price">1.0812</div>
+              <div class="mt-chg up">▲ +0.18%</div>
+            </div>
+          </div>
+          <div class="mt-row">
+            <div class="mt-name">VIX <span class="mt-ticker">Volatility</span></div>
+            <div class="mt-right">
+              <div class="mt-price">18.4</div>
+              <div class="mt-chg down">▼ −1.2%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming events -->
+      <div class="sb-block">
+        <div class="sb-title">
+          <span data-lang="ru" class="active">Ключевые события</span>
+          <span data-lang="ua">Ключові події</span>
+          <span data-lang="en">Key Events</span>
+        </div>
+        <div class="events-list">
+          <div class="event-item">
+            <div class="event-day">26<span>MAR</span></div>
+            <div>
+              <div class="event-title">
+                <span data-lang="ru" class="active">ВВП США Q4 2025 (финальная оценка)</span>
+                <span data-lang="ua">ВВП США Q4 2025 (фінальна оцінка)</span>
+                <span data-lang="en">US GDP Q4 2025 (Final)</span>
+              </div>
+              <div class="event-meta">15:30 UTC &nbsp; <span class="event-imp imp-high">● HIGH</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-day">27<span>MAR</span></div>
+            <div>
+              <div class="event-title">
+                <span data-lang="ru" class="active">PCE Инфляция США (февраль)</span>
+                <span data-lang="ua">PCE Інфляція США (лютий)</span>
+                <span data-lang="en">US PCE Inflation (February)</span>
+              </div>
+              <div class="event-meta">15:30 UTC &nbsp; <span class="event-imp imp-high">● HIGH</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-day">28<span>MAR</span></div>
+            <div>
+              <div class="event-title">
+                <span data-lang="ru" class="active">Индекс доверия потребителей США</span>
+                <span data-lang="ua">Індекс довіри споживачів США</span>
+                <span data-lang="en">US Consumer Confidence Index</span>
+              </div>
+              <div class="event-meta">16:00 UTC &nbsp; <span class="event-imp imp-med">● MED</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-day">1<span>APR</span></div>
+            <div>
+              <div class="event-title">
+                <span data-lang="ru" class="active">NFP — Занятость вне с/х сектора</span>
+                <span data-lang="ua">NFP — Зайнятість поза с/г сектором</span>
+                <span data-lang="en">NFP — Non-Farm Payrolls</span>
+              </div>
+              <div class="event-meta">15:30 UTC &nbsp; <span class="event-imp imp-high">● HIGH</span></div>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-day">3<span>APR</span></div>
+            <div>
+              <div class="event-title">
+                <span data-lang="ru" class="active">Заседание ЕЦБ по монетарной политике</span>
+                <span data-lang="ua">Засідання ЄЦБ з монетарної політики</span>
+                <span data-lang="en">ECB Monetary Policy Meeting</span>
+              </div>
+              <div class="event-meta">14:15 UTC &nbsp; <span class="event-imp imp-high">● HIGH</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- REGIONAL NEWS -->
+<section class="regions-section">
+  <div class="news-section-title" style="padding: 0 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem;">
+    <span data-lang="ru" class="active">По регионам</span>
+    <span data-lang="ua">За регіонами</span>
+    <span data-lang="en">By Region</span>
+  </div>
+  <div class="regions-grid">
+    <div class="region-card reveal">
+      <div class="rc-region">🇺🇸 USA / AMERICAS</div>
+      <div class="rc-headline">
+        <span data-lang="ru" class="active">Сезон отчётностей Q1 2026: технологический сектор снова задаёт тон</span>
+        <span data-lang="ua">Сезон звітностей Q1 2026: технологічний сектор знову задає тон</span>
+        <span data-lang="en">Q1 2026 Earnings Season: Tech Sector Sets the Tone Again</span>
+      </div>
+      <p class="rc-text">
+        <span data-lang="ru" class="active">Крупнейшие технологические компании США публикуют результаты выше прогнозов. Маржинальность NVIDIA достигла 75% — рынок закладывает дальнейший рост AI-инфраструктуры.</span>
+        <span data-lang="ua">Найбільші технологічні компанії США публікують результати вище прогнозів.</span>
+        <span data-lang="en">Major US tech companies are reporting above-consensus results. NVIDIA's margins hit 75% — markets are pricing in continued AI infrastructure growth.</span>
+      </p>
+      <div class="rc-tag">S&P 500 · NASDAQ · Big Tech</div>
+    </div>
+    <div class="region-card reveal reveal-d1">
+      <div class="rc-region">🇪🇺 EUROPE / ECB</div>
+      <div class="rc-headline">
+        <span data-lang="ru" class="active">ЕЦБ готовится к снижению ставки в апреле на фоне замедления инфляции</span>
+        <span data-lang="ua">ЄЦБ готується до зниження ставки у квітні на тлі сповільнення інфляції</span>
+        <span data-lang="en">ECB Prepares for April Rate Cut as Inflation Continues to Cool</span>
+      </div>
+      <p class="rc-text">
+        <span data-lang="ru" class="active">Инфляция в еврозоне снизилась до 2.3%, немецкий PMI восстанавливается. Инвесторы закладывают три снижения ставки ЕЦБ в 2026 году, евро укрепляется к доллару.</span>
+        <span data-lang="ua">Інфляція в єврозоні знизилася до 2.3%, німецький PMI відновлюється.</span>
+        <span data-lang="en">Eurozone inflation has fallen to 2.3%, German PMI is recovering. Investors are pricing in three ECB rate cuts in 2026, with the euro strengthening against the dollar.</span>
+      </p>
+      <div class="rc-tag">EUR/USD · DAX · Euro Stoxx</div>
+    </div>
+    <div class="region-card reveal reveal-d2">
+      <div class="rc-region">🌏 ASIA / EM</div>
+      <div class="rc-headline">
+        <span data-lang="ru" class="active">Китай вводит пакет стимулирования экономики — рынок Гонконга реагирует ростом 4%</span>
+        <span data-lang="ua">Китай вводить пакет стимулювання економіки — ринок Гонконгу реагує зростанням 4%</span>
+        <span data-lang="en">China Launches Economic Stimulus Package — Hong Kong Market Rallies 4%</span>
+      </div>
+      <p class="rc-text">
+        <span data-lang="ru" class="active">Пекин объявил о новом стимулирующем пакете на $300 млрд, направленном на поддержку внутреннего потребления. Гонконгский Hang Seng вырос на 4%, юань стабилизировался.</span>
+        <span data-lang="ua">Пекін оголосив новий стимулюючий пакет на $300 млрд, спрямований на підтримку внутрішнього споживання.</span>
+        <span data-lang="en">Beijing announced a new $300B stimulus package aimed at supporting domestic consumption. Hong Kong's Hang Seng gained 4%, the yuan stabilised.</span>
+      </p>
+      <div class="rc-tag">Hang Seng · CNY · Emerging Markets</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-track">
+    <span class="mq-item g">S&P 500</span><span class="mq-item">·</span>
+    <span class="mq-item g">ФРС</span><span class="mq-item">·</span>
+    <span class="mq-item">Инфляция</span><span class="mq-item">·</span>
+    <span class="mq-item g">Gold $3041</span><span class="mq-item">·</span>
+    <span class="mq-item">BTC/USD</span><span class="mq-item">·</span>
+    <span class="mq-item g">NVIDIA</span><span class="mq-item">·</span>
+    <span class="mq-item">EUR/USD</span><span class="mq-item">·</span>
+    <span class="mq-item g">ЕЦБ</span><span class="mq-item">·</span>
+    <span class="mq-item">NFP</span><span class="mq-item">·</span>
+    <span class="mq-item g">S&P 500</span><span class="mq-item">·</span>
+    <span class="mq-item g">ФРС</span><span class="mq-item">·</span>
+    <span class="mq-item">Инфляция</span><span class="mq-item">·</span>
+    <span class="mq-item g">Gold $3041</span><span class="mq-item">·</span>
+    <span class="mq-item">BTC/USD</span><span class="mq-item">·</span>
+    <span class="mq-item g">NVIDIA</span><span class="mq-item">·</span>
+    <span class="mq-item">EUR/USD</span><span class="mq-item">·</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo-link">
+        <div class="footer-logo">KOLOMIETSSA</div>
+      </a>
+      <p class="footer-tagline">
+        <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+        <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+        <span data-lang="en">Trading. Business. Capital.</span>
+      </p>
+      <div class="footer-socials">
+        <a href="https://t.me/kolomietssa" target="_blank" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          Telegram
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#050403"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-nav-cols">
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Обучение</span>
+          <span data-lang="ua">Навчання</span>
+          <span data-lang="en">Education</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-academy.html"><span data-lang="ru" class="active">Академия трейдинга</span><span data-lang="ua">Академія трейдингу</span><span data-lang="en">Trading Academy</span></a></li>
+          <li><a href="kolomietssa-academy.html#promo-all"><span data-lang="ru" class="active">Все 7 курсов — пакет</span><span data-lang="ua">Усі 7 курсів — пакет</span><span data-lang="en">All 7 Courses Bundle</span></a></li>
+          <li><a href="kolomietssa-academy.html#filter=base"><span data-lang="ru" class="active">Базовые курсы</span><span data-lang="ua">Базові курси</span><span data-lang="en">Foundation Courses</span></a></li>
+          <li><a href="kolomietssa-academy.html#filter=adv"><span data-lang="ru" class="active">Продвинутые курсы</span><span data-lang="ua">Просунуті курси</span><span data-lang="en">Advanced Courses</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title footer-col-title--cyan">
+          ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-club.html">Trading Insider &amp; Business Club</a></li>
+          <li><a href="kolomietssa-club.html#inside"><span data-lang="ru" class="active">Что внутри клуба</span><span data-lang="ua">Що всередині клубу</span><span data-lang="en">What's Inside</span></a></li>
+          <li><a href="kolomietssa-club.html#pricing"><span data-lang="ru" class="active">Тарифы клуба</span><span data-lang="ua">Тарифи клубу</span><span data-lang="en">Club Pricing</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Услуги &amp; Инвестиции</span>
+          <span data-lang="ua">Послуги &amp; Інвестиції</span>
+          <span data-lang="en">Services &amp; Invest</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-services.html"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a></li>
+          <li><a href="kolomietssa-services.html#mentorship"><span data-lang="ru" class="active">Наставничество</span><span data-lang="ua">Наставництво</span><span data-lang="en">Mentorship</span></a></li>
+          <li><a href="kolomietssa-invest.html"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Investments</span></a></li>
+          <li><a href="kolomietssa-invest.html#family-office">Family Office · $1M+</a></li>
+          <li><a href="kolomietssa-invest.html#fund"><span data-lang="ru" class="active">Управляемый фонд</span><span data-lang="ua">Керований фонд</span><span data-lang="en">Managed Fund</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Медиа</span>
+          <span data-lang="ua">Медіа</span>
+          <span data-lang="en">Media</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-blog.html"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a></li>
+          <li><a href="kolomietssa-news.html"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a></li>
+          <li><a href="kolomietssa-dashboard.html"><span data-lang="ru" class="active">Личный кабинет</span><span data-lang="ua">Особистий кабінет</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="kolomietssa-login.html"><span data-lang="ru" class="active">Войти / Регистрация</span><span data-lang="ua">Увійти / Реєстрація</span><span data-lang="en">Sign In / Register</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Правовая информация</span>
+          <span data-lang="ua">Правова інформація</span>
+          <span data-lang="en">Legal</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="kolomietssa-terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="kolomietssa-privacy.html">Privacy &amp; Cookies</a></li>
+          <li><a href="kolomietssa-financial-disclaimer.html"><span data-lang="ru" class="active">Предупреждение о рисках</span><span data-lang="ua">Попередження про ризики</span><span data-lang="en">Risk Disclaimer</span></a></li>
+          <li><a href="kolomietssa-refund.html"><span data-lang="ru" class="active">Политика возвратов</span><span data-lang="ua">Політика повернень</span><span data-lang="en">Refund Policy</span></a></li>
+          <li><a href="kolomietssa-legal-notice.html">Legal Notice / Impressum</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Risk disclaimer — above copyright ── -->
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="kolomietssa-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="kolomietssa-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="kolomietssa-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+
+  <!-- ── Bottom bar ── -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">KOLOMIETSSA</div>
+    <div class="footer-bottom-copy">
+      © 2026 KOLOMIETSSA ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="kolomietssa-terms.html">Terms</a>
+      <a href="kolomietssa-privacy.html">Privacy</a>
+      <a href="kolomietssa-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="kolomietssa-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="kolomietssa-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+
+</footer>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('out'), 1000);
+  });
+
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  document.addEventListener('mousemove', e => {
+    cur.style.left  = e.clientX + 'px';
+    cur.style.top   = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+  });
+
+  const hdr = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  let currentLang = 'ru';
+  const drop = document.getElementById('lang-drop');
+  const label = document.getElementById('lang-label');
+  function toggleLang(e) { e.stopPropagation(); drop.classList.toggle('open'); }
+  function setLang(lang) {
+    currentLang = lang;
+    label.textContent = lang.toUpperCase();
+    drop.classList.remove('open');
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+    document.querySelectorAll('.lang-opt').forEach(btn => {
+      btn.style.display = btn.textContent.trim().toLowerCase() === lang ? 'none' : 'block';
+    });
+  }
+  document.addEventListener('click', () => drop.classList.remove('open'));
+  document.querySelector('.lang-opt').style.display = 'none';
+
+  const mob = document.getElementById('mob-menu');
+  function toggleMob() { mob.style.display === 'flex' ? closeMob() : openMob(); }
+  function openMob()  { mob.style.display = 'flex'; }
+  function closeMob() { mob.style.display = 'none'; }
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      btn.querySelector('.auth-label-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      btn.querySelector('.auth-label-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      btn.querySelector('.auth-label-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      var svgPath = btn.querySelector('svg path');
+      if (svgPath) svgPath.setAttribute('d', isLogged
+        ? 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9'
+        : 'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3');
+      if (isLogged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.reload(); };
+      } else { btn.onclick = null; }
+    }
+    if (mobBtn) {
+      mobBtn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      mobBtn.querySelector('.mob-auth-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      mobBtn.querySelector('.mob-auth-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      mobBtn.querySelector('.mob-auth-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        mobBtn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.reload(); };
+      } else { mobBtn.onclick = null; }
+    }
+  }
+  setAuthUI(!!logged);
+})();
+</script>
+</body>
+</html>

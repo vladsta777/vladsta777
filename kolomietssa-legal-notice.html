@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Notice / Impressum — KOLOMIETSSA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b8975a; --gold-bright: #d4b278; --gold-dim: rgba(184,151,90,.12);
+      --text: #f0ede8; --text-2: #9a9488; --text-3: #4a4640;
+      --border: rgba(184,151,90,.14);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Outfit', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #050403; overflow-x: hidden; }
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 9500; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(5,4,3,.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .45em; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: .6rem; }
+    .logo-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+    .h-nav { display: flex; gap: 2rem; align-items: center; }
+    .h-nav a { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); text-decoration: none; transition: color .2s; }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav-club { border: 1px solid rgba(184,151,90,.3); padding: .28rem .8rem; color: var(--gold) !important; }
+    .h-cta { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: #000; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); padding: .65rem 1.4rem; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition: opacity .2s; }
+    .h-cta:hover { opacity: .85; }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; background: none; border: none; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); }
+    @media(max-width:900px) { .h-nav { display: none; } .h-burger { display: flex; } header { padding: .9rem 1.2rem; } }
+    .page-hero { padding: 9rem 3rem 4rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(184,151,90,.06), transparent 65%); pointer-events: none; }
+    .hero-label { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
+    .hero-subtitle { font-size: .85rem; color: var(--text-2); line-height: 1.7; max-width: 560px; }
+    @media(max-width:900px) { .page-hero { padding: 7rem 1.4rem 3rem; } }
+
+    /* ── Layout ── */
+    .notice-layout { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem 6rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    @media(max-width:900px) { .notice-layout { grid-template-columns: 1fr; padding: 2.5rem 1.4rem 4rem; gap: 2rem; } }
+
+    /* ── Cards ── */
+    .notice-card { border: 1px solid var(--border); background: rgba(184,151,90,.025); padding: 2rem; }
+    .notice-card-full { grid-column: 1 / -1; }
+    .nc-label { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; padding-bottom: .7rem; border-bottom: 1px solid rgba(184,151,90,.15); }
+    .nc-row { display: flex; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid rgba(184,151,90,.05); align-items: flex-start; }
+    .nc-row:last-child { border-bottom: none; }
+    .nc-key { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .1em; color: var(--text-3); flex: 0 0 130px; padding-top: .05rem; }
+    .nc-val { font-size: .88rem; color: rgba(240,237,232,.82); line-height: 1.55; flex: 1; }
+    .nc-val a { color: var(--gold); text-decoration: none; }
+    .nc-val a:hover { text-decoration: underline; }
+
+    /* ── ODR Section ── */
+    .odr-box { border: 1px solid rgba(184,151,90,.3); background: rgba(184,151,90,.05); padding: 2rem; margin-top: 1rem; }
+    .odr-title { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .odr-body { font-size: .88rem; line-height: 1.8; color: rgba(240,237,232,.75); }
+    .odr-body a { color: var(--gold); }
+    .odr-link { display: inline-block; margin-top: 1rem; font-family: var(--font-mono); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: #000; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); padding: .65rem 1.4rem; text-decoration: none; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition: opacity .2s; }
+    .odr-link:hover { opacity: .85; }
+
+    /* ── Legal Docs index ── */
+    .docs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-top: .5rem; }
+    @media(max-width:600px) { .docs-grid { grid-template-columns: 1fr; } }
+    .doc-link { display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); padding: .9rem 1.1rem; text-decoration: none; transition: border-color .2s, background .2s; }
+    .doc-link:hover { border-color: rgba(184,151,90,.4); background: rgba(184,151,90,.05); }
+    .doc-link-name { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-2); }
+    .doc-link:hover .doc-link-name { color: var(--gold); }
+    .doc-link-arrow { color: var(--text-3); font-size: .8rem; }
+
+    /* ── Disclaimer ── */
+    .legal-content { max-width: 1100px; margin: 0 auto; padding: 0 3rem 5rem; }
+    @media(max-width:900px) { .legal-content { padding: 0 1.4rem 4rem; } }
+    .legal-content section { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(184,151,90,.07); }
+    .legal-content section:last-child { border-bottom: none; }
+    .section-num { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: .5rem; }
+    .section-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 400; margin-bottom: 1.1rem; }
+    .legal-content p { font-size: .88rem; line-height: 1.85; color: rgba(240,237,232,.75); margin-bottom: .9rem; }
+    .legal-content p:last-child { margin-bottom: 0; }
+
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-bottom { padding: 1.6rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } }
+    #mob-menu { display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem; }
+    #mob-menu nav { display:flex;flex-direction:column;align-items:center;gap:1.8rem; }
+    #mob-menu nav a { font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none; }
+    #mob-menu nav a.club-link { color:#b8975a;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem; }
+    #mob-close { font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer; }
+  
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-risk { padding: 1.2rem 3rem; border-top: 1px solid rgba(184,151,90,.08); }
+    .footer-risk-text { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em; line-height: 1.8; color: var(--text-3); max-width: 1100px; }
+    .footer-risk-text a { color: rgba(184,151,90,.4); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom { padding: 1.4rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid var(--border); }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } .footer-risk { padding: 1rem 1.4rem; } }
+  </style>
+</head>
+<body>
+
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="kolomietssa-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="kolomietssa-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="kolomietssa-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="kolomietssa-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="kolomietssa-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="kolomietssa-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="kolomietssa-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    KOLOMIETSSA
+  </a>
+
+  <nav class="h-nav">
+    <a href="kolomietssa-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="kolomietssa-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="kolomietssa-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="kolomietssa-invest.html">
+      <span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="kolomietssa-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="kolomietssa-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <!-- Language dropdown -->
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <a href="kolomietssa-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+
+
+<div class="page-hero">
+  <div class="hero-label">Legal Documentation</div>
+  <h1 class="hero-title">Legal Notice<br><em>Impressum</em></h1>
+  <p class="hero-subtitle">Company details, registered information, contact data, and regulatory disclosures required by EU law. ODR platform access is provided below.</p>
+</div>
+
+<!-- Company Details Grid -->
+<div class="notice-layout">
+
+  <!-- Company Identity -->
+  <div class="notice-card">
+    <div class="nc-label">Company Identity</div>
+    <div class="nc-row"><div class="nc-key">Company Name</div><div class="nc-val">KOLOMIETSSA</div></div>
+    <div class="nc-row"><div class="nc-key">Trading Name</div><div class="nc-val">KOLOMIETSSA — Trading. Business. Capital.</div></div>
+    <div class="nc-row"><div class="nc-key">Legal Form</div><div class="nc-val">Limited Liability Company (LLC)</div></div>
+    <div class="nc-row"><div class="nc-key">Registration No.</div><div class="nc-val">XXXXXXXX-X-XX</div></div>
+    <div class="nc-row"><div class="nc-key">VAT Number</div><div class="nc-val">EU XXX XXX XXX</div></div>
+    <div class="nc-row"><div class="nc-key">Founded</div><div class="nc-val">2021</div></div>
+    <div class="nc-row"><div class="nc-key">Industry</div><div class="nc-val">Financial Education &amp; Investment Consulting</div></div>
+  </div>
+
+  <!-- Registered Address -->
+  <div class="notice-card">
+    <div class="nc-label">Registered Address</div>
+    <div class="nc-row"><div class="nc-key">Street</div><div class="nc-val">Registered Office Address, Suite 100</div></div>
+    <div class="nc-row"><div class="nc-key">City</div><div class="nc-val">Business City</div></div>
+    <div class="nc-row"><div class="nc-key">Postal Code</div><div class="nc-val">00000</div></div>
+    <div class="nc-row"><div class="nc-key">Country</div><div class="nc-val">European Union Member State</div></div>
+    <div class="nc-row"><div class="nc-key">Court</div><div class="nc-val">Registered at the Commercial Court of the applicable jurisdiction</div></div>
+  </div>
+
+  <!-- Contact Information -->
+  <div class="notice-card">
+    <div class="nc-label">Contact Information</div>
+    <div class="nc-row"><div class="nc-key">General</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#365f585059765d595a595b5f53424545571855595b"><span class="__cf_email__" data-cfemail="85ecebe3eac5eeeae9eae8ece0f1f6f6e4abe6eae8">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Support</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#05767075756a7771456e6a696a686c60717676642b666a68"><span class="__cf_email__" data-cfemail="a8dbddd8d8c7dadce8c3c7c4c7c5c1cddcdbdbc986cbc7c5">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Legal</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#137f7674727f53787c7f7c7e7a76676060723d707c7e"><span class="__cf_email__" data-cfemail="721e1715131e32191d1e1d1f1b17060101135c111d1f">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Privacy / DPO</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#97e7e5fee1f6f4eed7fcf8fbf8fafef2e3e4e4f6b9f4f8fa"><span class="__cf_email__" data-cfemail="a0d0d2c9d6c1c3d9e0cbcfcccfcdc9c5d4d3d3c18ec3cfcd">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Refunds</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#ddafb8bba8b3b9ae9db6b2b1b2b0b4b8a9aeaebcf3beb2b0"><span class="__cf_email__" data-cfemail="790b1c1f0c171d0a391216151614101c0d0a0a18571a1614">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Press / Media</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#f49991909d95b49f9b989b999d9180878795da979b99"><span class="__cf_email__" data-cfemail="c7aaa2a3aea687aca8aba8aaaea2b3b4b4a6e9a4a8aa">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Telegram</div><div class="nc-val"><a href="https://t.me/kolomietssa" target="_blank">t.me/kolomietssa</a></div></div>
+    <div class="nc-row"><div class="nc-key">Response Time</div><div class="nc-val">Within 2 business days</div></div>
+  </div>
+
+  <!-- Management & Responsible Person -->
+  <div class="notice-card">
+    <div class="nc-label">Management &amp; Responsibility</div>
+    <div class="nc-row"><div class="nc-key">Managing Director</div><div class="nc-val">A. Kolomietssa</div></div>
+    <div class="nc-row"><div class="nc-key">Responsible for Content</div><div class="nc-val">A. Kolomietssa (pursuant to applicable EU electronic commerce law)</div></div>
+    <div class="nc-row"><div class="nc-key">Data Protection Officer</div><div class="nc-val"><a href="/cdn-cgi/l/email-protection#cbbbb9a2bdaaa8b28ba0a4a7a4a6a2aebfb8b8aae5a8a4a6"><span class="__cf_email__" data-cfemail="4c3c3e253a2d2f350c27232023212529383f3f2d622f2321">[email&#160;protected]</span></a></div></div>
+    <div class="nc-row"><div class="nc-key">Supervisory Authority</div><div class="nc-val">National data protection supervisory authority of the jurisdiction of incorporation</div></div>
+    <div class="nc-row"><div class="nc-key">Website</div><div class="nc-val"><a href="https://kolomietssa.com" target="_blank">kolomietssa.com</a></div></div>
+  </div>
+
+  <!-- ODR Platform — full width -->
+  <div class="notice-card notice-card-full">
+    <div class="nc-label">Online Dispute Resolution (ODR) — EU Regulation 524/2013</div>
+    <div class="odr-box">
+      <div class="odr-title">EU Online Dispute Resolution Platform</div>
+      <div class="odr-body">
+        <p>In accordance with Regulation (EU) No 524/2013 of the European Parliament and of the Council on online dispute resolution for consumer disputes, KOLOMIETSSA provides the following link to the European Commission's Online Dispute Resolution (ODR) platform.</p>
+        <p style="margin-top:.8rem;">EU consumers have the right to use the ODR platform to resolve disputes relating to online purchases of goods and services. The ODR platform provides access to national dispute resolution bodies that are independent, impartial, transparent, effective, fast, and fair.</p>
+        <p style="margin-top:.8rem;"><strong>KOLOMIETSSA's email address for ODR purposes:</strong> <a href="/cdn-cgi/l/email-protection#4b272e2c2a270b2024272426222e3f38382a65282426" style="color:var(--gold)"><span class="__cf_email__" data-cfemail="b9d5dcded8d5f9d2d6d5d6d4d0dccdcacad897dad6d4">[email&#160;protected]</span></a></p>
+        <a href="https://ec.europa.eu/consumers/odr" target="_blank" class="odr-link">
+          Access EU ODR Platform →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Documents Index — full width -->
+  <div class="notice-card notice-card-full">
+    <div class="nc-label">Legal Documentation Index</div>
+    <div class="docs-grid">
+      <a href="kolomietssa-terms.html" class="doc-link">
+        <span class="doc-link-name">Terms &amp; Conditions</span>
+        <span class="doc-link-arrow">→</span>
+      </a>
+      <a href="kolomietssa-privacy.html" class="doc-link">
+        <span class="doc-link-name">Privacy &amp; Cookie Policy</span>
+        <span class="doc-link-arrow">→</span>
+      </a>
+      <a href="kolomietssa-financial-disclaimer.html" class="doc-link">
+        <span class="doc-link-name">Financial Disclaimers &amp; Risk Disclosure</span>
+        <span class="doc-link-arrow">→</span>
+      </a>
+      <a href="kolomietssa-refund.html" class="doc-link">
+        <span class="doc-link-name">Refund Policy</span>
+        <span class="doc-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Additional Legal Disclosures -->
+<div class="legal-content">
+
+  <section>
+    <div class="section-num">Disclaimer</div>
+    <h2 class="section-title">Disclaimer of Liability for External Links</h2>
+    <p>This website contains hyperlinks to external third-party websites. KOLOMIETSSA has no control over the content, availability, or data protection practices of linked external sites and expressly disclaims all liability for the content of such sites. At the time hyperlinks were created, no unlawful content was identifiable on the linked pages. Should unlawful content on linked pages become known to us, we will remove the relevant hyperlinks immediately.</p>
+  </section>
+
+  <section>
+    <div class="section-num">Copyright</div>
+    <h2 class="section-title">Copyright &amp; Intellectual Property</h2>
+    <p>All content published on this website — including but not limited to text, graphics, course materials, videos, logos, trademarks, and analytical content — is protected by copyright and intellectual property law. Reproduction, distribution, or use of any content beyond the permitted scope requires prior written consent from KOLOMIETSSA. Unauthorised use of Platform content may constitute copyright infringement and will be pursued accordingly.</p>
+  </section>
+
+  <section>
+    <div class="section-num">Regulatory</div>
+    <h2 class="section-title">Regulatory &amp; Financial Services Disclosure</h2>
+    <p>KOLOMIETSSA operates as a financial education and consulting entity. Unless explicitly confirmed in writing as part of a separate regulated service engagement, KOLOMIETSSA does not provide regulated investment advice, portfolio management, or brokerage services within the meaning of the EU Markets in Financial Instruments Directive II (MiFID II) or any equivalent national legislation.</p>
+    <p>All educational content, market analysis, and consulting services are provided for informational and educational purposes only and do not constitute a personal recommendation or solicitation to trade. Users are advised to seek regulated financial advice appropriate to their individual circumstances before making investment decisions.</p>
+    <p>KOLOMIETSSA's payment processing services are provided exclusively by Stripe, Inc., a licensed and regulated payment service provider. KOLOMIETSSA does not handle, store, or process payment card data directly.</p>
+  </section>
+
+  <section>
+    <div class="section-num">Governing Law</div>
+    <h2 class="section-title">Applicable Law</h2>
+    <p>This Legal Notice and all matters related to the operation of KOLOMIETSSA's website and services are governed by the laws of the European Union and the applicable national laws of the jurisdiction in which KOLOMIETSSA is incorporated. The applicability of EU consumer protection regulations to consumers resident in other EU member states is expressly acknowledged and shall not be limited by this provision.</p>
+    <p>Last reviewed and updated: <strong>1 March 2026</strong></p>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="kolomietssa-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="kolomietssa-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="kolomietssa-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">KOLOMIETSSA</div>
+    <div class="footer-bottom-copy">
+      © 2026 KOLOMIETSSA ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="index.html"><span data-lang="ru" class="active">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
+      <a href="kolomietssa-terms.html">Terms</a>
+      <a href="kolomietssa-privacy.html">Privacy</a>
+      <a href="kolomietssa-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="kolomietssa-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="kolomietssa-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  function closeMob() {
+    var m = document.getElementById('mob-menu');
+    if(m){ m.style.display='none'; m.style.flexDirection=''; }
+  }
+  function toggleMob() {
+    var m = document.getElementById('mob-menu');
+    if(!m) return;
+    var open = m.style.display === 'flex';
+    m.style.display = open ? 'none' : 'flex';
+    if(!open) m.style.flexDirection = 'column';
+  }
+  function setLang(lang) {
+    localStorage.setItem('ksa_lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+    var ldrop = document.getElementById('lang-drop');
+    if(ldrop) ldrop.classList.remove('open');
+  }
+  function toggleLang(e) {
+    e.stopPropagation();
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.remove('open');
+  });
+  (function initLang() {
+    var lang = localStorage.getItem('ksa_lang') || 'ru';
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+  })();
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'ko

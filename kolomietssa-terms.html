@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions — KOLOMIETSSA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b8975a; --gold-bright: #d4b278; --gold-dim: rgba(184,151,90,.12);
+      --text: #f0ede8; --text-2: #9a9488; --text-3: #4a4640;
+      --border: rgba(184,151,90,.14); --surface: rgba(10,9,8,.82);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Outfit', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #050403; overflow-x: hidden; }
+
+    /* ── Header ── */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 9500; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: rgba(5,4,3,.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    .logo { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .45em; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: .6rem; }
+    .logo-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+    .h-nav { display: flex; gap: 2rem; align-items: center; }
+    .h-nav a { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); text-decoration: none; transition: color .2s; }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav-club { border: 1px solid rgba(184,151,90,.3); padding: .28rem .8rem; color: var(--gold) !important; }
+    .h-cta { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: #000; background: linear-gradient(135deg, var(--gold-bright), var(--gold)); padding: .65rem 1.4rem; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%); transition: opacity .2s; }
+    .h-cta:hover { opacity: .85; }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; background: none; border: none; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); }
+    @media(max-width:900px) { .h-nav { display: none; } .h-burger { display: flex; } header { padding: .9rem 1.2rem; } }
+
+    /* ── Page Hero ── */
+    .page-hero { padding: 9rem 3rem 4rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(184,151,90,.06), transparent 65%); pointer-events: none; }
+    .hero-label { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
+    .hero-subtitle { font-size: .85rem; color: var(--text-2); line-height: 1.7; max-width: 600px; }
+    .hero-meta { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+    .hero-meta-item { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-3); }
+    .hero-meta-item span { color: var(--text-2); }
+
+    /* ── Layout ── */
+    .legal-layout { display: grid; grid-template-columns: 240px 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 6rem; }
+    @media(max-width:900px) { .legal-layout { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.4rem 4rem; } }
+
+    /* ── TOC Sidebar ── */
+    .toc { position: sticky; top: 7rem; align-self: start; }
+    .toc-title { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+    .toc-list a { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; color: var(--text-3); text-decoration: none; padding: .3rem .5rem; display: block; border-left: 1px solid transparent; transition: color .2s, border-color .2s, padding-left .2s; }
+    .toc-list a:hover { color: var(--gold); border-left-color: var(--gold); padding-left: .8rem; }
+    @media(max-width:900px) { .toc { position: static; background: rgba(184,151,90,.04); border: 1px solid var(--border); padding: 1.2rem; } }
+
+    /* ── Content ── */
+    .legal-content section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(184,151,90,.07); }
+    .legal-content section:last-child { border-bottom: none; }
+    .section-num { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: .6rem; }
+    .section-title { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; margin-bottom: 1.4rem; line-height: 1.2; }
+    .legal-content p { font-size: .9rem; line-height: 1.85; color: rgba(240,237,232,.78); margin-bottom: 1rem; }
+    .legal-content p:last-child { margin-bottom: 0; }
+    .legal-content h4 { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); margin: 1.6rem 0 .7rem; }
+    .legal-content ul, .legal-content ol { padding-left: 1.4rem; margin-bottom: 1rem; }
+    .legal-content li { font-size: .88rem; line-height: 1.8; color: rgba(240,237,232,.75); margin-bottom: .4rem; }
+    .callout { background: rgba(184,151,90,.06); border: 1px solid rgba(184,151,90,.2); border-left: 3px solid var(--gold); padding: 1.2rem 1.4rem; margin: 1.4rem 0; }
+    .callout p { font-size: .84rem; color: var(--text-2); margin: 0; }
+    .callout strong { color: var(--gold); }
+    .stripe-badge { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .15em; color: var(--text-3); border: 1px solid var(--border); padding: .35rem .8rem; margin-top: .8rem; }
+
+    /* Mobile menu */
+    #mob-menu { display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem; }
+    #mob-menu nav { display:flex;flex-direction:column;align-items:center;gap:1.8rem; }
+    #mob-menu nav a { font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none; }
+    #mob-menu nav a.club-link { color:#b8975a;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem; }
+    #mob-close { font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer; }
+  
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-risk { padding: 1.2rem 3rem; border-top: 1px solid rgba(184,151,90,.08); }
+    .footer-risk-text { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em; line-height: 1.8; color: var(--text-3); max-width: 1100px; }
+    .footer-risk-text a { color: rgba(184,151,90,.4); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom { padding: 1.4rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid var(--border); }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } .footer-risk { padding: 1rem 1.4rem; } }
+  </style>
+</head>
+<body>
+
+<!-- Mobile menu -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="kolomietssa-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="kolomietssa-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="kolomietssa-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="kolomietssa-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="kolomietssa-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="kolomietssa-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="kolomietssa-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    KOLOMIETSSA
+  </a>
+
+  <nav class="h-nav">
+    <a href="kolomietssa-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="kolomietssa-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="kolomietssa-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="kolomietssa-invest.html">
+      <span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="kolomietssa-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="kolomietssa-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <!-- Language dropdown -->
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <a href="kolomietssa-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="hero-label">Legal Documentation</div>
+  <h1 class="hero-title">Terms &amp; Conditions</h1>
+  <p class="hero-subtitle">These Terms and Conditions govern your access to and use of all services, digital products, subscriptions, and educational content provided by KOLOMIETSSA. Please read carefully before proceeding.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Effective Date: <span>1 January 2025</span></div>
+    <div class="hero-meta-item">Last Updated: <span>1 March 2026</span></div>
+    <div class="hero-meta-item">Version: <span>3.2</span></div>
+    <div class="hero-meta-item">Jurisdiction: <span>European Union</span></div>
+  </div>
+</div>
+
+<div class="legal-layout">
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#s1">1. Definitions &amp; Parties</a></li>
+      <li><a href="#s2">2. Scope of Services</a></li>
+      <li><a href="#s3">3. Account Registration</a></li>
+      <li><a href="#s4">4. Acceptable Use Policy</a></li>
+      <li><a href="#s5">5. Club Subscription</a></li>
+      <li><a href="#s6">6. Academy Courses</a></li>
+      <li><a href="#s7">7. Digital Content Delivery</a></li>
+      <li><a href="#s8">8. Payment &amp; Billing</a></li>
+      <li><a href="#s9">9. Intellectual Property</a></li>
+      <li><a href="#s10">10. Limitation of Liability</a></li>
+      <li><a href="#s11">11. Governing Law</a></li>
+      <li><a href="#s12">12. Amendments</a></li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <article class="legal-content">
+
+    <section id="s1">
+      <div class="section-num">Section 01</div>
+      <h2 class="section-title">Definitions &amp; Parties</h2>
+      <p>These Terms and Conditions ("Agreement") constitute a legally binding contract between you ("User", "Client", "Subscriber") and KOLOMIETSSA ("Company", "we", "us", "our"), a financial education and consulting entity operating under European Union law.</p>
+      <h4>Key Definitions</h4>
+      <ul>
+        <li><strong>"Services"</strong> — all educational courses, subscription-based club access, investment consulting, digital content, newsletters, webinars, and analytical materials provided by KOLOMIETSSA.</li>
+        <li><strong>"Platform"</strong> — the website kolomietssa.com and all associated subdomains, mobile applications, and client dashboard interfaces.</li>
+        <li><strong>"Digital Content"</strong> — any downloadable files, video recordings, live or recorded sessions, PDF materials, trading templates, indicator files, or other electronically delivered goods.</li>
+        <li><strong>"Subscription"</strong> — a recurring billing arrangement granting access to the Trading Insider &amp; Business Club at the selected tier.</li>
+        <li><strong>"Academy"</strong> — the KOLOMIETSSA educational module offering structured courses in trading, investment, and financial markets.</li>
+        <li><strong>"Stripe"</strong> — the third-party payment processing service operated by Stripe, Inc., used to facilitate all financial transactions on the Platform.</li>
+      </ul>
+      <p>By accessing the Platform, creating an account, purchasing any product, or engaging with any Service, you irrevocably accept this Agreement in its entirety. If you do not agree, you must immediately discontinue use of the Platform.</p>
+    </section>
+
+    <section id="s2">
+      <div class="section-num">Section 02</div>
+      <h2 class="section-title">Scope of Services</h2>
+      <p>KOLOMIETSSA provides a multi-product financial education ecosystem comprising the following distinct service categories:</p>
+      <h4>2.1 Educational Services (Academy)</h4>
+      <p>The Academy offers a curated library of structured trading and investment courses delivered exclusively in digital format. Course content includes pre-recorded video lectures, accompanying written materials, practical exercises, model portfolios, and downloadable resources. All educational content is intended solely for informational and instructional purposes and does not constitute financial advice.</p>
+      <h4>2.2 Club Membership (Trading Insider &amp; Business Club)</h4>
+      <p>The Club provides subscribers with access to a private community platform, real-time market analysis, curated trading signals for informational purposes, business networking features, gamification elements, and exclusive live sessions. Club membership is available at multiple subscription tiers as published on the pricing page.</p>
+      <h4>2.3 Investment Consulting &amp; Services</h4>
+      <p>KOLOMIETSSA offers individual and institutional consulting services in the domains of wealth management, portfolio structuring, and investment strategy. Consulting engagements are governed by separate service agreements and are subject to minimum asset thresholds as specified in the relevant service description. These services do not constitute regulated investment advice unless expressly stated and confirmed in writing.</p>
+      <h4>2.4 Service Availability</h4>
+      <p>We strive to ensure continuous availability of the Platform. However, we reserve the right to perform scheduled maintenance, updates, or emergency repairs that may result in temporary service interruptions. We shall not be liable for any loss arising from unavailability periods not exceeding 48 consecutive hours per calendar month.</p>
+    </section>
+
+    <section id="s3">
+      <div class="section-num">Section 03</div>
+      <h2 class="section-title">Account Registration &amp; Eligibility</h2>
+      <p>To access the full range of Services, you are required to register a personal account on the Platform. You represent and warrant that:</p>
+      <ul>
+        <li>You are at least 18 years of age or the age of majority in your jurisdiction, whichever is higher;</li>
+        <li>You have full legal capacity to enter into binding contracts under the laws of your country of residence;</li>
+        <li>All registration information you provide is truthful, accurate, current, and complete;</li>
+        <li>You will maintain the accuracy of your account information and promptly update it if any details change;</li>
+        <li>You are not subject to any sanctions, embargoes, or legal restrictions that would prohibit your use of the Services;</li>
+        <li>Your use of the Services does not violate any applicable law or regulation in your jurisdiction.</li>
+      </ul>
+      <h4>Account Security</h4>
+      <p>You are solely responsible for maintaining the confidentiality of your account credentials. You agree to notify us immediately at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6aaa3a1a7aa86ada9aaa9abafa3b2b5b5a7e8a5a9ab">[email&#160;protected]</a> upon becoming aware of any unauthorized access to or use of your account. KOLOMIETSSA shall not be liable for any loss or damage arising from your failure to comply with these security obligations.</p>
+      <div class="callout">
+        <p><strong>Important:</strong> KOLOMIETSSA will never request your password via email, chat, or any communication channel. If you receive such a request, treat it as a phishing attempt and report it immediately.</p>
+      </div>
+    </section>
+
+    <section id="s4">
+      <div class="section-num">Section 04</div>
+      <h2 class="section-title">Acceptable Use Policy</h2>
+      <p>Your use of the Platform and all Services is subject to the following conduct standards. Violation of this policy may result in immediate suspension or permanent termination of your account without prior notice and without entitlement to any refund.</p>
+      <h4>4.1 Prohibited Activities</h4>
+      <p>You expressly agree not to engage in or facilitate any of the following activities:</p>
+      <ul>
+        <li>Reproducing, distributing, selling, sublicensing, or publicly displaying any portion of the Platform's content, course materials, or proprietary analysis without explicit written authorisation from KOLOMIETSSA;</li>
+        <li>Sharing account credentials with third parties, including family members, colleagues, or any other individuals not registered as authorised users;</li>
+        <li>Using automated tools, bots, scrapers, or scripts to access, collect, or extract data from the Platform;</li>
+        <li>Attempting to gain unauthorised access to any section of the Platform, database, or server infrastructure;</li>
+        <li>Uploading or transmitting malware, viruses, or any malicious code to the Platform;</li>
+        <li>Engaging in harassment, abuse, defamation, or any behaviour that disrupts the community experience for other users;</li>
+        <li>Impersonating KOLOMIETSSA staff, instructors, or other Platform users;</li>
+        <li>Using insights derived from Club signals or educational content to engage in market manipulation or any activity constituting market abuse under applicable law;</li>
+        <li>Circumventing, disabling, or interfering with any security features or digital rights management measures of the Platform.</li>
+      </ul>
+      <h4>4.2 Community Standards</h4>
+      <p>Users participating in any interactive features of the Platform, including Club discussion forums, live session chats, or community boards, must adhere to a standard of professional and respectful conduct. Content that is offensive, discriminatory, misleading, or unlawful will be removed without notice. Repeated violations will result in permanent account termination.</p>
+    </section>
+
+    <section id="s5">
+      <div class="section-num">Section 05</div>
+      <h2 class="section-title">Club Subscription — Terms, Renewal &amp; Cancellation</h2>
+      <p>Membership in the Trading Insider &amp; Business Club is provided on a recurring subscription basis. The following terms apply to all Club subscriptions regardless of the selected tier.</p>
+      <h4>5.1 Subscription Tiers &amp; Billing Cycles</h4>
+      <p>Club subscriptions are available on monthly and annual billing cycles at pricing published on the Club page. Annual subscriptions are billed as a single lump sum and carry a discount over the equivalent monthly rate. All prices are stated inclusive of applicable VAT where required by law.</p>
+      <h4>5.2 Automatic Renewal</h4>
+      <p>All subscriptions renew automatically at the end of each billing period unless cancelled prior to the renewal date. By subscribing, you expressly authorise KOLOMIETSSA to charge your saved payment method via Stripe for the applicable renewal fee. You will receive an email reminder no fewer than 7 days before any annual subscription renewal.</p>
+      <h4>5.3 Cancellation Policy</h4>
+      <p>You may cancel your subscription at any time through your Account Dashboard or by contacting <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdcec8cdcdd2cfc9fdd6d2d1d2d0d4d8c9cecedc93ded2d0">[email&#160;protected]</a>. Cancellation takes effect at the end of the current billing period — you retain full access to Club benefits until that date. KOLOMIETSSA does not provide pro-rata refunds for the unused portion of any billing period unless required by applicable consumer protection law.</p>
+      <h4>5.4 Price Changes</h4>
+      <p>KOLOMIETSSA reserves the right to modify subscription pricing with no less than 30 days' written notice to active subscribers via email. Your continued use of the Club after the effective date of a price change constitutes your acceptance of the new pricing. If you do not accept the new pricing, you must cancel prior to the renewal date.</p>
+      <div class="callout">
+        <p><strong>Stripe Processing:</strong> All recurring billing is handled securely by Stripe. KOLOMIETSSA does not store your full card number or CVV. Your payment information is tokenised and managed exclusively by Stripe in accordance with PCI DSS Level 1 standards.</p>
+      </div>
+      <div class="stripe-badge">🔒 Powered by Stripe · PCI DSS Compliant</div>
+    </section>
+
+    <section id="s6">
+      <div class="section-num">Section 06</div>
+      <h2 class="section-title">Academy Courses — Purchase Terms</h2>
+      <p>Academy courses are sold as individual lifetime-access products or as bundled packages. The following terms govern all course purchases.</p>
+      <h4>6.1 Licence Grant</h4>
+      <p>Upon completing payment for a course, KOLOMIETSSA grants you a non-exclusive, non-transferable, revocable licence to access and consume the course content for your own personal educational purposes. This licence does not grant you any ownership rights in the course content.</p>
+      <h4>6.2 Access Duration</h4>
+      <p>"Lifetime access" means access for as long as KOLOMIETSSA continues to make the relevant course available on the Platform. KOLOMIETSSA reserves the right to retire, update, or merge courses. In the event a course is permanently retired, you will be notified at least 60 days in advance and offered a credit of equivalent value.</p>
+      <h4>6.3 Personal Use Only</h4>
+      <p>Course access is strictly personal. You may not resell, redistribute, duplicate, or share course materials. Violation of this provision constitutes copyright infringement and may result in legal action in addition to immediate account termination.</p>
+    </section>
+
+    <section id="s7">
+      <div class="section-num">Section 07</div>
+      <h2 class="section-title">Digital Content Delivery Policy</h2>
+      <p>All products sold through the Platform are delivered exclusively in digital format. No physical goods are offered or delivered.</p>
+      <h4>7.1 Delivery Method</h4>
+      <p>Upon successful payment confirmation from Stripe, digital access is granted automatically within the Platform dashboard. You will receive a confirmation email to your registered address. Downloadable files (PDFs, templates, indicators) are made available through secure links within the Dashboard or by email attachment.</p>
+      <h4>7.2 Technical Requirements</h4>
+      <p>You are responsible for ensuring that your device, browser, and internet connection meet the minimum technical requirements to access digital content. KOLOMIETSSA is not liable for any inability to access content arising from your own technical deficiencies.</p>
+      <h4>7.3 Consumer Right of Withdrawal</h4>
+      <p>In accordance with EU Directive 2011/83/EU on Consumer Rights, users who purchase digital content expressly agree that delivery commences immediately upon purchase and thereby waive their 14-day statutory right of withdrawal. This waiver is confirmed during the checkout process. This provision does not affect your rights under any separate Refund Policy maintained by KOLOMIETSSA.</p>
+    </section>
+
+    <section id="s8">
+      <div class="section-num">Section 08</div>
+      <h2 class="section-title">Payment, Billing &amp; Taxes</h2>
+      <p>All financial transactions on the Platform are processed by Stripe, Inc. ("Stripe"). By making a purchase, you agree to Stripe's Terms of Service and Privacy Policy in addition to this Agreement.</p>
+      <h4>8.1 Accepted Payment Methods</h4>
+      <p>KOLOMIETSSA accepts payments via credit and debit cards (Visa, Mastercard, American Express), and any additional payment methods made available by Stripe from time to time. Payment availability may vary by country.</p>
+      <h4>8.2 Currency</h4>
+      <p>All prices are displayed and charged in Euros (EUR) unless otherwise stated. If your card is denominated in a different currency, your bank or card issuer will apply the applicable exchange rate and may charge additional conversion fees. KOLOMIETSSA is not responsible for any currency conversion costs.</p>
+      <h4>8.3 Taxes and VAT</h4>
+      <p>KOLOMIETSSA charges Value Added Tax (VAT) where required under applicable European Union law, based on the buyer's country of residence. The applicable VAT rate is calculated and displayed at checkout prior to payment confirmation.</p>
+      <h4>8.4 Failed Payments</h4>
+      <p>If a scheduled subscription renewal payment fails, KOLOMIETSSA will attempt to reprocess the payment up to three times over a 7-day period. If payment remains unsuccessful after all retry attempts, your subscription will be suspended and access to subscription-only features will be restricted until payment is successfully received.</p>
+    </section>
+
+    <section id="s9">
+      <div class="section-num">Section 09</div>
+      <h2 class="section-title">Intellectual Property Rights</h2>
+      <p>All content, materials, and intellectual property on the Platform — including but not limited to course videos, written curricula, trading frameworks, proprietary indicators, analytical models, brand names, logos, graphic designs, and source code — are the exclusive property of KOLOMIETSSA or its licensed content creators and are protected by international copyright, trademark, and intellectual property law.</p>
+      <p>Nothing in this Agreement grants you any right, title, or interest in or to any KOLOMIETSSA intellectual property beyond the limited licence described in Section 6.1. Any unauthorised reproduction, distribution, or modification of Platform content constitutes a material breach of this Agreement and may give rise to civil and criminal liability.</p>
+    </section>
+
+    <section id="s10">
+      <div class="section-num">Section 10</div>
+      <h2 class="section-title">Disclaimer &amp; Limitation of Liability</h2>
+      <p>THE PLATFORM AND ALL SERVICES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE.</p>
+      <p>To the maximum extent permitted by applicable law, KOLOMIETSSA expressly disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, non-infringement, and accuracy of information. We do not warrant that the Platform will be error-free, uninterrupted, secure, or free from viruses or other harmful components.</p>
+      <p>KOLOMIETSSA shall not be liable for any indirect, incidental, special, consequential, punitive, or exemplary damages arising from or in connection with your use of the Services, including but not limited to loss of profits, loss of data, loss of goodwill, or trading losses incurred in reliance on educational content or analytical materials.</p>
+      <div class="callout">
+        <p><strong>Trading Risk Notice:</strong> Financial trading and investment carry significant risk of loss. Educational content provided by KOLOMIETSSA does not constitute investment advice. Past performance of any trading strategy discussed on the Platform does not guarantee future results. See our separate <a href="kolomietssa-financial-disclaimer.html" style="color:var(--gold)">Financial Disclaimers page</a> for full risk disclosure.</p>
+      </div>
+    </section>
+
+    <section id="s11">
+      <div class="section-num">Section 11</div>
+      <h2 class="section-title">Governing Law &amp; Dispute Resolution</h2>
+      <p>This Agreement shall be governed by and construed in accordance with the laws of the European Union and the applicable laws of the jurisdiction in which KOLOMIETSSA is incorporated, without regard to conflicts of law principles.</p>
+      <p>In the event of any dispute, claim, or controversy arising out of or in connection with this Agreement or the Services, the parties shall first attempt to resolve the matter through good-faith negotiation. If the dispute cannot be resolved within 30 days of written notice, either party may pursue resolution through competent courts of the applicable jurisdiction.</p>
+      <p>EU residents may also utilise the European Commission's Online Dispute Resolution (ODR) platform at <a href="https://ec.europa.eu/consumers/odr" target="_blank" style="color:var(--gold)">https://ec.europa.eu/consumers/odr</a>.</p>
+    </section>
+
+    <section id="s12">
+      <div class="section-num">Section 12</div>
+      <h2 class="section-title">Amendments &amp; Severability</h2>
+      <p>KOLOMIETSSA reserves the right to amend these Terms and Conditions at any time. Material changes will be communicated to registered users via email no fewer than 14 days prior to the effective date. Your continued use of the Platform after the effective date of any amendment constitutes your acceptance of the revised terms.</p>
+      <p>If any provision of this Agreement is found to be invalid, illegal, or unenforceable under applicable law, such provision shall be deemed modified to the minimum extent necessary to make it enforceable, or if modification is not possible, severed from this Agreement. The remaining provisions shall continue in full force and effect.</p>
+      <p>For all legal enquiries, please contact: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="117d7476707d517a7e7d7e7c7874656262703f727e7c">[email&#160;protected]</a></strong></p>
+    </section>
+
+  </article>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="kolomietssa-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="kolomietssa-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="kolomietssa-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">KOLOMIETSSA</div>
+    <div class="footer-bottom-copy">
+      © 2026 KOLOMIETSSA ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="index.html"><span data-lang="ru" class="active">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
+      <a href="kolomietssa-terms.html">Terms</a>
+      <a href="kolomietssa-privacy.html">Privacy</a>
+      <a href="kolomietssa-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="kolomietssa-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="kolomietssa-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  function closeMob() {
+    var m = document.getElementById('mob-menu');
+    if(m){ m.style.display='none'; m.style.flexDirection=''; }
+  }
+  function toggleMob() {
+    var m = document.getElementById('mob-menu');
+    if(!m) return;
+    var open = m.style.display === 'flex';
+    m.style.display = open ? 'none' : 'flex';
+    if(!open) m.style.flexDirection = 'column';
+  }
+  function setLang(lang) {
+    localStorage.setItem('ksa_lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+    var ldrop = document.getElementById('lang-drop');
+    if(ldrop) ldrop.classList.remove('open');
+  }
+  function toggleLang(e) {
+    e.stopPropagation();
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.remove('open');
+  });
+  (function initLang() {
+    var lang = localStorage.getItem('ksa_lang') || 'ru';
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+  })();
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      document.getElementById('auth-label-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      document.getElementById('auth-label-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      document.getElementById('auth-label-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.href='index.html'; };
+      } else { btn.onclick = null; }
+    }
+    if (mobBtn) {
+      mobBtn.href = isLogged ? 'kolomietssa-dashboard.html' : 'kolomietssa-login.html';
+      document.getElementById('mob-auth-ru').textContent = isLogged ? 'Выйти' : 'Войт�
