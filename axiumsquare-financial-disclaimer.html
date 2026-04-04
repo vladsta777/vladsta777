@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Disclaimers & Risk Disclosure — AXIUMSQUARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b8975a; --gold-bright: #d4b278; --gold-dim: rgba(184,151,90,.12);
+      --red: #c94040; --red-dim: rgba(201,64,64,.12); --red-border: rgba(201,64,64,.3);
+      --text: #f0ede8; --text-2: #9a9488; --text-3: #4a4640;
+      --border: rgba(184,151,90,.14);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Outfit', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #050403; cursor: none; overflow-x: hidden; }
+        /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, opacity .2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(184,151,90,.5); border-radius: 50%;
+      pointer-events: none; z-index: 99998;
+      transform: translate(-50%,-50%);
+      transition: width .35s ease, height .35s ease, transform .1s ease;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+    /* ── Minimal grid overlay ── */
+    #grid {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.013) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.013) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── Preloader ── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 99999; background: #050403;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      transition: opacity .8s ease;
+    }
+    #preloader.out { opacity: 0; pointer-events: none; }
+    .pre-logo {
+      font-family: var(--font-mono); font-size: clamp(.85rem,2vw,1rem);
+      letter-spacing: .5em; color: var(--gold);
+      animation: flicker 1.4s ease infinite alternate;
+    }
+    .pre-line { width: 180px; height: 1px; background: var(--border); overflow: hidden; }
+    .pre-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); animation: fill 1.2s ease forwards; }
+    @keyframes fill { from{width:0} to{width:100%} }
+    @keyframes flicker { from{opacity:.25} to{opacity:1} }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9500;
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,4,3,.88); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s;
+    }
+    header.scrolled { padding: 1rem 3rem; }
+    .h-logo {
+      font-family: var(--font-mono); font-size: .8rem;
+      letter-spacing: .45em; color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .h-logo-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+
+    .h-nav { display: flex; align-items: center; gap: 2.5rem; }
+    .h-nav a {
+      font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-2); text-decoration: none; transition: color .25s;
+      position: relative;
+    }
+    .h-nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width .3s ease;
+    }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav a:hover::after { width: 100%; }
+    .h-nav-club {
+      border: 1px solid rgba(184,151,90,.35) !important;
+      padding: .3rem .85rem !important;
+      background: rgba(184,151,90,.05) !important;
+      color: var(--gold) !important;
+      transition: border-color .2s, background .2s, box-shadow .2s !important;
+    }
+    .h-nav-club::after { display: none !important; }
+    .h-nav-club:hover { border-color: var(--gold) !important; background: rgba(184,151,90,.12) !important; box-shadow: 0 0 16px rgba(184,151,90,.2) !important; }
+
+    /* ── Language dropdown ── */
+    .lang-drop { position: relative; }
+    .lang-current {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold);
+      background: transparent; border: 1px solid rgba(184,151,90,.3);
+      padding: .7rem 1rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: border-color .2s, background .2s; user-select: none;
+    }
+    .lang-current:hover { border-color: var(--gold); background: rgba(184,151,90,.06); }
+    .lang-current svg { width: 10px; height: 10px; transition: transform .25s; }
+    .lang-drop.open .lang-current svg { transform: rotate(180deg); }
+    .lang-menu {
+      position: absolute; top: calc(100% + .5rem); right: 0;
+      background: rgba(8,7,6,.95); backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity .2s ease, transform .2s ease; min-width: 80px;
+    }
+    .lang-drop.open .lang-menu { opacity: 1; pointer-events: all; transform: none; }
+    .lang-opt {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--text-3);
+      background: none; border: none; border-bottom: 1px solid var(--border);
+      width: 100%; padding: .6rem 1rem; cursor: pointer; text-align: left;
+      transition: color .15s, background .15s; display: block;
+    }
+    .lang-opt:last-child { border-bottom: none; }
+    .lang-opt:hover { color: var(--gold); background: rgba(184,151,90,.06); }
+
+    .h-cta {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #000;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      border: none; padding: .7rem 1.6rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: opacity .2s, transform .15s;
+    }
+    .h-cta:hover { opacity: .85; transform: translateY(-1px); }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); transition: all .3s; }
+
+    /* ── Mobile menu overlay ── */
+    #mob-menu { display:none; position:fixed; inset:0; z-index:9400; background:rgba(5,4,3,.97); backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; gap:2.5rem; }
+
+    @media (max-width: 900px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .lang-drop { display: flex; }
+      .lang-current { padding: .55rem .8rem; clip-path: none; }
+      .lang-menu { clip-path: none; }
+      .h-nav { display: none; }
+      .h-burger { display: flex; }
+      header { padding: .9rem 1.2rem; }
+    }
+
+    /* ── WARNING BANNER ── */
+    .risk-banner {
+      margin-top: 70px;
+      background: linear-gradient(135deg, rgba(201,64,64,.18), rgba(150,40,40,.1));
+      border-bottom: 2px solid var(--red);
+      padding: 1.4rem 3rem;
+      display: flex; align-items: flex-start; gap: 1.2rem;
+    }
+    .risk-banner-icon { font-size: 1.6rem; flex-shrink: 0; line-height: 1; margin-top: .1rem; }
+    .risk-banner-text { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; line-height: 1.7; color: #e07070; }
+    .risk-banner-text strong { color: #ff8080; text-transform: uppercase; letter-spacing: .2em; display: block; margin-bottom: .3rem; font-size: .65rem; }
+    @media(max-width:900px) { .risk-banner { padding: 1.2rem 1.4rem; } }
+
+    /* ── Page Hero ── */
+    .page-hero { padding: 4rem 3rem; border-bottom: 2px solid var(--red-border); position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(201,64,64,.04) 0%, transparent 100%); }
+    .hero-label { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--red); margin-bottom: 1.2rem; }
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
+    .hero-subtitle { font-size: .88rem; color: var(--text-2); line-height: 1.8; max-width: 680px; }
+    .hero-meta { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+    .hero-meta-item { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-3); }
+    .hero-meta-item span { color: var(--text-2); }
+    @media(max-width:900px) { .page-hero { padding: 3rem 1.4rem; } }
+
+    /* ── Core Warning Box ── */
+    .master-warning {
+      max-width: 1100px; margin: 3rem auto; padding: 0 3rem;
+    }
+    .master-warning-box {
+      background: linear-gradient(135deg, rgba(201,64,64,.12), rgba(120,30,30,.08));
+      border: 2px solid var(--red);
+      padding: 2.5rem 3rem;
+      position: relative;
+    }
+    .master-warning-box::before {
+      content: '⚠';
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%) translateY(-50%);
+      font-size: 1.4rem;
+      background: #050403;
+      padding: 0 .8rem;
+      color: var(--red);
+    }
+    .mw-title { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--red); margin-bottom: 1.2rem; text-align: center; }
+    .mw-body { font-size: .92rem; line-height: 1.9; color: rgba(240,220,220,.85); text-align: center; }
+    .mw-body strong { color: #ff9090; }
+    @media(max-width:900px) { .master-warning { padding: 0 1.4rem; } .master-warning-box { padding: 1.8rem 1.4rem; } }
+
+    /* ── Layout ── */
+    .legal-layout { display: grid; grid-template-columns: 240px 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 6rem; }
+    @media(max-width:900px) { .legal-layout { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.4rem 4rem; } }
+    .toc { position: sticky; top: 7rem; align-self: start; }
+    .toc-title { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+    .toc-list a { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; color: var(--text-3); text-decoration: none; padding: .3rem .5rem; display: block; border-left: 1px solid transparent; transition: color .2s, border-color .2s, padding-left .2s; }
+    .toc-list a:hover { color: var(--gold); border-left-color: var(--gold); padding-left: .8rem; }
+    @media(max-width:900px) { .toc { position: static; background: rgba(184,151,90,.04); border: 1px solid var(--border); padding: 1.2rem; } }
+
+    /* ── Content ── */
+    .legal-content section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(184,151,90,.07); }
+    .legal-content section:last-child { border-bottom: none; }
+    .section-num { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: .6rem; }
+    .section-title { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; margin-bottom: 1.4rem; line-height: 1.2; }
+    .legal-content p { font-size: .9rem; line-height: 1.85; color: rgba(240,237,232,.78); margin-bottom: 1rem; }
+    .legal-content p:last-child { margin-bottom: 0; }
+    .legal-content h4 { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); margin: 1.6rem 0 .7rem; }
+    .legal-content ul, .legal-content ol { padding-left: 1.4rem; margin-bottom: 1rem; }
+    .legal-content li { font-size: .88rem; line-height: 1.8; color: rgba(240,237,232,.75); margin-bottom: .4rem; }
+    .callout { background: rgba(184,151,90,.06); border: 1px solid rgba(184,151,90,.2); border-left: 3px solid var(--gold); padding: 1.2rem 1.4rem; margin: 1.4rem 0; }
+    .callout p { font-size: .84rem; color: var(--text-2); margin: 0; }
+    .callout strong { color: var(--gold); }
+    .risk-callout { background: rgba(201,64,64,.08); border: 1px solid var(--red-border); border-left: 3px solid var(--red); padding: 1.2rem 1.4rem; margin: 1.4rem 0; }
+    .risk-callout p { font-size: .84rem; color: #d08080; margin: 0; line-height: 1.7; }
+    .risk-callout strong { color: #ff8080; }
+
+    /* Stat boxes */
+    .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin: 1.6rem 0; }
+    @media(max-width:700px) { .stat-row { grid-template-columns: 1fr; } }
+    .stat-box { border: 1px solid var(--red-border); background: rgba(201,64,64,.05); padding: 1.2rem; text-align: center; }
+    .stat-value { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 300; color: #e07070; line-height: 1; margin-bottom: .4rem; }
+    .stat-label { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-3); }
+
+    /* ── Footer ── */
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-bottom { padding: 1.6rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } }
+    #mob-menu { display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem; }
+    #mob-menu nav { display:flex;flex-direction:column;align-items:center;gap:1.8rem; }
+    #mob-menu nav a { font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none; }
+    #mob-menu nav a.club-link { color:#b8975a;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem; }
+    #mob-close { font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer; }
+  
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-risk { padding: 1.2rem 3rem; border-top: 1px solid rgba(184,151,90,.08); }
+    .footer-risk-text { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em; line-height: 1.8; color: var(--text-3); max-width: 1100px; }
+    .footer-risk-text a { color: rgba(184,151,90,.4); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom { padding: 1.4rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid var(--border); }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } .footer-risk { padding: 1rem 1.4rem; } }
+  </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Grid overlay -->
+<div id="grid"></div>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pre-logo">AXIUMSQUARE</div>
+  <div class="pre-line"><div class="pre-fill"></div></div>
+</div>
+
+<!-- Mobile menu -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="axiumsquare-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="axiumsquare-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="axiumsquare-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="axiumsquare-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="axiumsquare-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="axiumsquare-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="axiumsquare-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    AXIUMSQUARE
+  </a>
+
+  <nav class="h-nav">
+    <a href="axiumsquare-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="axiumsquare-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="axiumsquare-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="axiumsquare-invest.html">
+      <span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="axiumsquare-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="axiumsquare-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <!-- Language dropdown -->
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <a href="axiumsquare-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- Critical Warning Banner -->
+<div class="risk-banner">
+  <div class="risk-banner-icon">⚠️</div>
+  <div class="risk-banner-text">
+    <strong>High-Risk Investment Warning</strong>
+    Trading financial instruments involves a high risk of loss and is not suitable for all investors. You may lose all of your invested capital. Past performance does not guarantee future results. Ensure you fully understand the risks involved before trading.
+  </div>
+</div>
+
+<div class="page-hero">
+  <div class="hero-label">⚠ Risk &amp; Financial Disclosure</div>
+  <h1 class="hero-title">Financial Disclaimers</h1>
+  <p class="hero-subtitle">This page contains mandatory risk disclosures and past performance disclaimers applicable to all content, analysis, signals, and educational materials published by AXIUMSQUARE. Reading and understanding these disclosures is a condition of using our Services.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Effective Date: <span>1 January 2025</span></div>
+    <div class="hero-meta-item">Last Updated: <span>1 March 2026</span></div>
+    <div class="hero-meta-item">Applies To: <span>All AXIUMSQUARE Services</span></div>
+  </div>
+</div>
+
+<!-- Master Warning -->
+<div class="master-warning">
+  <div class="master-warning-box">
+    <div class="mw-title">Mandatory Risk Disclosure · Please Read Before Proceeding</div>
+    <div class="mw-body">
+      <strong>Trading in financial markets, including but not limited to equities, derivatives, forex, cryptocurrencies, and commodities, carries a substantial risk of loss.</strong> A significant percentage of retail traders lose money. You should never trade with money you cannot afford to lose. AXIUMSQUARE does not provide regulated investment advice. Nothing on this Platform constitutes a solicitation or recommendation to buy or sell any financial instrument.
+    </div>
+  </div>
+</div>
+
+<div class="legal-layout">
+  <aside class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#r1">1. General Risk Disclosure</a></li>
+      <li><a href="#r2">2. Specific Market Risks</a></li>
+      <li><a href="#r3">3. Leverage &amp; Margin Risk</a></li>
+      <li><a href="#r4">4. Not Investment Advice</a></li>
+      <li><a href="#r5">5. Past Performance Disclaimer</a></li>
+      <li><a href="#r6">6. Signal &amp; Analysis Disclaimer</a></li>
+      <li><a href="#r7">7. Educational Content Disclaimer</a></li>
+      <li><a href="#r8">8. No Guarantee of Results</a></li>
+      <li><a href="#r9">9. Regulatory Status</a></li>
+      <li><a href="#r10">10. Acknowledgement</a></li>
+    </ul>
+  </aside>
+
+  <article class="legal-content">
+
+    <section id="r1">
+      <div class="section-num">Section 01</div>
+      <h2 class="section-title">General Risk Disclosure</h2>
+      <p>All forms of financial trading and investment carry significant risks. The value of financial instruments can fall as well as rise, and investors may receive back less than they invested. In some cases, losses may exceed the initial investment.</p>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-value">74%</div>
+          <div class="stat-label">Retail CFD accounts lose money</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">90%</div>
+          <div class="stat-label">Of active traders underperform passive strategies</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Of invested capital is at risk</div>
+        </div>
+      </div>
+
+      <p>Before committing capital to any trading or investment activity, you should carefully consider your investment objectives, level of experience, financial situation, and risk appetite. You should seek independent financial advice from a qualified and regulated financial adviser if you are uncertain about the suitability of any investment for your personal circumstances.</p>
+
+      <div class="risk-callout">
+        <p><strong>You should only trade or invest with money you can afford to lose entirely.</strong> Do not trade with funds required for essential living expenses, loan repayments, or financial obligations.</p>
+      </div>
+    </section>
+
+    <section id="r2">
+      <div class="section-num">Section 02</div>
+      <h2 class="section-title">Specific Market Risks</h2>
+      <p>AXIUMSQUARE's educational content and analytical materials discuss various financial markets. Each market carries unique and significant risks:</p>
+      <h4>Equity Markets (Stocks)</h4>
+      <p>Equity securities are subject to market risk, liquidity risk, company-specific risk, sector risk, and macroeconomic risk. Stock prices can experience rapid and dramatic declines due to earnings disappointments, regulatory action, broader market sell-offs, geopolitical events, or changes in investor sentiment. Companies can and do go bankrupt, resulting in total loss of invested equity.</p>
+      <h4>Derivatives (Options, Futures, CFDs)</h4>
+      <p>Derivative instruments are highly complex and carry substantially higher risks than direct equity investments. Derivatives may be subject to leverage, expiry dates, counterparty risk, and liquidity risk. CFDs (Contracts for Difference) are leveraged products that can result in losses exceeding your initial deposit. The majority of retail investors lose money when trading CFDs.</p>
+      <h4>Cryptocurrency Assets</h4>
+      <p>Cryptocurrency markets are characterised by extreme volatility, limited regulatory oversight, security risks associated with exchanges and wallets, and the potential for complete loss of value. Crypto assets are not covered by any deposit protection scheme. Regulatory changes can have sudden and severe impact on crypto asset valuations.</p>
+      <h4>Foreign Exchange (Forex)</h4>
+      <p>Currency trading involves significant leverage and the foreign exchange market is highly volatile. Exchange rates are affected by interest rate differentials, political events, economic data releases, and central bank policy — many of which are unpredictable. Leverage in forex trading amplifies both gains and losses.</p>
+    </section>
+
+    <section id="r3">
+      <div class="section-num">Section 03</div>
+      <h2 class="section-title">Leverage &amp; Margin Risk</h2>
+      <p>Many of the trading strategies and instruments discussed in AXIUMSQUARE educational materials involve the use of leverage. Leverage allows traders to control a larger position than their deposited capital would otherwise permit.</p>
+      <div class="risk-callout">
+        <p><strong>Leverage is a double-edged instrument.</strong> While it can amplify profits, it equally amplifies losses. A 10:1 leveraged position can result in total loss of deposited margin from a 10% adverse price movement. Higher leverage ratios increase this risk proportionally.</p>
+      </div>
+      <p>Margin calls may require you to deposit additional funds at short notice or your broker may automatically close your position at a loss. You should ensure you understand how margin requirements work at your specific broker before using any leveraged strategy.</p>
+      <p>AXIUMSQUARE's educational content discussing leveraged strategies does not constitute a recommendation to use leverage. Decisions regarding leverage should be made solely by the trader based on their own risk assessment, experience, and financial resilience.</p>
+    </section>
+
+    <section id="r4">
+      <div class="section-num">Section 04</div>
+      <h2 class="section-title">Not Investment Advice</h2>
+      <p>AXIUMSQUARE is an educational and consulting platform. Unless expressly stated in a separate written agreement and confirmed to be provided by a licensed and regulated entity, nothing published on this Platform — including but not limited to articles, course content, video material, community posts, live session commentary, analytical reports, model portfolios, or signals — constitutes:</p>
+      <ul>
+        <li>Investment advice within the meaning of the EU Markets in Financial Instruments Directive (MiFID II);</li>
+        <li>A personal recommendation to acquire, sell, hold, or otherwise deal in any specific financial instrument;</li>
+        <li>Financial planning or wealth management advice;</li>
+        <li>Tax advice or guidance on the tax treatment of any investment or trading activity;</li>
+        <li>Legal advice regarding the legality of any trading activity in your jurisdiction.</li>
+      </ul>
+      <p>All content is published for general educational and informational purposes only. AXIUMSQUARE expressly disclaims any responsibility for trading or investment decisions made by users based on content published on the Platform.</p>
+    </section>
+
+    <section id="r5">
+      <div class="section-num">Section 05</div>
+      <h2 class="section-title">Past Performance Disclaimer</h2>
+      <div class="risk-callout">
+        <p><strong>Past performance is not a reliable indicator of future results.</strong> Historical performance data presented anywhere on this Platform — including backtest results, live track records, portfolio performance statistics, or testimonials — does not and cannot predict future performance with any degree of reliability.</p>
+      </div>
+      <p>Markets are dynamic and non-stationary systems. A strategy that performed well in historical market conditions may perform poorly or catastrophically in different market environments due to regime changes, increased volatility, reduced liquidity, structural shifts in market microstructure, or correlation breakdowns.</p>
+      <h4>Backtest Limitations</h4>
+      <p>Backtested results are subject to significant limitations including but not limited to: look-ahead bias, overfitting to historical data, failure to account for transaction costs and slippage, survivorship bias in instrument selection, and the fundamental impossibility of replicating historical conditions in real-time trading environments.</p>
+      <h4>Hypothetical Performance</h4>
+      <p>Any hypothetical or simulated performance results shown on the Platform have inherent limitations. Hypothetical results do not reflect actual trading and may not account for market impact, liquidity constraints, or the psychological pressures of live trading. Actual results could differ materially and adversely from hypothetical presentations.</p>
+    </section>
+
+    <section id="r6">
+      <div class="section-num">Section 06</div>
+      <h2 class="section-title">Trading Signal &amp; Analysis Disclaimer</h2>
+      <p>Market analysis, trading ideas, and signals shared within the Club or any other section of the Platform are published strictly for educational and informational purposes. They represent the personal views and analytical conclusions of the author at the time of writing and should not be construed as investment advice or recommendations.</p>
+      <p>Market conditions can change rapidly. By the time any signal or analytical view reaches you, the underlying market conditions may have materially changed. AXIUMSQUARE does not guarantee the accuracy, completeness, or timeliness of any signals or analytical content.</p>
+      <p>You should conduct your own independent research and analysis before acting on any information. You bear full and exclusive responsibility for any trading decisions you make, regardless of whether those decisions were influenced by content on the Platform.</p>
+    </section>
+
+    <section id="r7">
+      <div class="section-num">Section 07</div>
+      <h2 class="section-title">Educational Content Disclaimer</h2>
+      <p>The Academy courses and all educational materials are designed to provide general knowledge and skills in trading and investment concepts. Educational content presents strategies, frameworks, and methodologies for informational purposes and does not guarantee profitable outcomes when applied in real trading conditions.</p>
+      <p>Trading education can improve your knowledge base but cannot eliminate the inherent risks of trading. Success in financial markets depends on numerous factors beyond education, including psychological discipline, market conditions at the time of trading, broker execution quality, position sizing, and risk management implementation.</p>
+      <p>Instructor or creator performance discussed within courses reflects their individual results in specific market conditions and time periods. Such performance cannot be replicated by students and should not be used as a benchmark for expected outcomes.</p>
+    </section>
+
+    <section id="r8">
+      <div class="section-num">Section 08</div>
+      <h2 class="section-title">No Guarantee of Results</h2>
+      <p>AXIUMSQUARE makes no representations, warranties, or guarantees of any kind — express, implied, or statutory — regarding:</p>
+      <ul>
+        <li>The profitability of any trading strategy, course content, or analytical methodology discussed on the Platform;</li>
+        <li>The achievement of specific financial returns or performance targets;</li>
+        <li>The suitability of any educational content or trading approach for your individual circumstances;</li>
+        <li>The accuracy or completeness of market data, price feeds, or analytical tools referenced on the Platform.</li>
+      </ul>
+      <div class="risk-callout">
+        <p><strong>Individual results will vary significantly.</strong> Testimonials and success stories shared on the Platform represent exceptional outcomes and are not indicative of typical or expected results. Most users will not achieve similar results.</p>
+      </div>
+    </section>
+
+    <section id="r9">
+      <div class="section-num">Section 09</div>
+      <h2 class="section-title">Regulatory Status</h2>
+      <p>AXIUMSQUARE operates as a financial education and consulting platform. Unless explicitly stated otherwise in a specific service agreement, AXIUMSQUARE is not a regulated investment firm, broker, portfolio manager, or financial adviser under the applicable laws of the European Union or any other jurisdiction.</p>
+      <p>AXIUMSQUARE does not hold, and does not represent itself as holding, any licence to provide regulated investment services, manage client funds, or offer regulated financial advice. Where consulting services approach the boundary of regulated activities, AXIUMSQUARE will clearly disclose its regulatory status and, where required, refer clients to appropriately licensed and regulated professionals.</p>
+      <p>Users are responsible for ensuring that their use of AXIUMSQUARE services complies with all applicable laws and regulations in their country of residence, including any requirements for the receipt of financial information or education.</p>
+    </section>
+
+    <section id="r10">
+      <div class="section-num">Section 10</div>
+      <h2 class="section-title">User Acknowledgement</h2>
+      <p>By accessing and using any part of the AXIUMSQUARE Platform, you explicitly acknowledge and agree that:</p>
+      <ol>
+        <li>You have read, understood, and accepted all risk disclosures contained on this page;</li>
+        <li>You understand that trading and investing in financial markets involves substantial risk of loss, up to and including the total loss of your invested capital;</li>
+        <li>No content on the Platform constitutes investment advice or a personal recommendation;</li>
+        <li>Past performance data presented on the Platform is not indicative of future results;</li>
+        <li>You assume full and sole responsibility for all trading and investment decisions you make;</li>
+        <li>AXIUMSQUARE shall not be liable for any financial loss, howsoever arising, that results from your trading or investment activity, whether or not influenced by Platform content.</li>
+      </ol>
+      <div class="callout">
+        <p><strong>If you require regulated financial advice</strong> tailored to your personal circumstances, please consult a qualified and regulated financial adviser in your jurisdiction. AXIUMSQUARE's consulting services can provide general strategic guidance but cannot replace personalised regulated advice for all situations.</p>
+      </div>
+    </section>
+
+  </article>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="axiumsquare-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="axiumsquare-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="axiumsquare-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">AXIUMSQUARE</div>
+    <div class="footer-bottom-copy">
+      © 2026 AXIUMSQUARE ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="index.html"><span data-lang="ru" class="active">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
+      <a href="axiumsquare-terms.html">Terms</a>
+      <a href="axiumsquare-privacy.html">Privacy</a>
+      <a href="axiumsquare-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="axiumsquare-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="axiumsquare-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function closeMob() {
+    var m = document.getElementById('mob-menu');
+    if(m){ m.style.display='none'; m.style.flexDirection=''; }
+  }
+  function toggleMob() {
+    var m = document.getElementById('mob-menu');
+    if(!m) return;
+    var open = m.style.display === 'flex';
+    m.style.display = open ? 'none' : 'flex';
+    if(!open) m.style.flexDirection = 'column';
+  }
+  function setLang(lang) {
+    localStorage.setItem('ksa_lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+    var ldrop = document.getElementById('lang-drop');
+    if(ldrop) ldrop.classList.remove('open');
+  }
+  function toggleLang(e) {
+    e.stopPropagation();
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.remove('open');
+  });
+  (function initLang() {
+    var lang = localStorage.getItem('ksa_lang') || 'ru';
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+  })();
+</script>
+
+<script>
+  // Preloader
+  window.addEventListener('load', function() {
+    setTimeout(function() { var p = document.getElementById('preloader'); if(p) p.classList.add('out'); }, 800);
+  });
+  // Custom cursor
+  var cur = document.getElementById('cursor');
+  var ring = document.getElementById('cursor-ring');
+  if (cur && ring) {
+    document.addEventListener('mousemove', function(e) {
+      cur.style.left  = e.clientX + 'px'; cur.style.top   = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px'; ring.style.top  = e.clientY + 'px';
+    });
+  }
+  // Header shrink on scroll
+  var hdr = document.getElementById('header');
+  if (hdr) {
+    window.addEventListener('scroll', function() {
+      hdr.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>

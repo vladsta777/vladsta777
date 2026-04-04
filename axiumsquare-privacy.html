@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy & Cookie Policy — AXIUMSQUARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #b8975a; --gold-bright: #d4b278; --gold-dim: rgba(184,151,90,.12);
+      --text: #f0ede8; --text-2: #9a9488; --text-3: #4a4640;
+      --border: rgba(184,151,90,.14); --surface: rgba(10,9,8,.82);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Outfit', sans-serif; --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); color: var(--text); background: #050403; cursor: none; overflow-x: hidden; }
+        /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, opacity .2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(184,151,90,.5); border-radius: 50%;
+      pointer-events: none; z-index: 99998;
+      transform: translate(-50%,-50%);
+      transition: width .35s ease, height .35s ease, transform .1s ease;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+    /* ── Minimal grid overlay ── */
+    #grid {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.013) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.013) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── Preloader ── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 99999; background: #050403;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      transition: opacity .8s ease;
+    }
+    #preloader.out { opacity: 0; pointer-events: none; }
+    .pre-logo {
+      font-family: var(--font-mono); font-size: clamp(.85rem,2vw,1rem);
+      letter-spacing: .5em; color: var(--gold);
+      animation: flicker 1.4s ease infinite alternate;
+    }
+    .pre-line { width: 180px; height: 1px; background: var(--border); overflow: hidden; }
+    .pre-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); animation: fill 1.2s ease forwards; }
+    @keyframes fill { from{width:0} to{width:100%} }
+    @keyframes flicker { from{opacity:.25} to{opacity:1} }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9500;
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(5,4,3,.88); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s;
+    }
+    header.scrolled { padding: 1rem 3rem; }
+    .h-logo {
+      font-family: var(--font-mono); font-size: .8rem;
+      letter-spacing: .45em; color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .h-logo-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+
+    .h-nav { display: flex; align-items: center; gap: 2.5rem; }
+    .h-nav a {
+      font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-2); text-decoration: none; transition: color .25s;
+      position: relative;
+    }
+    .h-nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width .3s ease;
+    }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav a:hover::after { width: 100%; }
+    .h-nav-club {
+      border: 1px solid rgba(184,151,90,.35) !important;
+      padding: .3rem .85rem !important;
+      background: rgba(184,151,90,.05) !important;
+      color: var(--gold) !important;
+      transition: border-color .2s, background .2s, box-shadow .2s !important;
+    }
+    .h-nav-club::after { display: none !important; }
+    .h-nav-club:hover { border-color: var(--gold) !important; background: rgba(184,151,90,.12) !important; box-shadow: 0 0 16px rgba(184,151,90,.2) !important; }
+
+    /* ── Language dropdown ── */
+    .lang-drop { position: relative; }
+    .lang-current {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold);
+      background: transparent; border: 1px solid rgba(184,151,90,.3);
+      padding: .7rem 1rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: border-color .2s, background .2s; user-select: none;
+    }
+    .lang-current:hover { border-color: var(--gold); background: rgba(184,151,90,.06); }
+    .lang-current svg { width: 10px; height: 10px; transition: transform .25s; }
+    .lang-drop.open .lang-current svg { transform: rotate(180deg); }
+    .lang-menu {
+      position: absolute; top: calc(100% + .5rem); right: 0;
+      background: rgba(8,7,6,.95); backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity .2s ease, transform .2s ease; min-width: 80px;
+    }
+    .lang-drop.open .lang-menu { opacity: 1; pointer-events: all; transform: none; }
+    .lang-opt {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--text-3);
+      background: none; border: none; border-bottom: 1px solid var(--border);
+      width: 100%; padding: .6rem 1rem; cursor: pointer; text-align: left;
+      transition: color .15s, background .15s; display: block;
+    }
+    .lang-opt:last-child { border-bottom: none; }
+    .lang-opt:hover { color: var(--gold); background: rgba(184,151,90,.06); }
+
+    .h-cta {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #000;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      border: none; padding: .7rem 1.6rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: opacity .2s, transform .15s;
+    }
+    .h-cta:hover { opacity: .85; transform: translateY(-1px); }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); transition: all .3s; }
+
+    /* ── Mobile menu overlay ── */
+    #mob-menu { display:none; position:fixed; inset:0; z-index:9400; background:rgba(5,4,3,.97); backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; gap:2.5rem; }
+
+    @media (max-width: 900px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .lang-drop { display: flex; }
+      .lang-current { padding: .55rem .8rem; clip-path: none; }
+      .lang-menu { clip-path: none; }
+      .h-nav { display: none; }
+      .h-burger { display: flex; }
+      header { padding: .9rem 1.2rem; }
+    }
+    .page-hero { padding: 9rem 3rem 4rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(184,151,90,.06), transparent 65%); pointer-events: none; }
+    .hero-label { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero-title { font-family: var(--font-serif); font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 300; line-height: 1.1; margin-bottom: 1.2rem; }
+    .hero-subtitle { font-size: .85rem; color: var(--text-2); line-height: 1.7; max-width: 620px; }
+    .hero-meta { display: flex; gap: 2rem; margin-top: 1.8rem; flex-wrap: wrap; }
+    .hero-meta-item { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-3); }
+    .hero-meta-item span { color: var(--text-2); }
+    .legal-layout { display: grid; grid-template-columns: 240px 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; padding: 4rem 3rem 6rem; }
+    @media(max-width:900px) { .legal-layout { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.4rem 4rem; } }
+    .toc { position: sticky; top: 7rem; align-self: start; }
+    .toc-title { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+    .toc-list a { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .08em; color: var(--text-3); text-decoration: none; padding: .3rem .5rem; display: block; border-left: 1px solid transparent; transition: color .2s, border-color .2s, padding-left .2s; }
+    .toc-list a:hover { color: var(--gold); border-left-color: var(--gold); padding-left: .8rem; }
+    @media(max-width:900px) { .toc { position: static; background: rgba(184,151,90,.04); border: 1px solid var(--border); padding: 1.2rem; } }
+    .legal-content section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(184,151,90,.07); }
+    .legal-content section:last-child { border-bottom: none; }
+    .section-num { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: .6rem; }
+    .section-title { font-family: var(--font-serif); font-size: 1.7rem; font-weight: 400; margin-bottom: 1.4rem; line-height: 1.2; }
+    .legal-content p { font-size: .9rem; line-height: 1.85; color: rgba(240,237,232,.78); margin-bottom: 1rem; }
+    .legal-content p:last-child { margin-bottom: 0; }
+    .legal-content h4 { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); margin: 1.6rem 0 .7rem; }
+    .legal-content ul, .legal-content ol { padding-left: 1.4rem; margin-bottom: 1rem; }
+    .legal-content li { font-size: .88rem; line-height: 1.8; color: rgba(240,237,232,.75); margin-bottom: .4rem; }
+    .callout { background: rgba(184,151,90,.06); border: 1px solid rgba(184,151,90,.2); border-left: 3px solid var(--gold); padding: 1.2rem 1.4rem; margin: 1.4rem 0; }
+    .callout p { font-size: .84rem; color: var(--text-2); margin: 0; }
+    .callout strong { color: var(--gold); }
+    .gdpr-badge { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .12em; color: var(--text-3); border: 1px solid var(--border); padding: .35rem .8rem; margin-top: .6rem; }
+    .rights-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin: 1.2rem 0; }
+    @media(max-width:600px) { .rights-grid { grid-template-columns: 1fr; } }
+    .right-card { border: 1px solid var(--border); padding: 1rem 1.2rem; background: rgba(184,151,90,.03); }
+    .right-card-title { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+    .right-card p { font-size: .8rem; color: var(--text-2); margin: 0; line-height: 1.6; }
+    .cookie-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .cookie-table th { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-2); text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); }
+    .cookie-table td { font-size: .82rem; color: rgba(240,237,232,.72); padding: .65rem .8rem; border-bottom: 1px solid rgba(184,151,90,.06); vertical-align: top; line-height: 1.5; }
+    .cookie-table tr:last-child td { border-bottom: none; }
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-bottom { padding: 1.6rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } }
+    #mob-menu { display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem; }
+    #mob-menu nav { display:flex;flex-direction:column;align-items:center;gap:1.8rem; }
+    #mob-menu nav a { font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none; }
+    #mob-menu nav a.club-link { color:#b8975a;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem; }
+    #mob-close { font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer; }
+  
+    .site-footer { background: rgba(3,2,2,.97); border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-risk { padding: 1.2rem 3rem; border-top: 1px solid rgba(184,151,90,.08); }
+    .footer-risk-text { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em; line-height: 1.8; color: var(--text-3); max-width: 1100px; }
+    .footer-risk-text a { color: rgba(184,151,90,.4); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom { padding: 1.4rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid var(--border); }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    @media(max-width:600px) { .footer-bottom { padding: 1.2rem 1.4rem; flex-direction: column; align-items: flex-start; } .footer-risk { padding: 1rem 1.4rem; } }
+  </style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Grid overlay -->
+<div id="grid"></div>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pre-logo">AXIUMSQUARE</div>
+  <div class="pre-line"><div class="pre-fill"></div></div>
+</div>
+
+<!-- Mobile menu -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(5,4,3,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="axiumsquare-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="axiumsquare-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#b8975a;text-decoration:none;border:1px solid rgba(184,151,90,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="axiumsquare-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="axiumsquare-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="axiumsquare-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="axiumsquare-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="axiumsquare-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#b8975a;background:none;border:1px solid rgba(184,151,90,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    AXIUMSQUARE
+  </a>
+
+  <nav class="h-nav">
+    <a href="axiumsquare-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="axiumsquare-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="axiumsquare-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="axiumsquare-invest.html">
+      <span data-lang="ru" class="active">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="axiumsquare-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="axiumsquare-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <!-- Language dropdown -->
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <a href="axiumsquare-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+
+
+<div class="page-hero">
+  <div class="hero-label">Legal Documentation</div>
+  <h1 class="hero-title">Privacy &amp; Cookie Policy</h1>
+  <p class="hero-subtitle">AXIUMSQUARE is committed to protecting your personal data in full compliance with the EU General Data Protection Regulation (GDPR). This policy explains what data we collect, how we use it, and your rights as a data subject.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Effective Date: <span>1 January 2025</span></div>
+    <div class="hero-meta-item">Last Updated: <span>1 March 2026</span></div>
+    <div class="hero-meta-item">Regulation: <span>GDPR (EU) 2016/679</span></div>
+    <div class="hero-meta-item">DPO Contact: <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7a7a5bea1b6b4ae97bcb8bbb8babeb2a3a4a4b6f9b4b8ba">[email&#160;protected]</a></span></div>
+  </div>
+</div>
+
+<div class="legal-layout">
+  <aside class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#p1">1. Data Controller</a></li>
+      <li><a href="#p2">2. Data We Collect</a></li>
+      <li><a href="#p3">3. Lawful Basis</a></li>
+      <li><a href="#p4">4. How We Use Your Data</a></li>
+      <li><a href="#p5">5. Data Sharing</a></li>
+      <li><a href="#p6">6. International Transfers</a></li>
+      <li><a href="#p7">7. Retention Periods</a></li>
+      <li><a href="#p8">8. Your GDPR Rights</a></li>
+      <li><a href="#p9">9. Cookie Policy</a></li>
+      <li><a href="#p10">10. Security Measures</a></li>
+      <li><a href="#p11">11. Children's Privacy</a></li>
+      <li><a href="#p12">12. Contact &amp; Complaints</a></li>
+    </ul>
+  </aside>
+
+  <article class="legal-content">
+
+    <section id="p1">
+      <div class="section-num">Section 01</div>
+      <h2 class="section-title">Data Controller Identity</h2>
+      <p>The data controller responsible for processing your personal data is AXIUMSQUARE (hereinafter "Controller", "we", "us"). The Controller determines the purposes and means of processing personal data collected through the Platform and its related services.</p>
+      <p>For all data protection enquiries, please contact our Data Protection Officer at: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3646445f4057554f765d595a595b5f53424545571855595b">[email&#160;protected]</a></strong>. Postal correspondence may be directed to the address listed in our <a href="axiumsquare-legal-notice.html" style="color:var(--gold)">Legal Notice</a>.</p>
+      <div class="gdpr-badge">🛡 GDPR Compliant · EU 2016/679</div>
+    </section>
+
+    <section id="p2">
+      <div class="section-num">Section 02</div>
+      <h2 class="section-title">Personal Data We Collect</h2>
+      <p>We collect personal data only to the extent necessary for the lawful purposes described in this policy. The categories of personal data we process include:</p>
+      <h4>2.1 Identity &amp; Account Data</h4>
+      <ul>
+        <li>Full name, email address, and password (stored as an encrypted hash);</li>
+        <li>Profile information voluntarily provided, such as profile picture, biography, or trading experience level;</li>
+        <li>Account creation date, last login timestamp, and authentication logs.</li>
+      </ul>
+      <h4>2.2 Transaction &amp; Billing Data</h4>
+      <ul>
+        <li>Purchase history, subscription tier, billing cycle, and invoice records;</li>
+        <li>Tokenised payment data provided by Stripe (we do not store full card numbers, CVV codes, or raw bank account details);</li>
+        <li>Billing country and VAT identification number where applicable.</li>
+      </ul>
+      <h4>2.3 Usage &amp; Technical Data</h4>
+      <ul>
+        <li>IP address, device type, operating system, and browser fingerprint;</li>
+        <li>Course progress, content consumption metrics, and feature interaction logs;</li>
+        <li>Referral sources, UTM campaign parameters, and session duration data;</li>
+        <li>Error logs and crash reports for platform stability monitoring.</li>
+      </ul>
+      <h4>2.4 Communication Data</h4>
+      <ul>
+        <li>Content of support ticket submissions and email correspondence with AXIUMSQUARE;</li>
+        <li>Responses to surveys, feedback forms, and satisfaction questionnaires;</li>
+        <li>Community forum posts and live session chat messages (where applicable).</li>
+      </ul>
+    </section>
+
+    <section id="p3">
+      <div class="section-num">Section 03</div>
+      <h2 class="section-title">Lawful Basis for Processing</h2>
+      <p>Under GDPR Article 6, we process your personal data on one or more of the following lawful bases:</p>
+      <ul>
+        <li><strong>Contract performance (Art. 6(1)(b)):</strong> Processing necessary to fulfil your purchase, manage your subscription, and deliver digital content;</li>
+        <li><strong>Legal obligation (Art. 6(1)(c)):</strong> Processing required to comply with tax, accounting, anti-money laundering, and other applicable legal obligations;</li>
+        <li><strong>Legitimate interests (Art. 6(1)(f)):</strong> Processing for fraud prevention, platform security, product improvement, and business analytics, where such interests are not overridden by your rights;</li>
+        <li><strong>Consent (Art. 6(1)(a)):</strong> Processing for marketing communications and non-essential cookies, where we have obtained your explicit, freely-given, and specific consent.</li>
+      </ul>
+      <p>Where processing is based on consent, you have the right to withdraw that consent at any time without affecting the lawfulness of prior processing.</p>
+    </section>
+
+    <section id="p4">
+      <div class="section-num">Section 04</div>
+      <h2 class="section-title">How We Use Your Personal Data</h2>
+      <p>We use the personal data we collect for the following specific purposes:</p>
+      <ul>
+        <li>Creating and managing your user account and authenticating your identity;</li>
+        <li>Processing payments, issuing invoices, and managing subscription lifecycles through Stripe;</li>
+        <li>Delivering purchased digital content, course access, and Club membership benefits;</li>
+        <li>Providing customer support and responding to enquiries in a timely manner;</li>
+        <li>Sending transactional emails including purchase confirmations, renewal reminders, and security alerts;</li>
+        <li>Sending marketing communications about new products, offers, and platform updates, where you have opted in;</li>
+        <li>Analysing usage patterns to improve the Platform's functionality, content quality, and user experience;</li>
+        <li>Detecting, investigating, and preventing fraudulent transactions and unauthorised account access;</li>
+        <li>Complying with legal obligations under EU and applicable national law.</li>
+      </ul>
+      <div class="callout">
+        <p><strong>Marketing opt-out:</strong> You may unsubscribe from marketing emails at any time by clicking the "Unsubscribe" link in any marketing email or by updating your preferences in the Account Dashboard. Transactional and security-related emails cannot be opted out of while your account remains active.</p>
+      </div>
+    </section>
+
+    <section id="p5">
+      <div class="section-num">Section 05</div>
+      <h2 class="section-title">Data Sharing &amp; Third-Party Processors</h2>
+      <p>AXIUMSQUARE does not sell, rent, or trade your personal data to any third party for their own marketing purposes. We share data only with carefully selected processors under Data Processing Agreements (DPAs) that ensure GDPR-compliant handling.</p>
+      <h4>Our Key Data Processors</h4>
+      <ul>
+        <li><strong>Stripe, Inc.</strong> — Payment processing, subscription billing management, and fraud prevention. Stripe processes cardholder data under PCI DSS Level 1 certification;</li>
+        <li><strong>Cloud Hosting Provider</strong> — Secure server infrastructure, automated backups, and CDN services;</li>
+        <li><strong>Email Service Provider</strong> — Transactional email delivery and marketing communication management;</li>
+        <li><strong>Analytics Provider</strong> — Anonymised and/or pseudonymised platform usage analytics (configured to respect user privacy and honour consent signals);</li>
+        <li><strong>Customer Support Platform</strong> — Management of support ticket workflows and help desk functions.</li>
+      </ul>
+      <p>We may also disclose personal data to competent authorities when required by law, court order, or to protect the rights, property, or safety of AXIUMSQUARE, our users, or the public.</p>
+    </section>
+
+    <section id="p6">
+      <div class="section-num">Section 06</div>
+      <h2 class="section-title">International Data Transfers</h2>
+      <p>Some of our data processors are located outside the European Economic Area (EEA). Where personal data is transferred to third countries, we ensure that appropriate safeguards are in place as required by GDPR Chapter V, including:</p>
+      <ul>
+        <li>Standard Contractual Clauses (SCCs) approved by the European Commission;</li>
+        <li>Adequacy decisions covering the recipient country or territory;</li>
+        <li>Binding Corporate Rules (BCRs) where applicable.</li>
+      </ul>
+      <p>For transfers to the United States, including to Stripe, Inc., we rely on Standard Contractual Clauses and, where available, the EU-U.S. Data Privacy Framework. You may request details of the specific safeguards applicable to any transfer by contacting <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfbfbda6b9aeacb68fa4a0a3a0a2a6aabbbcbcaee1aca0a2">[email&#160;protected]</a>.</p>
+    </section>
+
+    <section id="p7">
+      <div class="section-num">Section 07</div>
+      <h2 class="section-title">Data Retention Periods</h2>
+      <p>We retain personal data only for as long as necessary to fulfil the purposes for which it was collected, or as required by applicable law. Our retention periods are as follows:</p>
+      <ul>
+        <li><strong>Account data:</strong> Retained for the duration of your account and for 3 years following permanent account deletion, to handle any residual claims;</li>
+        <li><strong>Transaction records &amp; invoices:</strong> Retained for 7 years in compliance with applicable accounting and tax legislation;</li>
+        <li><strong>Marketing consent records:</strong> Retained for the duration of your subscription to marketing communications, plus 3 years for audit purposes;</li>
+        <li><strong>Technical logs:</strong> Retained for a maximum of 90 days unless required for an active security investigation;</li>
+        <li><strong>Support correspondence:</strong> Retained for 3 years following the closure of each support case.</li>
+      </ul>
+      <p>Upon expiry of the applicable retention period, personal data is securely deleted or irreversibly anonymised.</p>
+    </section>
+
+    <section id="p8">
+      <div class="section-num">Section 08</div>
+      <h2 class="section-title">Your GDPR Data Subject Rights</h2>
+      <p>As a data subject under GDPR, you hold the following rights with respect to your personal data. You may exercise any of these rights by submitting a request to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d6d4cfd0c7c5dfe6cdc9cac9cbcfc3d2d5d5c788c5c9cb">[email&#160;protected]</a>. We will respond within 30 days.</p>
+      <div class="rights-grid">
+        <div class="right-card">
+          <div class="right-card-title">Right of Access (Art. 15)</div>
+          <p>Obtain a copy of all personal data we hold about you and information about how it is processed.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Rectification (Art. 16)</div>
+          <p>Request correction of any inaccurate or incomplete personal data held by us.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Erasure (Art. 17)</div>
+          <p>Request deletion of your personal data where there is no compelling reason for its continued processing.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Restriction (Art. 18)</div>
+          <p>Request that we restrict processing of your data in certain circumstances.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Portability (Art. 20)</div>
+          <p>Receive your data in a structured, machine-readable format and transfer it to another controller.</p>
+        </div>
+        <div class="right-card">
+          <div class="right-card-title">Right to Object (Art. 21)</div>
+          <p>Object to processing based on legitimate interests or direct marketing at any time.</p>
+        </div>
+      </div>
+      <p>You also have the right to lodge a complaint with a supervisory authority. For EU residents, this is the data protection authority in your country of residence.</p>
+    </section>
+
+    <section id="p9">
+      <div class="section-num">Section 09</div>
+      <h2 class="section-title">Cookie Policy</h2>
+      <p>The Platform uses cookies and similar tracking technologies. A cookie is a small text file stored on your device that helps us recognise you and improve your experience. We use the following categories of cookies:</p>
+
+      <table class="cookie-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Purpose</th>
+            <th>Basis</th>
+            <th>Retention</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Strictly Necessary</strong></td>
+            <td>Session management, authentication tokens, CSRF protection, Stripe checkout functionality</td>
+            <td>Contract / Legal obligation</td>
+            <td>Session or up to 30 days</td>
+          </tr>
+          <tr>
+            <td><strong>Functional</strong></td>
+            <td>Language preferences, saved UI settings, last-viewed content, playback position</td>
+            <td>Legitimate interest</td>
+            <td>Up to 12 months</td>
+          </tr>
+          <tr>
+            <td><strong>Analytics</strong></td>
+            <td>Page view tracking, feature usage metrics, conversion funnel analysis (anonymised)</td>
+            <td>Consent</td>
+            <td>Up to 24 months</td>
+          </tr>
+          <tr>
+            <td><strong>Marketing</strong></td>
+            <td>Retargeting audiences, cross-site conversion attribution, advertising effectiveness measurement</td>
+            <td>Consent</td>
+            <td>Up to 90 days</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Managing Cookies</h4>
+      <p>Upon your first visit, you will be presented with a consent banner allowing you to accept, reject, or customise non-essential cookie categories. You may update your cookie preferences at any time through the Cookie Settings panel in the website footer. You may also manage cookies through your browser settings; however, disabling strictly necessary cookies may impair Platform functionality.</p>
+
+      <div class="callout">
+        <p><strong>Stripe Cookies:</strong> Stripe uses cookies as part of its fraud prevention and payment security processes. These are strictly necessary for payment functionality and cannot be disabled without blocking the checkout process. For details, see <a href="https://stripe.com/privacy" target="_blank" style="color:var(--gold)">Stripe's Privacy Policy</a>.</p>
+      </div>
+    </section>
+
+    <section id="p10">
+      <div class="section-num">Section 10</div>
+      <h2 class="section-title">Security Measures</h2>
+      <p>AXIUMSQUARE implements appropriate technical and organisational measures to protect personal data against accidental loss, unauthorised access, alteration, or disclosure. Our security infrastructure includes:</p>
+      <ul>
+        <li>TLS 1.3 encryption for all data transmitted between your device and our servers;</li>
+        <li>AES-256 encryption for sensitive data at rest;</li>
+        <li>Multi-factor authentication options for user accounts;</li>
+        <li>Role-based access control limiting staff access to personal data on a need-to-know basis;</li>
+        <li>Regular penetration testing and vulnerability assessments conducted by qualified third parties;</li>
+        <li>Automated monitoring systems detecting and alerting on anomalous access patterns.</li>
+      </ul>
+      <p>In the event of a personal data breach that poses a risk to your rights and freedoms, AXIUMSQUARE will notify the relevant supervisory authority within 72 hours and, where required, notify affected data subjects without undue delay.</p>
+    </section>
+
+    <section id="p11">
+      <div class="section-num">Section 11</div>
+      <h2 class="section-title">Children's Privacy</h2>
+      <p>The Platform and Services are not directed at individuals under the age of 18. AXIUMSQUARE does not knowingly collect personal data from minors. If we become aware that personal data of a person under 18 has been collected without verifiable parental consent, we will take immediate steps to delete that information.</p>
+      <p>If you believe a minor has provided us with personal data, please contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e797958e9186849ea78c888b888a8e8293949486c984888a">[email&#160;protected]</a> immediately.</p>
+    </section>
+
+    <section id="p12">
+      <div class="section-num">Section 12</div>
+      <h2 class="section-title">Contact, Complaints &amp; Policy Updates</h2>
+      <p>For all data protection queries, requests to exercise your rights, or concerns about our data processing practices, please contact our Data Protection Officer:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6212100b1403011b22090d0e0d0f0b07161111034c010d0f">[email&#160;protected]</a></li>
+        <li><strong>Postal address:</strong> See <a href="axiumsquare-legal-notice.html" style="color:var(--gold)">Legal Notice</a></li>
+        <li><strong>Response time:</strong> Within 30 calendar days</li>
+      </ul>
+      <p>If you are dissatisfied with our response, you have the right to lodge a complaint with your local data protection supervisory authority. A list of EU supervisory authorities is available on the European Data Protection Board website at <a href="https://edpb.europa.eu" target="_blank" style="color:var(--gold)">edpb.europa.eu</a>.</p>
+      <p>This Privacy Policy may be updated periodically. Material changes will be communicated by email to registered users. The current version is always accessible at this URL. The "Last Updated" date at the top of this page indicates when the most recent revision was made.</p>
+    </section>
+
+  </article>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="axiumsquare-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="axiumsquare-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="axiumsquare-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">AXIUMSQUARE</div>
+    <div class="footer-bottom-copy">
+      © 2026 AXIUMSQUARE ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="index.html"><span data-lang="ru" class="active">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
+      <a href="axiumsquare-terms.html">Terms</a>
+      <a href="axiumsquare-privacy.html">Privacy</a>
+      <a href="axiumsquare-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="axiumsquare-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="axiumsquare-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function closeMob() {
+    var m = document.getElementById('mob-menu');
+    if(m){ m.style.display='none'; m.style.flexDirection=''; }
+  }
+  function toggleMob() {
+    var m = document.getElementById('mob-menu');
+    if(!m) return;
+    var open = m.style.display === 'flex';
+    m.style.display = open ? 'none' : 'flex';
+    if(!open) m.style.flexDirection = 'column';
+  }
+  function setLang(lang) {
+    localStorage.setItem('ksa_lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+    var ldrop = document.getElementById('lang-drop');
+    if(ldrop) ldrop.classList.remove('open');
+  }
+  function toggleLang(e) {
+    e.stopPropagation();
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    var d = document.getElementById('lang-drop');
+    if(d) d.classList.remove('open');
+  });
+  (function initLang() {
+    var lang = localStorage.getItem('ksa_lang') || 'ru';
+    document.querySelectorAll('[data-lang]').forEach(function(el) {
+      el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+    });
+    var lbl = document.getElementById('lang-label');
+    if(lbl) lbl.textContent = lang.toUpperCase();
+  })();
+</script>
+
+<script>
+  // Preloader
+  window.addEventListener('load', function() {
+    setTimeout(function() { var p = document.getElementById('preloader'); if(p) p.classList.add('out'); }, 800);
+  });
+  // Custom cursor
+  var cur = document.getElementById('cursor');
+  var ring = document.getElementById('cursor-ring');
+  if (cur && ring) {
+    document.addEventListener('mousemove', function(e) {
+      cur.style.left  = e.clientX + 'px'; cur.style.top   = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px'; ring.style.top  = e.clientY + 'px';
+    });
+  }
+  // Header shrink on scroll
+  var hdr = document.getElementById('header');
+  if (hdr) {
+    window.addEventListener('scroll', function() {
+      hdr.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>

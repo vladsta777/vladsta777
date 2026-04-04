@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading Insider & Business Club — AXIUMSQUARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:   #c8a84b;
+      --gold-b: #e8c860;
+      --gold-p: #f5e090;
+      --cyan:   #00d4ff;
+      --green:  #00ff88;
+      --purple: #8b5cf6;
+      --text:   #f0ede8;
+      --t2:     #9a9488;
+      --t3:     #4a4640;
+      --border: rgba(200,168,75,.18);
+      --mono:   'DM Mono', monospace;
+      --font:   'Outfit', sans-serif;
+      --display:'Bebas Neue', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: var(--font); color: var(--text); overflow-x: hidden;
+      background:
+        radial-gradient(ellipse 120% 60% at 0%   0%,   rgba(0,212,255,.08)   0%, transparent 50%),
+        radial-gradient(ellipse 80%  70% at 100% 20%,  rgba(139,92,246,.1)   0%, transparent 55%),
+        radial-gradient(ellipse 60%  80% at 60%  60%,  rgba(200,168,75,.06)  0%, transparent 55%),
+        radial-gradient(ellipse 70%  50% at 10%  90%,  rgba(0,255,136,.05)   0%, transparent 50%),
+        radial-gradient(ellipse 50%  40% at 90% 100%,  rgba(0,212,255,.06)   0%, transparent 50%),
+        #030508;
+      background-attachment: fixed;
+    }
+
+    /* ── Animated grid ── */
+    #grid {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,212,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Floating orbs ── */
+    .orb {
+      position: fixed; border-radius: 50%; pointer-events: none; filter: blur(60px);
+      animation: orbFloat 10s ease-in-out infinite alternate;
+    }
+    .orb1 { width:400px; height:400px; top:-100px; right:-100px; background:rgba(139,92,246,.15); animation-delay:0s; }
+    .orb2 { width:300px; height:300px; bottom:10%; left:-80px; background:rgba(0,212,255,.12); animation-delay:-4s; }
+    .orb3 { width:250px; height:250px; top:50%; right:15%; background:rgba(200,168,75,.1); animation-delay:-7s; }
+    @keyframes orbFloat { from{transform:translate(0,0)scale(1)} to{transform:translate(3%,5%)scale(1.06)} }
+
+    /* ── Preloader ── */
+    #pre {
+      position: fixed; inset: 0; z-index: 99999; background: #030508;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+      transition: opacity .7s ease;
+    }
+    #pre.out { opacity: 0; pointer-events: none; }
+    .pre-badge {
+      font-family: var(--display); font-size: clamp(1.2rem,4vw,1.8rem); letter-spacing: .2em;
+      background: linear-gradient(135deg, var(--cyan), var(--gold-b));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: pulse 1.2s ease infinite alternate;
+    }
+    .pre-bar { width: 180px; height: 2px; background: rgba(0,212,255,.15); overflow: hidden; border-radius: 1px; }
+    .pre-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--gold-b)); animation: fill 1.1s ease forwards; border-radius: 1px; }
+    @keyframes fill  { from{width:0} to{width:100%} }
+    @keyframes pulse { from{opacity:.2} to{opacity:1} }
+
+    /* ── Header ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9500;
+      padding: 1.1rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(3,5,8,.88); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,212,255,.1);
+    }
+    header.sm { padding: .8rem 3rem; }
+    .logo { font-family: var(--mono); font-size: .8rem; letter-spacing: .4em; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: .6rem; }
+    .logo-dot { width: 5px; height: 5px; background: var(--cyan); border-radius: 50%; animation: pd 2s ease infinite; box-shadow: 0 0 8px var(--cyan); }
+    @keyframes pd { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+    nav { display: flex; gap: 1.8rem; align-items: center; }
+    nav a { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--t2); text-decoration: none; transition: color .2s; position: relative; }
+    nav a:hover { color: var(--text); }
+    nav a.cur { color: var(--text); }
+
+    /* Club nav button — highlighted */
+    .nav-club {
+      font-family: var(--mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cyan) !important;
+      border: 1px solid rgba(0,212,255,.4);
+      padding: .35rem .9rem;
+      background: rgba(0,212,255,.06);
+      transition: border-color .2s, background .2s, box-shadow .2s !important;
+      position: relative;
+    }
+    .nav-club::before {
+      content: ''; position: absolute; inset: -1px;
+      background: linear-gradient(135deg, rgba(0,212,255,.3), rgba(139,92,246,.3));
+      opacity: 0; transition: opacity .3s;
+      pointer-events: none;
+    }
+    .nav-club:hover { border-color: var(--cyan) !important; background: rgba(0,212,255,.12) !important; box-shadow: 0 0 16px rgba(0,212,255,.2) !important; }
+
+    /* Lang dropdown */
+    .ldrop { position: relative; }
+    .lcur { font-family: var(--mono); font-size: .68rem; letter-spacing: .15em; color: var(--gold); background: transparent; border: 1px solid rgba(200,168,75,.3); padding: .55rem .8rem; cursor: pointer; display: inline-flex; align-items: center; gap: .4rem; transition: border-color .2s, background .2s; }
+    .lcur:hover { border-color: var(--gold); background: rgba(200,168,75,.06); }
+    .lcur svg { width: 9px; height: 9px; transition: transform .25s; }
+    .ldrop.open .lcur svg { transform: rotate(180deg); }
+    .lmenu { position: absolute; top: calc(100% + .4rem); right: 0; min-width: 72px; background: rgba(8,10,18,.96); backdrop-filter: blur(16px); border: 1px solid var(--border); overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-5px); transition: opacity .2s, transform .2s; }
+    .ldrop.open .lmenu { opacity: 1; pointer-events: all; transform: none; }
+    .lopt { font-family: var(--mono); font-size: .62rem; letter-spacing: .15em; color: var(--t3); background: none; border: none; border-bottom: 1px solid var(--border); width: 100%; padding: .5rem .8rem; cursor: pointer; text-align: left; transition: color .15s, background .15s; }
+    .lopt:last-child { border-bottom: none; }
+    .lopt:hover { color: var(--gold); background: rgba(200,168,75,.06); }
+
+    .btn-join {
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: #000; background: linear-gradient(135deg, var(--cyan), #0099cc);
+      border: none; padding: .65rem 1.5rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      box-shadow: 0 0 20px rgba(0,212,255,.4);
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      font-weight: 700;
+    }
+    .btn-join:hover { opacity: .88; transform: translateY(-1px); box-shadow: 0 0 30px rgba(0,212,255,.55); }
+    .btn-ghost {
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cyan); background: transparent; border: 1px solid rgba(0,212,255,.4);
+      padding: .65rem 1.5rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .btn-ghost:hover { border-color: var(--cyan); background: rgba(0,212,255,.08); box-shadow: 0 0 16px rgba(0,212,255,.2); }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      padding: 9rem 3rem 5rem; position: relative; overflow: hidden;
+    }
+    /* big title glow */
+    .hero-bg-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--display); font-size: clamp(8rem,20vw,22rem);
+      white-space: nowrap; letter-spacing: -.02em; line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(0,212,255,.06);
+      user-select: none; pointer-events: none;
+      animation: bgPulse 4s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse { from{opacity:.4} to{opacity:1} }
+
+    /* live indicator */
+    .hero-live {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--mono); font-size: .65rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .7s ease .2s forwards;
+    }
+    .live-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: livePulse 1.2s ease infinite; box-shadow: 0 0 10px var(--green); }
+    @keyframes livePulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:.6} }
+
+    .hero-title {
+      font-family: var(--display); font-size: clamp(4rem,10vw,10rem); line-height: .92; letter-spacing: .02em;
+      margin-bottom: 1.5rem; position: relative;
+      opacity: 0; animation: fadeUp .8s ease .35s forwards;
+    }
+    .hero-title .t-cyan {
+      background: linear-gradient(135deg, var(--cyan) 0%, #0088ff 50%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 30px rgba(0,212,255,.5));
+    }
+    .hero-title .t-gold {
+      background: linear-gradient(135deg, var(--gold-p) 0%, var(--gold) 50%, #a07820 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(.9rem,1.5vw,1.1rem); color: var(--t2); max-width: 58ch; line-height: 1.85;
+      font-weight: 300; margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp .8s ease .55s forwards;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp .8s ease .75s forwards; }
+
+    /* members count animated */
+    .hero-count {
+      position: absolute; right: 3rem; bottom: 5rem;
+      text-align: right;
+      opacity: 0; animation: fadeLeft .8s ease 1s forwards;
+    }
+    .hero-count-num {
+      font-family: var(--display); font-size: 5rem; line-height: 1;
+      background: linear-gradient(135deg, var(--cyan), var(--gold-b));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0,212,255,.4));
+    }
+    .hero-count-label { font-family: var(--mono); font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; color: var(--t3); margin-top: .2rem; }
+
+    /* ticker tape */
+    .ticker { overflow: hidden; padding: .7rem 0; background: rgba(0,212,255,.04); border-top: 1px solid rgba(0,212,255,.1); border-bottom: 1px solid rgba(0,212,255,.1); }
+    .ticker-track { display: flex; width: max-content; animation: ticker 20s linear infinite; }
+    .ticker-item { font-family: var(--mono); font-size: .65rem; letter-spacing: .2em; white-space: nowrap; padding: 0 2rem; border-right: 1px solid rgba(0,212,255,.12); }
+    .t-up { color: var(--green); }
+    .t-dn { color: #ff4466; }
+    .t-nu { color: var(--t3); }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    @keyframes fadeUp  { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+    @keyframes fadeLeft { from{opacity:0;transform:translate(20px,0)} to{opacity:1;transform:none} }
+
+    /* ═══════════════════════════════
+       SECTION BASE
+    ═══════════════════════════════ */
+    .sec { padding: 6rem 3rem; position: relative; }
+    .sec-ey {
+      font-family: var(--mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase;
+      margin-bottom: .9rem; display: flex; align-items: center; gap: .7rem;
+    }
+    .sec-ey::before { content:''; width:1.5rem; height:1px; flex-shrink:0; }
+    .ey-cyan { color: var(--cyan); }
+    .ey-cyan::before { background: var(--cyan); }
+    .ey-gold { color: var(--gold); }
+    .ey-gold::before { background: var(--gold); }
+    .ey-green { color: var(--green); }
+    .ey-green::before { background: var(--green); }
+    .sec-title {
+      font-family: var(--display); font-size: clamp(2.5rem,5vw,5rem); line-height: .95; letter-spacing: .02em;
+    }
+    .sec-sub { font-size: .95rem; color: var(--t2); font-weight: 300; max-width: 60ch; line-height: 1.85; margin-top: 1rem; }
+
+    /* ═══════════════════════════════
+       WHAT'S INSIDE — 2 columns
+    ═══════════════════════════════ */
+    .inside-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3.5rem; }
+    .inside-col {
+      border: 1px solid rgba(0,212,255,.15);
+      background: rgba(3,5,12,.8); backdrop-filter: blur(6px);
+      padding: 2.5rem; position: relative; overflow: hidden;
+    }
+    .inside-col.gold-border { border-color: rgba(200,168,75,.2); }
+    .inside-col::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      transition: opacity .35s;
+    }
+    .inside-col.cyan-top::before { background: linear-gradient(90deg, transparent, var(--cyan), transparent); opacity: .6; }
+    .inside-col.gold-top::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .6; }
+    .inside-col::after {
+      content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px;
+      border-radius:50%; pointer-events:none; opacity:.15;
+    }
+    .inside-col.cyan-top::after { background: radial-gradient(circle, var(--cyan), transparent 70%); }
+    .inside-col.gold-top::after { background: radial-gradient(circle, var(--gold), transparent 70%); }
+    .inside-col:hover::before { opacity: 1; }
+
+    .ic-label { font-family: var(--mono); font-size: .6rem; letter-spacing: .25em; text-transform: uppercase; margin-bottom: 1rem; }
+    .ic-label.cyan { color: var(--cyan); }
+    .ic-label.gold { color: var(--gold); }
+    .ic-title { font-family: var(--display); font-size: 2rem; letter-spacing: .04em; margin-bottom: 1.2rem; }
+    .ic-list { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+    .ic-list li { font-size: .88rem; color: var(--t2); display: flex; align-items: flex-start; gap: .8rem; line-height: 1.6; }
+    .ic-list li span.ic-icon { flex-shrink: 0; font-size: .9rem; }
+    .ic-list strong { color: var(--text); }
+
+    /* ═══════════════════════════════
+       GAMIFICATION — SCOREBOARD
+    ═══════════════════════════════ */
+    .game-section { background: rgba(3,5,12,.6); border-top: 1px solid rgba(0,212,255,.1); border-bottom: 1px solid rgba(0,212,255,.1); }
+    .game-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+
+    /* scoreboard */
+    .scoreboard {
+      grid-column: span 2;
+      border: 1px solid rgba(0,212,255,.2);
+      background: rgba(0,10,20,.8); backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+    .sb-head {
+      padding: 1.2rem 1.8rem; border-bottom: 1px solid rgba(0,212,255,.12);
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(0,212,255,.04);
+    }
+    .sb-title { font-family: var(--mono); font-size: .68rem; letter-spacing: .25em; text-transform: uppercase; color: var(--cyan); display: flex; align-items: center; gap: .5rem; }
+    .sb-period { font-family: var(--mono); font-size: .6rem; color: var(--t3); letter-spacing: .1em; }
+    .sb-row {
+      padding: .9rem 1.8rem; border-bottom: 1px solid rgba(255,255,255,.04);
+      display: grid; grid-template-columns: 2rem 1fr auto auto;
+      gap: 1rem; align-items: center;
+      transition: background .2s;
+    }
+    .sb-row:hover { background: rgba(0,212,255,.04); }
+    .sb-row:last-child { border-bottom: none; }
+    .sb-rank { font-family: var(--display); font-size: 1.2rem; line-height: 1; }
+    .rank-1 { color: var(--gold-p); filter: drop-shadow(0 0 8px var(--gold)); }
+    .rank-2 { color: #c0c8d0; }
+    .rank-3 { color: #cd7f32; }
+    .rank-n { color: var(--t3); font-size: .9rem; }
+    .sb-user { display: flex; align-items: center; gap: .8rem; }
+    .sb-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: .65rem; font-weight: 700;
+      background: linear-gradient(135deg, rgba(0,212,255,.3), rgba(139,92,246,.3));
+      border: 1px solid rgba(0,212,255,.3);
+      color: var(--cyan);
+    }
+    .sb-name { font-size: .85rem; font-weight: 600; }
+    .sb-tag { font-family: var(--mono); font-size: .55rem; letter-spacing: .1em; color: var(--t3); }
+    .sb-calls { font-family: var(--mono); font-size: .72rem; color: var(--t2); text-align: center; }
+    .sb-calls-label { font-size: .52rem; letter-spacing: .1em; text-transform: uppercase; color: var(--t3); }
+    .sb-return {
+      font-family: var(--mono); font-size: .85rem; font-weight: 700; text-align: right;
+    }
+    .ret-pos { color: var(--green); }
+    .ret-neg { color: #ff4466; }
+    .sb-badge { font-size: .7rem; }
+
+    /* challenges widget */
+    .challenges {
+      border: 1px solid rgba(200,168,75,.2);
+      background: rgba(10,8,2,.85); backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+    .ch-head {
+      padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(200,168,75,.12);
+      background: rgba(200,168,75,.04);
+      font-family: var(--mono); font-size: .68rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ch-item { padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .ch-item:last-child { border-bottom: none; }
+    .ch-item-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+    .ch-name { font-size: .82rem; font-weight: 600; }
+    .ch-reward {
+      font-family: var(--mono); font-size: .62rem; color: var(--gold);
+      border: 1px solid rgba(200,168,75,.3); padding: .15rem .5rem;
+      background: rgba(200,168,75,.06);
+    }
+    .ch-bar { height: 3px; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden; }
+    .ch-fill { height: 100%; border-radius: 2px; transition: width 1.5s cubic-bezier(.16,1,.3,1); }
+    .ch-fill.cyan { background: linear-gradient(90deg, var(--cyan), #0099cc); }
+    .ch-fill.gold { background: linear-gradient(90deg, var(--gold), var(--gold-b)); }
+    .ch-fill.green { background: linear-gradient(90deg, var(--green), #00cc66); }
+    .ch-meta { font-family: var(--mono); font-size: .56rem; letter-spacing: .1em; color: var(--t3); margin-top: .4rem; display: flex; justify-content: space-between; }
+
+    /* ═══════════════════════════════
+       ACHIEVEMENTS / BADGES
+    ═══════════════════════════════ */
+    .badges-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .badge-card {
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(5,6,14,.8); backdrop-filter: blur(4px);
+      padding: 1.8rem 1.2rem; text-align: center;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
+    }
+    .badge-card.earned { border-color: rgba(200,168,75,.3); }
+    .badge-card.earned::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at center, rgba(200,168,75,.06), transparent 70%);
+    }
+    .badge-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,.3); box-shadow: 0 8px 30px rgba(0,212,255,.1); }
+    .badge-icon { font-size: 2.2rem; margin-bottom: .8rem; display: block; }
+    .badge-name { font-family: var(--mono); font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--t2); margin-bottom: .3rem; }
+    .badge-desc { font-size: .72rem; color: var(--t3); line-height: 1.4; }
+    .badge-earned-tag {
+      position: absolute; top: .6rem; right: .6rem;
+      font-family: var(--mono); font-size: .5rem; letter-spacing: .1em;
+      color: var(--gold); border: 1px solid rgba(200,168,75,.4); padding: .12rem .4rem;
+    }
+
+    /* ═══════════════════════════════
+       LIVE FEED / COMMUNITY ACTIVITY
+    ═══════════════════════════════ */
+    .feed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .feed-panel {
+      border: 1px solid rgba(0,212,255,.15);
+      background: rgba(2,6,14,.85); backdrop-filter: blur(8px);
+      overflow: hidden; max-height: 420px;
+    }
+    .feed-head {
+      padding: 1rem 1.5rem; border-bottom: 1px solid rgba(0,212,255,.1);
+      background: rgba(0,212,255,.04);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .fh-title { font-family: var(--mono); font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; color: var(--cyan); display: flex; align-items: center; gap: .5rem; }
+    .fh-count { font-family: var(--mono); font-size: .58rem; color: var(--t3); }
+    .feed-body { overflow-y: auto; max-height: 340px; }
+    .feed-body::-webkit-scrollbar { width: 3px; }
+    .feed-body::-webkit-scrollbar-track { background: transparent; }
+    .feed-body::-webkit-scrollbar-thumb { background: rgba(0,212,255,.2); border-radius: 2px; }
+    .feed-item { padding: .8rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.04); display: flex; gap: .8rem; align-items: flex-start; animation: feedIn .4s ease; }
+    @keyframes feedIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+    .feed-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, rgba(0,212,255,.3), rgba(139,92,246,.3)); border: 1px solid rgba(0,212,255,.25); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: .6rem; color: var(--cyan); }
+    .fi-name { font-size: .8rem; font-weight: 600; margin-bottom: .2rem; }
+    .fi-text { font-size: .78rem; color: var(--t2); line-height: 1.5; }
+    .fi-time { font-family: var(--mono); font-size: .56rem; color: var(--t3); margin-top: .2rem; }
+    .fi-tag { display: inline-flex; align-items: center; gap: .3rem; font-family: var(--mono); font-size: .58rem; border-radius: 2px; padding: .1rem .4rem; margin-top: .3rem; }
+    .fi-tag.up { color: var(--green); background: rgba(0,255,136,.08); border: 1px solid rgba(0,255,136,.2); }
+    .fi-tag.down { color: #ff4466; background: rgba(255,68,102,.08); border: 1px solid rgba(255,68,102,.2); }
+    .fi-tag.neutral { color: var(--gold); background: rgba(200,168,75,.08); border: 1px solid rgba(200,168,75,.2); }
+
+    /* contest panel */
+    .contest-panel {
+      border: 1px solid rgba(139,92,246,.25);
+      background: rgba(8,3,20,.85); backdrop-filter: blur(8px);
+      padding: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .contest-panel::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, var(--purple), var(--cyan), transparent);
+      animation: shimmer 3s ease infinite;
+    }
+    @keyframes shimmer { 0%{background-position:0% 0} 100%{background-position:300% 0} }
+    .contest-panel::after {
+      content:''; position:absolute; top:-80px; right:-80px; width:300px; height:300px;
+      background: radial-gradient(circle, rgba(139,92,246,.15), transparent 65%); pointer-events:none;
+    }
+    .cp-badge { font-family: var(--mono); font-size: .6rem; letter-spacing: .25em; text-transform: uppercase; color: var(--purple); display: flex; align-items: center; gap: .5rem; margin-bottom: 1.2rem; }
+    .cp-badge::before { content:'🏆'; }
+    .cp-title { font-family: var(--display); font-size: clamp(1.4rem,3vw,2.2rem); line-height: 1; margin-bottom: .8rem; background: linear-gradient(135deg, #fff, var(--purple), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .cp-desc { font-size: .86rem; color: var(--t2); line-height: 1.75; margin-bottom: 1.5rem; }
+    .cp-prize { display: flex; align-items: baseline; gap: .6rem; margin-bottom: 1.2rem; }
+    .cp-prize-num { font-family: var(--display); font-size: 3.5rem; line-height: 1; background: linear-gradient(135deg, var(--gold-p), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 12px rgba(200,168,75,.4)); }
+    .cp-prize-label { font-family: var(--mono); font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--t3); }
+    .cp-timer { font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; color: var(--t2); margin-bottom: 1.5rem; }
+    .cp-timer span { color: var(--cyan); }
+    .cp-rules { list-style: none; display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.8rem; }
+    .cp-rules li { font-size: .82rem; color: var(--t2); display: flex; align-items: flex-start; gap: .6rem; line-height: 1.5; }
+    .cp-rules li::before { content:'›'; color: var(--purple); font-size: 1rem; flex-shrink: 0; }
+
+    /* ═══════════════════════════════
+       PRICING
+    ═══════════════════════════════ */
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .price-card {
+      border: 1px solid rgba(0,212,255,.2);
+      background: rgba(3,8,18,.85); backdrop-filter: blur(8px);
+      padding: 2.5rem 2.2rem; position: relative; overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .price-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent); opacity: .5;
+    }
+    .price-card.featured {
+      border-color: rgba(200,168,75,.45);
+      background: linear-gradient(150deg, rgba(15,10,3,.95), rgba(8,8,8,.95));
+    }
+    .price-card.featured::before { background: linear-gradient(90deg, transparent, var(--gold-b), var(--gold-p), var(--gold-b), transparent); opacity: 1; animation: shimmer 3s linear infinite; background-size: 300% 100%; }
+    .price-card.featured::after { content:''; position:absolute; top:-60px; right:-60px; width:250px; height:250px; background:radial-gradient(circle, rgba(200,168,75,.14), transparent 65%); pointer-events:none; }
+    .price-card:hover { border-color: rgba(0,212,255,.4); box-shadow: 0 0 40px rgba(0,212,255,.1); }
+    .price-card.elite {
+      border-color: rgba(255,68,220,.45);
+      background: linear-gradient(150deg, rgba(20,3,18,.95), rgba(8,3,14,.95));
+    }
+    .price-card.elite::before { background: linear-gradient(90deg, transparent, #ff44dc, #ff44dc99, #ff44dc, transparent); opacity: 1; animation: shimmer 2.5s linear infinite; background-size: 300% 100%; }
+    .price-card.elite::after { content:''; position:absolute; top:-60px; right:-60px; width:250px; height:250px; background:radial-gradient(circle, rgba(255,68,220,.18), transparent 65%); pointer-events:none; }
+    .price-card.elite:hover { border-color: rgba(255,68,220,.7); box-shadow: 0 0 60px rgba(255,68,220,.2); }
+    .elite-badge-label { display:inline-flex; align-items:center; gap:.4rem; font-family:var(--mono); font-size:.6rem; letter-spacing:.25em; text-transform:uppercase; color:#ff44dc; border:1px solid rgba(255,68,220,.4); padding:.3rem .8rem; background:rgba(255,68,220,.08); margin-bottom:1.2rem; }
+    .elite-badge-label::before { content:'⚡'; }
+    .pc-price.elite-color { background: linear-gradient(135deg, #ff44dc, #cc22aa, #ff88ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(255,68,220,.5)); }
+    .elite-tag {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--mono); font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+      color: #ff44dc; border: 1px solid rgba(255,68,220,.4);
+      padding: .22rem .6rem; background: rgba(255,68,220,.06);
+      animation: eliteGlow 2s ease infinite alternate;
+    }
+    @keyframes eliteGlow { from{box-shadow:0 0 6px rgba(255,68,220,.2)} to{box-shadow:0 0 14px rgba(255,68,220,.5)} }
+    .btn-elite {
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: #fff; background: linear-gradient(135deg, #ff44dc, #cc22aa);
+      border: none; padding: .65rem 1.5rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem; justify-content: center; width: 100%;
+      box-shadow: 0 0 24px rgba(255,68,220,.4);
+      transition: opacity .2s, transform .15s, box-shadow .2s; font-weight: 700;
+    }
+    .btn-elite:hover { opacity: .88; transform: translateY(-1px); box-shadow: 0 0 36px rgba(255,68,220,.6); }
+    .pc-badge { font-family: var(--mono); font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: #000; background: linear-gradient(90deg, var(--gold-p), var(--gold)); padding: .28rem .8rem; width: fit-content; margin-bottom: 1.2rem; clip-path: polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); }
+    .pc-period { font-family: var(--mono); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--t2); margin-bottom: .8rem; }
+    .pc-price {
+      font-family: var(--display); font-size: 5rem; line-height: .9; margin-bottom: .3rem;
+    }
+    .pc-price.cyan { background: linear-gradient(135deg, var(--cyan), #0088ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 16px rgba(0,212,255,.4)); }
+    .pc-price.gold { background: linear-gradient(135deg, var(--gold-p), var(--gold), #a07820); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 16px rgba(200,168,75,.4)); }
+    .pc-old { font-family: var(--mono); font-size: .85rem; color: var(--t3); text-decoration: line-through; margin-bottom: .3rem; }
+    .pc-save { font-family: var(--mono); font-size: .65rem; letter-spacing: .15em; color: var(--green); margin-bottom: 1.5rem; }
+    .pc-features { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 2rem; }
+    .pc-features li { font-size: .84rem; color: var(--t2); display: flex; align-items: flex-start; gap: .6rem; line-height: 1.5; }
+    .pc-features li::before { content:'✓'; color: var(--green); font-size: .8rem; flex-shrink: 0; font-weight: 700; }
+
+    /* ═══════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════ */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .tcard {
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(5,6,14,.8); backdrop-filter: blur(4px);
+      padding: 1.8rem; position: relative; overflow: hidden;
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .tcard:hover { border-color: rgba(0,212,255,.2); box-shadow: 0 8px 30px rgba(0,212,255,.07); }
+    .tcard-stock { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .tcard-ticker { font-family: var(--mono); font-size: .72rem; font-weight: 700; letter-spacing: .15em; color: var(--cyan); }
+    .tcard-return { font-family: var(--mono); font-size: .9rem; font-weight: 700; }
+    .tcard-return.up { color: var(--green); }
+    .tcard-text { font-size: .84rem; color: var(--t2); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+    .tcard-user { display: flex; align-items: center; gap: .8rem; }
+    .tcard-av { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, rgba(0,212,255,.25), rgba(139,92,246,.25)); border: 1px solid rgba(0,212,255,.2); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: .6rem; color: var(--cyan); }
+    .tcard-name { font-size: .8rem; font-weight: 600; }
+    .tcard-date { font-family: var(--mono); font-size: .56rem; color: var(--t3); }
+
+    /* ═══════════════════════════════
+       FINAL CTA
+    ═══════════════════════════════ */
+    .final {
+      padding: 7rem 3rem; text-align: center; position: relative; overflow: hidden;
+      border-top: 1px solid rgba(0,212,255,.1);
+    }
+    .final::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 70% 80% at 50% 120%, rgba(0,212,255,.1), transparent 60%),
+        radial-gradient(ellipse 50% 60% at 20% 0%, rgba(139,92,246,.08), transparent 55%);
+      pointer-events:none;
+    }
+    .final-ey { font-family: var(--mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.2rem; }
+    .final-title { font-family: var(--display); font-size: clamp(3rem,7vw,7rem); line-height: .92; margin-bottom: 1.5rem; }
+    .final-title .fc { background: linear-gradient(135deg, var(--cyan), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(0,212,255,.4)); }
+    .final-sub { font-size: .95rem; color: var(--t2); font-weight: 300; max-width: 44ch; margin: 0 auto 2.5rem; line-height: 1.8; }
+    .final-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .final-note { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; color: var(--t3); margin-top: 1.2rem; }
+
+    footer { padding: 2rem 3rem; border-top: 1px solid rgba(0,212,255,.08); display: flex; align-items: center; justify-content: space-between; background: rgba(3,5,8,.9); }
+    /* ════════════════════════════════
+       SITE FOOTER — structured product links
+    ════════════════════════════════ */
+    .site-footer {
+      background: rgba(3,2,2,.97);
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 4rem;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 1px solid rgba(184,151,90,.08);
+    }
+
+    /* Brand */
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .75rem; letter-spacing: .45em;
+      color: var(--gold, #b8975a); text-transform: uppercase;
+    }
+    .footer-tagline {
+      font-size: .78rem; line-height: 1.7;
+      color: var(--text-3, #4a4640); font-weight: 300;
+    }
+    .footer-socials { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .footer-social {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-3, #4a4640); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-social:hover { color: var(--gold, #b8975a); }
+
+    /* Nav columns */
+    .footer-nav-cols {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
+    }
+    .footer-col {}
+    .footer-col-title {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .6rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--gold, #b8975a);
+      margin-bottom: 1.2rem;
+      padding-bottom: .7rem;
+      border-bottom: 1px solid rgba(184,151,90,.15);
+    }
+    .footer-col-title--cyan { color: #00d4ff; border-bottom-color: rgba(0,212,255,.2); }
+    .footer-col-links {
+      list-style: none; display: flex; flex-direction: column; gap: .6rem;
+    }
+    .footer-col-links li {}
+    .footer-col-links a {
+      font-size: .76rem; line-height: 1.5;
+      color: var(--text-3, #4a4640); text-decoration: none;
+      transition: color .2s, padding-left .2s;
+      display: block;
+    }
+    .footer-col-links a:hover { color: var(--text, #f0ede8); padding-left: .35rem; }
+
+    /* Bottom bar */
+    .footer-bottom {
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom-logo {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .62rem; letter-spacing: .4em; color: rgba(184,151,90,.35);
+    }
+    .footer-bottom-copy {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .58rem; letter-spacing: .08em;
+      color: var(--text-3, #4a4640);
+    }
+    .footer-bottom-links {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .footer-bottom-links a {
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-3, #4a4640); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-bottom-links a:hover { color: var(--gold, #b8975a); }
+
+    /* Mobile footer */
+    @media (max-width: 900px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2rem; }
+      .footer-nav-cols { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .footer-bottom { padding: 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: .8rem; }
+      .footer-bottom-links { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .footer-nav-cols { grid-template-columns: 1fr; }
+    }
+
+    /* reveal */
+    .rev { opacity: 0; transform: translateY(28px); transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
+    .rev.in { opacity: 1; transform: none; }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+
+    /* lang */
+    [data-lang]{display:none} [data-lang].act{display:block}
+    span[data-lang]{display:none} span[data-lang].act{display:inline}
+
+    /* mobile */
+    /* Burger button */
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--t2); transition: all .3s; }
+
+    @media(max-width:900px) {
+      nav { display: none !important; }
+      .h-burger { display: flex !important; }
+      header { padding: .9rem 1.2rem; }
+      header.sm { padding: .7rem 1.2rem; }
+      .btn-join-hdr { display: none; }
+      #hdr-join { display: none; }
+      /* Fix price-card overflow animation on mobile */
+      .price-card::after { display: none; }
+      .price-card.featured::after { display: none; }
+      .price-card.elite::after { display: none; }
+      .hero{padding:7rem 1.5rem 4rem} .hero-count{display:none}
+      .sec{padding:4rem 1.5rem}
+      .inside-grid{grid-template-columns:1fr}
+      .game-grid{grid-template-columns:1fr}
+      .scoreboard{grid-column:span 1}
+      .badges-grid{grid-template-columns:repeat(2,1fr)}
+      .feed-grid{grid-template-columns:1fr}
+      .pricing-grid{grid-template-columns:1fr; max-width:100%;}
+      .testimonials-grid{grid-template-columns:1fr}
+      .final{padding:5rem 1.5rem}
+      .final-actions{flex-direction:column;align-items:stretch}
+      .final-actions .btn-join,.final-actions .btn-ghost{width:100%;justify-content:center;clip-path:none}
+      footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem}
+      .btn-join,.btn-ghost{clip-path:none}
+    }
+    @media(max-width:480px) {
+      .badges-grid{grid-template-columns:repeat(2,1fr)}
+      .hero-title{font-size:3.5rem}
+    }
+  </style>
+</head>
+<body>
+
+<div id="grid"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div id="pre">
+  <div class="pre-badge">TRADING INSIDER CLUB</div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+</div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <a href="index.html" class="logo"><span class="logo-dot"></span>AXIUMSQUARE</a>
+  <nav>
+    <a href="axiumsquare-services.html"><span data-lang="ru" class="act">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="axiumsquare-club.html" class="nav-club cur">◆ <span data-lang="ru" class="act">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="axiumsquare-academy.html"><span data-lang="ru" class="act">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="axiumsquare-invest.html"><span data-lang="ru" class="act">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="axiumsquare-blog.html"><span data-lang="ru" class="act">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="axiumsquare-news.html"><span data-lang="ru" class="act">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:.7rem;">
+    <div class="ldrop" id="ldrop">
+      <button class="lcur" onclick="tgL(event)"><span id="llbl">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lmenu">
+        <button class="lopt" onclick="setL('ru')">RU</button>
+        <button class="lopt" onclick="setL('ua')">UA</button>
+        <button class="lopt" onclick="setL('en')">EN</button>
+      </div>
+    </div>
+    <a href="axiumsquare-login.html" class="btn-join" id="hdr-auth-btn">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="act auth-label-ru">Войти</span><span data-lang="ua" class="auth-label-ua">Увійти</span><span data-lang="en" class="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9600;background:rgba(3,5,8,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex!important;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="index.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Главная</span><span data-lang="ua">Головна</span><span data-lang="en">Home</span></a>
+    <a href="axiumsquare-services.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="axiumsquare-club.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#00d4ff;text-decoration:none;border:1px solid rgba(0,212,255,.4);padding:.4rem 1.2rem;background:rgba(0,212,255,.06);">◆ <span data-lang="ru" class="act">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="axiumsquare-academy.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="axiumsquare-invest.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Инвестиции</span><span data-lang="ua">Інвестиції</span><span data-lang="en">Invest</span></a>
+    <a href="axiumsquare-blog.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="axiumsquare-news.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#9a9488;text-decoration:none;"><span data-lang="ru" class="act">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="axiumsquare-login.html" onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#d4a84b,#b8975a);color:#000;padding:.6rem 2rem;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);display:inline-block;margin-top:.5rem;">
+    <span class="mob-auth-ru">Войти</span><span class="mob-auth-ua" style="display:none;">Увійти</span><span class="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:#00d4ff;background:none;border:1px solid rgba(0,212,255,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- TICKER -->
+<div class="ticker" style="position:fixed;top:64px;left:0;right:0;z-index:9400;">
+  <div class="ticker-track">
+    <span class="ticker-item t-up">NVDA +4.2%</span><span class="ticker-item t-dn">TSLA −1.8%</span><span class="ticker-item t-up">AAPL +0.9%</span><span class="ticker-item t-up">SMCI +12.4%</span><span class="ticker-item t-nu">SPY +0.1%</span><span class="ticker-item t-up">AMD +3.1%</span><span class="ticker-item t-dn">META −0.5%</span><span class="ticker-item t-up">MSTR +8.7%</span><span class="ticker-item t-up">GOOG +1.4%</span><span class="ticker-item t-dn">NFLX −2.1%</span><span class="ticker-item t-up">PLTR +6.3%</span><span class="ticker-item t-nu">QQQ +0.3%</span>
+    <span class="ticker-item t-up">NVDA +4.2%</span><span class="ticker-item t-dn">TSLA −1.8%</span><span class="ticker-item t-up">AAPL +0.9%</span><span class="ticker-item t-up">SMCI +12.4%</span><span class="ticker-item t-nu">SPY +0.1%</span><span class="ticker-item t-up">AMD +3.1%</span><span class="ticker-item t-dn">META −0.5%</span><span class="ticker-item t-up">MSTR +8.7%</span><span class="ticker-item t-up">GOOG +1.4%</span><span class="ticker-item t-dn">NFLX −2.1%</span><span class="ticker-item t-up">PLTR +6.3%</span><span class="ticker-item t-nu">QQQ +0.3%</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding-top:10rem;">
+  <div class="hero-bg-text">INSIDER</div>
+  <div class="hero-live">
+    <span class="live-dot"></span>
+    <span data-lang="ru" class="act">147 участников онлайн сейчас</span>
+    <span data-lang="ua">147 учасників онлайн зараз</span>
+    <span data-lang="en">147 members online now</span>
+  </div>
+  <h1 class="hero-title">
+    <span class="t-cyan">TRADING</span><br>
+    <span class="t-gold">INSIDER</span><br>
+    <span style="color:var(--text);">& BUSINESS</span>
+  </h1>
+  <p class="hero-sub">
+    <span data-lang="ru" class="act">Не просто чат с сигналами — закрытая экосистема на стыке высокодоходного трейдинга NYSE/NASDAQ и устойчивого офлайн-бизнеса. Профессиональная аналитика + элитный нетворкинг + геймификация.</span>
+    <span data-lang="ua">Не просто чат із сигналами — закрита екосистема на перетині дохідного трейдингу NYSE/NASDAQ та стійкого офлайн-бізнесу.</span>
+    <span data-lang="en">Not just a signals chat — a closed ecosystem at the intersection of high-yield NYSE/NASDAQ trading and solid offline business. Professional analytics + elite networking + gamification.</span>
+  </p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-join">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span data-lang="ru" class="act">Вступить в клуб</span><span data-lang="ua">Вступити до клубу</span><span data-lang="en">Join the Club</span>
+    </a>
+    <a href="#inside" class="btn-ghost">
+      <span data-lang="ru" class="act">Посмотреть внутри</span><span data-lang="ua">Переглянути всередині</span><span data-lang="en">Look Inside</span>
+    </a>
+  </div>
+  <div class="hero-count">
+    <div class="hero-count-num" id="counter">0</div>
+    <div class="hero-count-label">
+      <span data-lang="ru" class="act">участников клуба</span>
+      <span data-lang="ua">учасників клубу</span>
+      <span data-lang="en">club members</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="sec" id="inside">
+  <div class="sec-ey ey-cyan rev">Trading Insider & Business Club</div>
+  <h2 class="sec-title rev">
+    <span data-lang="ru" class="act">ДВЕ СТОРОНЫ<br><span style="background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ОДНОЙ МЕДАЛИ</span></span>
+    <span data-lang="ua">ДВІ СТОРОНИ<br><span style="background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ОДНІЄЇ МЕДАЛІ</span></span>
+    <span data-lang="en">TWO SIDES<br><span style="background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">OF ONE COIN</span></span>
+  </h2>
+  <div class="inside-grid rev">
+    <div class="inside-col cyan-top">
+      <div class="ic-label cyan">01 · <span data-lang="ru" class="act">Профессиональный трейдинг</span><span data-lang="ua">Професійний трейдинг</span><span data-lang="en">Professional Trading</span></div>
+      <div class="ic-title" style="background:linear-gradient(135deg,var(--cyan),#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">USA MARKETS</div>
+      <ul class="ic-list">
+        <li><span class="ic-icon">📊</span><div><strong>Daily Watchlist</strong> — <span data-lang="ru" class="act">акции «в игре» до открытия сессии каждый день</span><span data-lang="ua">акції «у грі» до відкриття сесії щодня</span><span data-lang="en">Stocks in Play before session open every day</span></div></li>
+        <li><span class="ic-icon">⚡</span><div><strong>Live-аналитика</strong> — <span data-lang="ru" class="act">разбор сетапов, лента сделок и аномальные объёмы в реальном времени</span><span data-lang="ua">розбір сетапів та аномальні об'єми в реальному часі</span><span data-lang="en">setup breakdowns, tape reading and anomalous volumes in real time</span></div></li>
+        <li><span class="ic-icon">🔔</span><div><strong><span data-lang="ru" class="act">Эксклюзивные алерты</span><span data-lang="ua">Ексклюзивні алерти</span><span data-lang="en">Exclusive alerts</span></strong> — <span data-lang="ru" class="act">необычная опционная активность и действия инсайдеров</span><span data-lang="ua">незвичайна опціонна активність та дії інсайдерів</span><span data-lang="en">unusual options activity and insider moves</span></div></li>
+        <li><span class="ic-icon">💬</span><div><strong>Discord</strong> — <span data-lang="ru" class="act">живой чат трейдеров, обсуждение позиций, скриншоты сделок</span><span data-lang="ua">живий чат трейдерів, обговорення позицій, скріни угод</span><span data-lang="en">live traders chat, position discussions, trade screenshots</span></div></li>
+        <li><span class="ic-icon">🏆</span><div><strong>Scoreboard</strong> — <span data-lang="ru" class="act">ежедневный и ежемесячный рейтинг прогнозов и сделок</span><span data-lang="ua">щоденний та щомісячний рейтинг прогнозів та угод</span><span data-lang="en">daily and monthly leaderboard of forecasts and trades</span></div></li>
+      </ul>
+    </div>
+    <div class="inside-col gold-border gold-top">
+      <div class="ic-label gold">02 · <span data-lang="ru" class="act">Элитный нетворкинг</span><span data-lang="ua">Елітний нетворкінг</span><span data-lang="en">Elite Networking</span></div>
+      <div class="ic-title" style="background:linear-gradient(135deg,var(--gold-p),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">BUSINESS CLUB</div>
+      <ul class="ic-list">
+        <li><span class="ic-icon">👑</span><div><strong><span data-lang="ru" class="act">Лидеры бизнеса</span><span data-lang="ua">Лідери бізнесу</span><span data-lang="en">Business leaders</span></strong> — <span data-lang="ru" class="act">владельцы крупного офлайн-бизнеса, производств, IT</span><span data-lang="ua">власники великого офлайн-бізнесу, виробництв, IT</span><span data-lang="en">owners of large offline businesses, manufacturing, IT</span></div></li>
+        <li><span class="ic-icon">🔒</span><div><strong>Off-Market</strong> — <span data-lang="ru" class="act">закрытые инвестиционные предложения: недвижимость, стартапы, Private Equity</span><span data-lang="ua">закриті інвестиційні пропозиції: нерухомість, стартапи, Private Equity</span><span data-lang="en">closed investment opportunities: real estate, startups, Private Equity</span></div></li>
+        <li><span class="ic-icon">🤝</span><div><strong><span data-lang="ru" class="act">Бизнес-синергия</span><span data-lang="ua">Бізнес-синергія</span><span data-lang="en">Business synergy</span></strong> — <span data-lang="ru" class="act">партнёры, ко-инвесторы и эксперты для ваших проектов</span><span data-lang="ua">партнери, ко-інвестори та експерти для ваших проектів</span><span data-lang="en">partners, co-investors and experts for your projects</span></div></li>
+        <li><span class="ic-icon">🎯</span><div><strong><span data-lang="ru" class="act">Закрытые встречи</span><span data-lang="ua">Закриті зустрічі</span><span data-lang="en">Closed meetups</span></strong> — <span data-lang="ru" class="act">онлайн-митапы и живые встречи для обсуждения стратегий</span><span data-lang="ua">онлайн-мітапи та живі зустрічі для обговорення стратегій</span><span data-lang="en">online and live meetups to discuss capital management strategies</span></div></li>
+        <li><span class="ic-icon">💰</span><div><strong><span data-lang="ru" class="act">Прибыль с биржи → в бизнес</span><span data-lang="ua">Прибуток з біржі → у бізнес</span><span data-lang="en">Market profit → into business</span></strong> — <span data-lang="ru" class="act">пространство, где деньги не лежат, а работают</span><span data-lang="ua">простір, де гроші не лежать, а працюють</span><span data-lang="en">a space where money never sits idle</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GAMIFICATION -->
+<section class="sec game-section" id="scoreboard">
+  <div class="sec-ey ey-green rev">
+    <span data-lang="ru" class="act">Геймификация · Соревнование · Рост</span>
+    <span data-lang="ua">Геймифікація · Змагання · Зростання</span>
+    <span data-lang="en">Gamification · Competition · Growth</span>
+  </div>
+  <h2 class="sec-title rev" style="background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+    <span data-lang="ru" class="act">ТОРГУЙ.<br>СОРЕВНУЙСЯ.<br>ПОБЕЖДАЙ.</span>
+    <span data-lang="ua">ТОРГУЙ.<br>ЗМАГАЙСЯ.<br>ПЕРЕМАГАЙ.</span>
+    <span data-lang="en">TRADE.<br>COMPETE.<br>WIN.</span>
+  </h2>
+
+  <div class="game-grid">
+    <!-- Scoreboard -->
+    <div class="scoreboard rev">
+      <div class="sb-head">
+        <div class="sb-title"><span class="live-dot" style="width:6px;height:6px;"></span>
+          <span data-lang="ru" class="act">Рейтинг месяца — Прогнозы</span>
+          <span data-lang="ua">Рейтинг місяця — Прогнози</span>
+          <span data-lang="en">Monthly Leaderboard — Forecasts</span>
+        </div>
+        <div class="sb-period">March 2026</div>
+      </div>
+      <div class="sb-row">
+        <div class="sb-rank rank-1">1</div>
+        <div class="sb-user"><div class="sb-avatar">KX</div><div><div class="sb-name">KryptoXen</div><div class="sb-tag">🏆 Top Caller</div></div></div>
+        <div class="sb-calls"><div>47</div><div class="sb-calls-label"><span data-lang="ru" class="act">коллов</span><span data-lang="en">calls</span></div></div>
+        <div><div class="sb-return ret-pos">+34.8%</div><div class="sb-badge">🔥</div></div>
+      </div>
+      <div class="sb-row">
+        <div class="sb-rank rank-2">2</div>
+        <div class="sb-user"><div class="sb-avatar">ST</div><div><div class="sb-name">SwingTrader_M</div><div class="sb-tag">⚡ Fast Fingers</div></div></div>
+        <div class="sb-calls"><div>38</div><div class="sb-calls-label"><span data-lang="ru" class="act">коллов</span><span data-lang="en">calls</span></div></div>
+        <div><div class="sb-return ret-pos">+28.2%</div><div class="sb-badge">💎</div></div>
+      </div>
+      <div class="sb-row">
+        <div class="sb-rank rank-3">3</div>
+        <div class="sb-user"><div class="sb-avatar">AA</div><div><div class="sb-name">AlphaAlex</div><div class="sb-tag">📈 Rising Star</div></div></div>
+        <div class="sb-calls"><div>52</div><div class="sb-calls-label"><span data-lang="ru" class="act">коллов</span><span data-lang="en">calls</span></div></div>
+        <div><div class="sb-return ret-pos">+22.7%</div></div>
+      </div>
+      <div class="sb-row">
+        <div class="sb-rank rank-n">4</div>
+        <div class="sb-user"><div class="sb-avatar">NV</div><div><div class="sb-name">NasdaqViper</div><div class="sb-tag">🎯 Sniper</div></div></div>
+        <div class="sb-calls"><div>29</div><div class="sb-calls-label"><span data-lang="ru" class="act">коллов</span><span data-lang="en">calls</span></div></div>
+        <div><div class="sb-return ret-pos">+18.1%</div></div>
+      </div>
+      <div class="sb-row">
+        <div class="sb-rank rank-n">5</div>
+        <div class="sb-user"><div class="sb-avatar">TF</div><div><div class="sb-name">TrendFollower</div><div class="sb-tag">📊 Analyst</div></div></div>
+        <div class="sb-calls"><div>61</div><div class="sb-calls-label"><span data-lang="ru" class="act">коллов</span><span data-lang="en">calls</span></div></div>
+        <div><div class="sb-return ret-dn" style="color:#ff4466;">−2.4%</div></div>
+      </div>
+      <div class="sb-row" style="opacity:.5;">
+        <div class="sb-rank rank-n">—</div>
+        <div class="sb-user"><div class="sb-avatar" style="opacity:.5;">?</div><div><div class="sb-name"><span data-lang="ru" class="act">Ты здесь?</span><span data-lang="ua">Ти тут?</span><span data-lang="en">You here?</span></div><div class="sb-tag"><span data-lang="ru" class="act">Вступи и попади в ТОП</span><span data-lang="ua">Вступи і потрап у ТОП</span><span data-lang="en">Join and reach the TOP</span></div></div></div>
+        <div></div>
+        <div><a href="#pricing" style="font-family:var(--mono);font-size:.62rem;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,212,255,.3);padding:.3rem .7rem;">JOIN →</a></div>
+      </div>
+    </div>
+
+    <!-- Challenges -->
+    <div class="challenges rev d1">
+      <div class="ch-head">
+        🎯 <span data-lang="ru" class="act">Активные задания</span><span data-lang="ua">Активні завдання</span><span data-lang="en">Active Challenges</span>
+        <span style="font-size:.55rem;color:var(--t3);">
+          <span data-lang="ru" class="act">Сбрасываются в 00:00 EST</span>
+          <span data-lang="en">Resets at 00:00 EST</span>
+        </span>
+      </div>
+      <div class="ch-item">
+        <div class="ch-item-top">
+          <div class="ch-name">📅 <span data-lang="ru" class="act">Ежедневный прогноз</span><span data-lang="ua">Щоденний прогноз</span><span data-lang="en">Daily Forecast</span></div>
+          <div class="ch-reward">+50 XP</div>
+        </div>
+        <div class="ch-bar"><div class="ch-fill cyan" style="width:68%"></div></div>
+        <div class="ch-meta"><span><span data-lang="ru" class="act">Сделать прогноз до открытия сессии</span><span data-lang="en">Make prediction before session open</span></span><span>68%</span></div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-item-top">
+          <div class="ch-name">📸 <span data-lang="ru" class="act">Опубликуй сделку</span><span data-lang="ua">Опублікуй угоду</span><span data-lang="en">Post a Trade</span></div>
+          <div class="ch-reward">+100 XP</div>
+        </div>
+        <div class="ch-bar"><div class="ch-fill gold" style="width:40%"></div></div>
+        <div class="ch-meta"><span><span data-lang="ru" class="act">Скрин + анализ входа</span><span data-lang="en">Screenshot + entry analysis</span></span><span>40%</span></div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-item-top">
+          <div class="ch-name">🗓️ <span data-lang="ru" class="act">Серия 7 дней</span><span data-lang="ua">Серія 7 днів</span><span data-lang="en">7-Day Streak</span></div>
+          <div class="ch-reward">+500 XP 🔥</div>
+        </div>
+        <div class="ch-bar"><div class="ch-fill green" style="width:57%"></div></div>
+        <div class="ch-meta"><span>4/7 <span data-lang="ru" class="act">дней</span><span data-lang="ua">днів</span><span data-lang="en">days</span></span><span>57%</span></div>
+      </div>
+      <div class="ch-item">
+        <div class="ch-item-top">
+          <div class="ch-name">💬 <span data-lang="ru" class="act">Разбор недели</span><span data-lang="ua">Розбір тижня</span><span data-lang="en">Weekly Review</span></div>
+          <div class="ch-reward">+200 XP</div>
+        </div>
+        <div class="ch-bar"><div class="ch-fill cyan" style="width:20%"></div></div>
+        <div class="ch-meta"><span><span data-lang="ru" class="act">Итоги недели в чате</span><span data-lang="en">Weekly summary in chat</span></span><span>20%</span></div>
+      </div>
+      <div class="ch-item" style="background:rgba(200,168,75,.04);">
+        <div class="ch-item-top">
+          <div class="ch-name">🏆 <span data-lang="ru" class="act">Конкурс месяца</span><span data-lang="ua">Конкурс місяця</span><span data-lang="en">Monthly Contest</span></div>
+          <div class="ch-reward" style="color:#ff9900;border-color:rgba(255,153,0,.4);">$500 🎁</div>
+        </div>
+        <div class="ch-bar"><div class="ch-fill" style="width:72%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div>
+        <div class="ch-meta"><span><span data-lang="ru" class="act">Лучший трейд месяца</span><span data-lang="en">Best trade of the month</span></span><span>72%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="sec" style="border-top:1px solid rgba(200,168,75,.1);">
+  <div class="sec-ey ey-gold rev">
+    <span data-lang="ru" class="act">Ачивки · Статусы · Бонусы</span>
+    <span data-lang="ua">Досягнення · Статуси · Бонуси</span>
+    <span data-lang="en">Achievements · Statuses · Bonuses</span>
+  </div>
+  <h2 class="sec-title rev" style="color:var(--gold);">
+    <span data-lang="ru" class="act">ЗАРАБАТЫВАЙ<br>СТАТУС</span>
+    <span data-lang="ua">ЗАРОБЛЯЙ<br>СТАТУС</span>
+    <span data-lang="en">EARN YOUR<br>STATUS</span>
+  </h2>
+  <p class="sec-sub rev">
+    <span data-lang="ru" class="act">Каждое действие в клубе даёт XP. Поднимайся по уровням, открывай эксклюзивный контент и получай реальные призы.</span>
+    <span data-lang="ua">Кожна дія в клубі дає XP. Піднімайся по рівнях та отримуй реальні призи.</span>
+    <span data-lang="en">Every action in the club earns XP. Level up, unlock exclusive content and win real prizes.</span>
+  </p>
+  <div class="badges-grid">
+    <div class="badge-card earned rev">
+      <div class="badge-earned-tag">EARNED</div>
+      <span class="badge-icon">🌱</span>
+      <div class="badge-name">Rookie</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">Первый прогноз опубликован</span><span data-lang="ua">Перший прогноз опубліковано</span><span data-lang="en">First forecast published</span></div>
+    </div>
+    <div class="badge-card earned rev d1">
+      <div class="badge-earned-tag">EARNED</div>
+      <span class="badge-icon">🎯</span>
+      <div class="badge-name">Sniper</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">5 точных прогнозов подряд</span><span data-lang="ua">5 точних прогнозів підряд</span><span data-lang="en">5 accurate forecasts in a row</span></div>
+    </div>
+    <div class="badge-card rev d2">
+      <span class="badge-icon">🔥</span>
+      <div class="badge-name">On Fire</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">7 дней активности подряд</span><span data-lang="ua">7 днів активності поспіль</span><span data-lang="en">7 days of activity in a row</span></div>
+    </div>
+    <div class="badge-card rev d3">
+      <span class="badge-icon">💎</span>
+      <div class="badge-name">Diamond</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">ТОП-3 рейтинга месяца</span><span data-lang="ua">ТОП-3 рейтингу місяця</span><span data-lang="en">TOP-3 monthly leaderboard</span></div>
+    </div>
+    <div class="badge-card rev d3">
+      <span class="badge-icon">👑</span>
+      <div class="badge-name">Legend</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">3 месяца в ТОП-10</span><span data-lang="ua">3 місяці в ТОП-10</span><span data-lang="en">3 months in TOP-10</span></div>
+    </div>
+    <div class="badge-card rev">
+      <span class="badge-icon">🚀</span>
+      <div class="badge-name">Moonshot</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">Прогноз +50% и выше</span><span data-lang="ua">Прогноз +50% і вище</span><span data-lang="en">Forecast +50% or higher</span></div>
+    </div>
+    <div class="badge-card rev d1">
+      <span class="badge-icon">🤝</span>
+      <div class="badge-name">Connector</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">Пригласил 3 участников</span><span data-lang="ua">Запросив 3 учасників</span><span data-lang="en">Invited 3 members</span></div>
+    </div>
+    <div class="badge-card rev d2">
+      <span class="badge-icon">📊</span>
+      <div class="badge-name">Analyst</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">20 разборов с аргументами</span><span data-lang="ua">20 розборів з аргументами</span><span data-lang="en">20 reasoned trade reviews</span></div>
+    </div>
+    <div class="badge-card rev d3">
+      <span class="badge-icon">🏆</span>
+      <div class="badge-name">Champion</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">Победитель конкурса</span><span data-lang="ua">Переможець конкурсу</span><span data-lang="en">Contest winner</span></div>
+    </div>
+    <div class="badge-card rev d3" style="border-color:rgba(139,92,246,.3);">
+      <span class="badge-icon">⭐</span>
+      <div class="badge-name">VIP</div>
+      <div class="badge-desc"><span data-lang="ru" class="act">1 год в клубе</span><span data-lang="ua">1 рік у клубі</span><span data-lang="en">1 year in the club</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE FEED + CONTEST -->
+<section class="sec" style="background:rgba(3,5,12,.5);border-top:1px solid rgba(0,212,255,.08);">
+  <div class="sec-ey ey-cyan rev">
+    <span data-lang="ru" class="act">Активность · Торги · Конкурсы</span>
+    <span data-lang="ua">Активність · Торги · Конкурси</span>
+    <span data-lang="en">Activity · Trades · Contests</span>
+  </div>
+  <h2 class="sec-title rev" style="color:var(--text);">
+    <span data-lang="ru" class="act">ЖИВОЕ<br><span style="color:var(--cyan);">СООБЩЕСТВО</span></span>
+    <span data-lang="ua">ЖИВЕ<br><span style="color:var(--cyan);">СПІВТОВАРИСТВО</span></span>
+    <span data-lang="en">LIVE<br><span style="color:var(--cyan);">COMMUNITY</span></span>
+  </h2>
+
+  <div class="feed-grid rev" style="margin-top:3rem;">
+    <!-- Live feed -->
+    <div class="feed-panel">
+      <div class="feed-head">
+        <div class="fh-title"><span class="live-dot"></span> <span data-lang="ru" class="act">Последние активности</span><span data-lang="ua">Останні активності</span><span data-lang="en">Recent Activity</span></div>
+        <div class="fh-count"><span data-lang="ru" class="act">обновляется live</span><span data-lang="en">updating live</span></div>
+      </div>
+      <div class="feed-body">
+        <div class="feed-item">
+          <div class="feed-avatar">KX</div>
+          <div><div class="fi-name">KryptoXen</div><div class="fi-text">NVDA — <span data-lang="ru" class="act">пробой $900, целевой уровень $940+</span><span data-lang="ua">пробій $900, цільовий рівень $940+</span><span data-lang="en">breakout $900, target $940+</span></div><div class="fi-tag up">↑ NVDA +4.2%</div><div class="fi-time">2 min ago</div></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar">ST</div>
+          <div><div class="fi-name">SwingTrader_M</div><div class="fi-text"><span data-lang="ru" class="act">Закрыл SMCI +12.4% 🎯 Точно по плану</span><span data-lang="ua">Закрив SMCI +12.4% 🎯 Точно за планом</span><span data-lang="en">Closed SMCI +12.4% 🎯 Exactly as planned</span></div><div class="fi-tag up">+12.4% profit</div><div class="fi-time">14 min ago</div></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar">NV</div>
+          <div><div class="fi-name">NasdaqViper</div><div class="fi-text"><span data-lang="ru" class="act">Опционный флоу на AMD — 50k коллов Jan$200. Следим</span><span data-lang="ua">Опціонний флоу на AMD — 50k коллів Jan$200. Слідкуємо</span><span data-lang="en">Options flow on AMD — 50k calls Jan$200. Watching</span></div><div class="fi-tag neutral">OPTIONS FLOW</div><div class="fi-time">28 min ago</div></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar">AA</div>
+          <div><div class="fi-name">AlphaAlex</div><div class="fi-text"><span data-lang="ru" class="act">Мой разбор PLTR за неделю — 63% выигрышных сетапов из 8</span><span data-lang="ua">Мій розбір PLTR за тиждень — 63% виграшних сетапів з 8</span><span data-lang="en">My PLTR weekly review — 63% winning setups out of 8</span></div><div class="fi-time">1h ago</div></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar">MR</div>
+          <div><div class="fi-name">MarketRider</div><div class="fi-text"><span data-lang="ru" class="act">Вступил в клуб. Уже сделал первый прогноз 🚀 AAPL</span><span data-lang="ua">Вступив до клубу. Вже зробив перший прогноз 🚀 AAPL</span><span data-lang="en">Just joined the club. Made my first forecast 🚀 AAPL</span></div><div class="fi-tag neutral">NEW MEMBER 🌱</div><div class="fi-time">2h ago</div></div>
+        </div>
+        <div class="feed-item">
+          <div class="feed-avatar">TF</div>
+          <div><div class="fi-name">TrendFollower</div><div class="fi-text"><span data-lang="ru" class="act">Нашёл партнёра для офлайн-проекта в Real Estate. Спасибо клубу 🤝</span><span data-lang="ua">Знайшов партнера для офлайн-проекту в Real Estate. Дякую клубу 🤝</span><span data-lang="en">Found a partner for offline Real Estate project. Thanks to the club 🤝</span></div><div class="fi-tag neutral">BUSINESS DEAL</div><div class="fi-time">3h ago</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contest -->
+    <div class="contest-panel rev d1">
+      <div class="cp-badge"><span data-lang="ru" class="act">Конкурс · Март 2026</span><span data-lang="ua">Конкурс · Березень 2026</span><span data-lang="en">Contest · March 2026</span></div>
+      <div class="cp-title">
+        <span data-lang="ru" class="act">ЛУЧШИЙ<br>ТРЕЙД МЕСЯЦА</span>
+        <span data-lang="ua">НАЙКРАЩА<br>УГОДА МІСЯЦЯ</span>
+        <span data-lang="en">BEST TRADE<br>OF THE MONTH</span>
+      </div>
+      <p class="cp-desc">
+        <span data-lang="ru" class="act">Публикуй скрин сделки с разбором. Голосование сообщества + оценка ментора. Победитель получает денежный приз и ачивку Champion 🏆</span>
+        <span data-lang="ua">Публікуй скрін угоди з розбором. Голосування спільноти + оцінка ментора. Переможець отримує грошовий приз та ачівку Champion 🏆</span>
+        <span data-lang="en">Post a trade screenshot with analysis. Community vote + mentor evaluation. Winner receives a cash prize and the Champion 🏆 achievement</span>
+      </p>
+      <div class="cp-prize">
+        <div class="cp-prize-num">$500</div>
+        <div class="cp-prize-label"><span data-lang="ru" class="act">денежный приз</span><span data-lang="ua">грошовий приз</span><span data-lang="en">cash prize</span></div>
+      </div>
+      <div class="cp-timer">
+        <span data-lang="ru" class="act">Осталось:</span><span data-lang="ua">Залишилось:</span><span data-lang="en">Remaining:</span>
+        <span id="countdown"></span>
+      </div>
+      <ul class="cp-rules">
+        <li><span data-lang="ru" class="act">Минимум 10% доходности на сделке</span><span data-lang="ua">Мінімум 10% дохідності на угоді</span><span data-lang="en">Minimum 10% return on trade</span></li>
+        <li><span data-lang="ru" class="act">Скрин с брокерской подтверждением обязателен</span><span data-lang="ua">Скрін з брокерським підтвердженням обов'язковий</span><span data-lang="en">Broker confirmation screenshot required</span></li>
+        <li><span data-lang="ru" class="act">Разбор точки входа и управления позицией</span><span data-lang="ua">Розбір точки входу та управління позицією</span><span data-lang="en">Entry point and position management breakdown</span></li>
+      </ul>
+      <a href="#pricing" class="btn-join" style="width:100%;justify-content:center;clip-path:none;">
+        <span data-lang="ru" class="act">Участвовать в конкурсе</span>
+        <span data-lang="ua">Взяти участь у конкурсі</span>
+        <span data-lang="en">Enter the Contest</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" style="border-top:1px solid rgba(200,168,75,.1);">
+  <div class="sec-ey ey-gold rev">
+    <span data-lang="ru" class="act">Результаты участников</span>
+    <span data-lang="ua">Результати учасників</span>
+    <span data-lang="en">Member Results</span>
+  </div>
+  <h2 class="sec-title rev" style="color:var(--gold);">
+    <span data-lang="ru" class="act">СКРИНЫ<br>ГОВОРЯТ САМИ</span>
+    <span data-lang="ua">СКРІНИ<br>ГОВОРЯТЬ САМІ</span>
+    <span data-lang="en">SCREENSHOTS<br>SPEAK FOR THEMSELVES</span>
+  </h2>
+  <div class="testimonials-grid">
+    <div class="tcard rev">
+      <div class="tcard-stock">
+        <span class="tcard-ticker">$NVDA</span>
+        <span class="tcard-return up">+38.4%</span>
+      </div>
+      <p class="tcard-text"><span data-lang="ru" class="act">«Алерт пришёл за 4 часа до движения. Взял позицию, закрыл точно на цели. Это уже 3-й месяц подряд в плюсе благодаря вотчлисту.»</span><span data-lang="ua">«Алерт прийшов за 4 години до руху. Взяв позицію, закрив точно на цілі.»</span><span data-lang="en">«The alert came 4 hours before the move. Took the position, closed exactly on target. This is my 3rd month in a row profitable thanks to the watchlist.»</span></p>
+      <div class="tcard-user">
+        <div class="tcard-av">KX</div>
+        <div><div class="tcard-name">KryptoXen</div><div class="tcard-date">March 15, 2026</div></div>
+      </div>
+    </div>
+    <div class="tcard rev d1">
+      <div class="tcard-stock">
+        <span class="tcard-ticker">$SMCI</span>
+        <span class="tcard-return up">+124%</span>
+      </div>
+      <p class="tcard-text"><span data-lang="ru" class="act">«Нашёл партнёра для бизнеса через клуб. Плюс SMCI дала 124% за 3 недели — вот что значит синергия трейдинга и нетворкинга!»</span><span data-lang="ua">«Знайшов партнера для бізнесу через клуб. Плюс SMCI дала 124% за 3 тижні.»</span><span data-lang="en">«Found a business partner through the club. Plus SMCI returned 124% in 3 weeks — this is what trading and networking synergy means!»</span></p>
+      <div class="tcard-user">
+        <div class="tcard-av">BK</div>
+        <div><div class="tcard-name">BusinessKing</div><div class="tcard-date">February 28, 2026</div></div>
+      </div>
+    </div>
+    <div class="tcard rev d2">
+      <div class="tcard-stock">
+        <span class="tcard-ticker">Portfolio</span>
+        <span class="tcard-return up">+67%</span>
+      </div>
+      <p class="tcard-text"><span data-lang="ru" class="act">«Занял 1-е место в конкурсе месяца, получил $500. Scoreboard — лучшая мотивация торговать дисциплинированно. Рекомендую всем!»</span><span data-lang="ua">«Зайняв 1-е місце в конкурсі місяця, отримав $500. Scoreboard — найкраща мотивація торгувати дисципліновано.»</span><span data-lang="en">«Won 1st place in the monthly contest, got $500. The scoreboard is the best motivation to trade with discipline. Recommend to everyone!»</span></p>
+      <div class="tcard-user">
+        <div class="tcard-av">ST</div>
+        <div><div class="tcard-name">SwingTrader_M</div><div class="tcard-date">January 31, 2026</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec" id="pricing" style="border-top:1px solid rgba(0,212,255,.15);">
+  <div class="sec-ey ey-cyan rev">
+    <span data-lang="ru" class="act">Стоимость · Выбери свой план</span>
+    <span data-lang="ua">Вартість · Обери свій план</span>
+    <span data-lang="en">Pricing · Choose Your Plan</span>
+  </div>
+  <h2 class="sec-title rev" style="background:linear-gradient(135deg,var(--cyan),var(--gold-b));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+    <span data-lang="ru" class="act">ВСТУПИ<br>СЕГОДНЯ</span>
+    <span data-lang="ua">ВСТУПИ<br>СЬОГОДНІ</span>
+    <span data-lang="en">JOIN<br>TODAY</span>
+  </h2>
+  <div class="pricing-grid rev" style="margin-top:3rem;">
+
+    <!-- Monthly -->
+    <div class="price-card">
+      <div class="pc-period"><span data-lang="ru" class="act">Ежемесячно</span><span data-lang="ua">Щомісяця</span><span data-lang="en">Monthly</span></div>
+      <div class="pc-price cyan">$99</div>
+      <div class="pc-save" style="color:var(--t3);">
+        <span data-lang="ru" class="act">Отмена в любой момент</span>
+        <span data-lang="ua">Скасування в будь-який момент</span>
+        <span data-lang="en">Cancel anytime</span>
+      </div>
+      <ul class="pc-features">
+        <li><span data-lang="ru" class="act">Daily Watchlist NYSE/NASDAQ</span><span data-lang="ua">Daily Watchlist NYSE/NASDAQ</span><span data-lang="en">Daily Watchlist NYSE/NASDAQ</span></li>
+        <li><span data-lang="ru" class="act">Live-аналитика и алерты</span><span data-lang="ua">Live-аналітика та алерти</span><span data-lang="en">Live analytics and alerts</span></li>
+        <li><span data-lang="ru" class="act">Доступ к Scoreboard</span><span data-lang="ua">Доступ до Scoreboard</span><span data-lang="en">Scoreboard access</span></li>
+        <li><span data-lang="ru" class="act">Ежемесячный конкурс трейдеров</span><span data-lang="ua">Щомісячний конкурс трейдерів</span><span data-lang="en">Monthly traders contest</span></li>
+        <li><span data-lang="ru" class="act">Discord-сообщество + чат</span><span data-lang="ua">Discord-спільнота + чат</span><span data-lang="en">Discord community + chat</span></li>
+        <li><span data-lang="ru" class="act">Система ачивок и XP</span><span data-lang="ua">Система ачівок та XP</span><span data-lang="en">Achievements & XP system</span></li>
+        <li><span data-lang="ru" class="act">Бизнес-нетворкинг</span><span data-lang="ua">Бізнес-нетворкінг</span><span data-lang="en">Business networking</span></li>
+      </ul>
+      <a href="#" class="btn-ghost" style="width:100%;justify-content:center;clip-path:none;">
+        <span data-lang="ru" class="act">Начать за $99/мес</span>
+        <span data-lang="ua">Почати за $99/міс</span>
+        <span data-lang="en">Start for $99/mo</span>
+      </a>
+    </div>
+
+    <!-- Annual -->
+    <div class="price-card featured">
+      <div class="pc-badge">★ <span data-lang="ru" class="act">Лучшая цена</span><span data-lang="ua">Найкраща ціна</span><span data-lang="en">Best value</span></div>
+      <div class="pc-period"><span data-lang="ru" class="act">Годовая подписка</span><span data-lang="ua">Річна підписка</span><span data-lang="en">Annual subscription</span></div>
+      <div class="pc-old">$1188</div>
+      <div class="pc-price gold">$790</div>
+      <div class="pc-save">↓ <span data-lang="ru" class="act">Экономия $398 · −33%</span><span data-lang="ua">Економія $398 · −33%</span><span data-lang="en">Save $398 · −33%</span></div>
+      <ul class="pc-features">
+        <li><span data-lang="ru" class="act">Всё из ежемесячного плана</span><span data-lang="ua">Все з щомісячного плану</span><span data-lang="en">Everything in the monthly plan</span></li>
+        <li><span data-lang="ru" class="act">VIP-статус с ачивкой в профиле</span><span data-lang="ua">VIP-статус з ачівкою в профілі</span><span data-lang="en">VIP status with profile achievement</span></li>
+        <li><span data-lang="ru" class="act">Приоритетный разбор ваших сделок</span><span data-lang="ua">Пріоритетний розбір ваших угод</span><span data-lang="en">Priority review of your trades</span></li>
+        <li><span data-lang="ru" class="act">Доступ к закрытым Off-Market сделкам</span><span data-lang="ua">Доступ до закритих Off-Market угод</span><span data-lang="en">Access to closed Off-Market deals</span></li>
+        <li><span data-lang="ru" class="act">+2 бесплатные консультации с ментором</span><span data-lang="ua">+2 безкоштовні консультації з ментором</span><span data-lang="en">+2 free sessions with mentor</span></li>
+        <li><span data-lang="ru" class="act">Professional Presets пакет в подарок ($79)</span><span data-lang="ua">Professional Presets пакет у подарунок ($79)</span><span data-lang="en">Professional Presets package as gift ($79)</span></li>
+        <li><span data-lang="ru" class="act">Офлайн-встречи клуба</span><span data-lang="ua">Офлайн-зустрічі клубу</span><span data-lang="en">Club offline meetups</span></li>
+      </ul>
+      <a href="#" class="btn-join" style="width:100%;justify-content:center;clip-path:none;">
+        <span data-lang="ru" class="act">Получить за $790/год</span>
+        <span data-lang="ua">Отримати за $790/рік</span>
+        <span data-lang="en">Get for $790/year</span>
+      </a>
+    </div>
+
+    <!-- ELITE -->
+    <div class="price-card elite">
+      <div class="elite-badge-label">
+        <span data-lang="ru" class="act">ELITE · Высший статус</span>
+        <span data-lang="ua">ELITE · Вищий статус</span>
+        <span data-lang="en">ELITE · Highest Status</span>
+      </div>
+      <div class="pc-period"><span data-lang="ru" class="act">Ежемесячно</span><span data-lang="ua">Щомісяця</span><span data-lang="en">Monthly</span></div>
+      <div class="pc-price elite-color">$1000</div>
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+        <span class="elite-tag">⚡ ELITE</span>
+        <span style="font-family:var(--mono);font-size:.58rem;color:var(--t3);letter-spacing:.1em;"><span data-lang="ru" class="act">виден всем в чатах</span><span data-lang="ua">видно всім у чатах</span><span data-lang="en">visible to all in chats</span></span>
+      </div>
+      <ul class="pc-features">
+        <li><span data-lang="ru" class="act">Всё из плана $99/мес — без исключений</span><span data-lang="ua">Все з плану $99/міс — без винятків</span><span data-lang="en">Everything from the $99/mo plan — no exceptions</span></li>
+        <li style="color:var(--text);font-weight:600;"><span style="color:#ff44dc;">⚡</span> <span data-lang="ru" class="act">Значок <strong style="color:#ff44dc;">[ELITE]</strong> в Discord и Telegram-чате — виден всем участникам</span><span data-lang="ua">Значок <strong style="color:#ff44dc;">[ELITE]</strong> у Discord та Telegram — видно всім учасникам</span><span data-lang="en">Badge <strong style="color:#ff44dc;">[ELITE]</strong> in Discord and Telegram — visible to all members</span></li>
+        <li><span data-lang="ru" class="act">Отдельная роль в Discord с эксклюзивным каналом</span><span data-lang="ua">Окрема роль у Discord з ексклюзивним каналом</span><span data-lang="en">Separate Discord role with exclusive channel</span></li>
+        <li><span data-lang="ru" class="act">Ачивка Champion в профиле с первого дня</span><span data-lang="ua">Ачівка Champion у профілі з першого дня</span><span data-lang="en">Champion achievement in profile from day one</span></li>
+        <li><span data-lang="ru" class="act">Приоритетные ответы ментора в чате</span><span data-lang="ua">Пріоритетні відповіді ментора в чаті</span><span data-lang="en">Priority mentor responses in chat</span></li>
+        <li><span data-lang="ru" class="act">Отмена в любой момент</span><span data-lang="ua">Скасування в будь-який момент</span><span data-lang="en">Cancel anytime</span></li>
+      </ul>
+      <a href="#" class="btn-elite">
+        <span data-lang="ru" class="act">⚡ Стать ELITE за $1000/мес</span>
+        <span data-lang="ua">⚡ Стати ELITE за $1000/міс</span>
+        <span data-lang="en">⚡ Become ELITE for $1000/mo</span>
+      </a>
+    </div>
+  </div>
+  <p style="font-family:var(--mono);font-size:.62rem;color:var(--t3);margin-top:1.5rem;letter-spacing:.1em;">
+    <span data-lang="ru" class="act">⚡ Лимит: 150 участников одновременно · Текущих мест: 12</span>
+    <span data-lang="ua">⚡ Ліміт: 150 учасників одночасно · Поточних місць: 12</span>
+    <span data-lang="en">⚡ Limit: 150 members at a time · Current spots: 12</span>
+  </p>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="final-ey rev"><span data-lang="ru" class="act">Последний шаг</span><span data-lang="ua">Останній крок</span><span data-lang="en">Final step</span></div>
+  <h2 class="final-title rev">
+    <span data-lang="ru" class="act">СТАНЬ ЧАСТЬЮ<br><span class="fc">INSIDER CLUB</span></span>
+    <span data-lang="ua">СТАНЬ ЧАСТИНОЮ<br><span class="fc">INSIDER CLUB</span></span>
+    <span data-lang="en">BECOME PART OF<br><span class="fc">INSIDER CLUB</span></span>
+  </h2>
+  <p class="final-sub rev">
+    <span data-lang="ru" class="act">Торгуй рядом с лучшими. Строй связи с предпринимателями. Побеждай в конкурсах. Зарабатывай статус.</span>
+    <span data-lang="ua">Торгуй поруч із найкращими. Будуй зв'язки з підприємцями. Перемагай у конкурсах.</span>
+    <span data-lang="en">Trade alongside the best. Build connections with entrepreneurs. Win contests. Earn your status.</span>
+  </p>
+  <div class="final-actions rev">
+    <a href="#pricing" class="btn-join" style="padding:1.1rem 3rem;font-size:.82rem;">
+      <span data-lang="ru" class="act">Вступить сейчас</span><span data-lang="ua">Вступити зараз</span><span data-lang="en">Join Now</span>
+    </a>
+    <a href="https://t.me/axiumsquare" class="btn-ghost" style="padding:1.1rem 2rem;" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+      Telegram
+    </a>
+  </div>
+  <div class="final-note rev">
+    <span data-lang="ru" class="act">Осталось 12 мест · Лимит 150 участников</span>
+    <span data-lang="ua">Залишилось 12 місць · Ліміт 150 учасників</span>
+    <span data-lang="en">12 spots remaining · 150 member limit</span>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- Brand column -->
+    <div class="footer-brand">
+      <div class="footer-logo">AXIUMSQUARE</div>
+      <p class="footer-tagline">
+        <span data-lang="ru" class="act">Трейдинг. Бизнес. Капитал.</span>
+        <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+        <span data-lang="en">Trading. Business. Capital.</span>
+      </p>
+      <div class="footer-socials">
+        <a href="https://t.me/axiumsquare" target="_blank" class="footer-social" aria-label="Telegram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          Telegram
+        </a>
+        <a href="#" class="footer-social" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="footer-social" aria-label="YouTube">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="black"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+
+    <!-- Nav columns -->
+    <div class="footer-nav-cols">
+
+      <!-- Col 1: Обучение -->
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="act">Обучение</span>
+          <span data-lang="ua">Навчання</span>
+          <span data-lang="en">Education</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-academy.html">
+            <span data-lang="ru" class="act">Академия трейдинга</span>
+            <span data-lang="ua">Академія трейдингу</span>
+            <span data-lang="en">Trading Academy</span>
+          </a></li>
+          <li><a href="axiumsquare-academy.html#promo-all">
+            <span data-lang="ru" class="act">Все 7 курсов — пакет</span>
+            <span data-lang="ua">Усі 7 курсів — пакет</span>
+            <span data-lang="en">All 7 Courses Bundle</span>
+          </a></li>
+          <li><a href="axiumsquare-academy.html#filter=base">
+            <span data-lang="ru" class="act">Базовые курсы</span>
+            <span data-lang="ua">Базові курси</span>
+            <span data-lang="en">Foundation Courses</span>
+          </a></li>
+          <li><a href="axiumsquare-academy.html#filter=adv">
+            <span data-lang="ru" class="act">Продвинутые курсы</span>
+            <span data-lang="ua">Просунуті курси</span>
+            <span data-lang="en">Advanced Courses</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Col 2: Сообщество -->
+      <div class="footer-col">
+        <div class="footer-col-title footer-col-title--cyan">
+          ◆ <span data-lang="ru" class="act">Клуб</span>
+          <span data-lang="ua">Клуб</span>
+          <span data-lang="en">Club</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-club.html">
+            Trading Insider &amp; Business Club
+          </a></li>
+          <li><a href="axiumsquare-club.html#inside">
+            <span data-lang="ru" class="act">Что внутри клуба</span>
+            <span data-lang="ua">Що всередині клубу</span>
+            <span data-lang="en">What's Inside</span>
+          </a></li>
+          <li><a href="axiumsquare-club.html#scoreboard">
+            <span data-lang="ru" class="act">Геймификация</span>
+            <span data-lang="ua">Геймифікація</span>
+            <span data-lang="en">Gamification</span>
+          </a></li>
+          <li><a href="axiumsquare-club.html#pricing">
+            <span data-lang="ru" class="act">Тарифы клуба</span>
+            <span data-lang="ua">Тарифи клубу</span>
+            <span data-lang="en">Club Pricing</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Услуги -->
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="act">Услуги</span>
+          <span data-lang="ua">Послуги</span>
+          <span data-lang="en">Services</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-services.html#mentorship">
+            <span data-lang="ru" class="act">Персональное наставничество</span>
+            <span data-lang="ua">Персональне наставництво</span>
+            <span data-lang="en">Personal Mentorship</span>
+          </a></li>
+          <li><a href="axiumsquare-services.html#premium">
+            <span data-lang="ru" class="act">Индивидуальные решения</span>
+            <span data-lang="ua">Індивідуальні рішення</span>
+            <span data-lang="en">Individual Solutions</span>
+          </a></li>
+          <li><a href="axiumsquare-services.html#tools">
+            <span data-lang="ru" class="act">Профессиональный софт</span>
+            <span data-lang="ua">Професійний софт</span>
+            <span data-lang="en">Pro Software</span>
+          </a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Инвестиции -->
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="act">Инвестиции</span>
+          <span data-lang="ua">Інвестиції</span>
+          <span data-lang="en">Investments</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-invest.html#family-office">
+            Family Office · $1M+
+          </a></li>
+          <li><a href="axiumsquare-invest.html#fund">
+            <span data-lang="ru" class="act">Управляемый фонд</span>
+            <span data-lang="ua">Керований фонд</span>
+            <span data-lang="en">Managed Fund</span>
+          </a></li>
+          <li><a href="axiumsquare-invest.html#real-assets">
+            <span data-lang="ru" class="act">Реальные активы</span>
+            <span data-lang="ua">Реальні активи</span>
+            <span data-lang="en">Real Assets</span>
+          </a></li>
+          <li><a href="axiumsquare-invest.html#wealth-mgmt">
+            <span data-lang="ru" class="act">Wealth Management</span>
+            <span data-lang="ua">Wealth Management</span>
+            <span data-lang="en">Wealth Management</span>
+          </a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">AXIUMSQUARE</div>
+    <div class="footer-bottom-copy">© 2026 AXIUMSQUARE · Trading. Business. Capital.</div>
+    <div class="footer-bottom-links">
+      <a href="index.html">
+        <span data-lang="ru" class="act">Главная</span>
+        <span data-lang="ua">Головна</span>
+        <span data-lang="en">Home</span>
+      </a>
+      <a href="axiumsquare-academy.html">
+        <span data-lang="ru" class="act">Академия</span>
+        <span data-lang="ua">Академія</span>
+        <span data-lang="en">Academy</span>
+      </a>
+      <a href="axiumsquare-club.html">
+        <span data-lang="ru" class="act">Клуб</span>
+        <span data-lang="ua">Клуб</span>
+        <span data-lang="en">Club</span>
+      </a>
+      <a href="axiumsquare-services.html">
+        <span data-lang="ru" class="act">Услуги</span>
+        <span data-lang="ua">Послуги</span>
+        <span data-lang="en">Services</span>
+      </a>
+      <a href="axiumsquare-invest.html">
+        <span data-lang="ru" class="act">Инвестиции</span>
+        <span data-lang="ua">Інвестиції</span>
+        <span data-lang="en">Invest</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load', () => setTimeout(() => document.getElementById('pre').classList.add('out'), 1000));
+
+  // Smooth scroll
+  (function(){
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lenis/1.0.45/lenis.min.js';
+    s.onload = () => {
+      const l = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)), smoothTouch: false });
+      function r(t){ l.raf(t); requestAnimationFrame(r); } requestAnimationFrame(r);
+      document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+        const el = document.querySelector(a.getAttribute('href'));
+        if(el){ e.preventDefault(); l.scrollTo(el, { offset: -90, duration: 1.6 }); }
+      }));
+    };
+    document.head.appendChild(s);
+  })();
+
+  // Header shrink
+  const hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', () => hdr.classList.toggle('sm', scrollY > 60), { passive: true });
+
+  // Reveal
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.07 });
+  document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+  // Animated counter
+  function animateCounter(el, target, duration) {
+    let start = 0, startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(ease * target);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const counterEl = document.getElementById('counter');
+  const counterIo = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { animateCounter(counterEl, 438, 2000); counterIo.unobserve(e.target); }
+  }), { threshold: 0.5 });
+  counterIo.observe(counterEl);
+
+  // Countdown timer
+  function updateCountdown() {
+    const end = new Date('2026-04-01T00:00:00');
+    const now = new Date();
+    const diff = end - now;
+    if (diff <= 0) { document.getElementById('countdown').textContent = '00:00:00:00'; return; }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('countdown').textContent = ` ${d}д ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Animate challenge bars on scroll
+  const barIo = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.ch-fill').forEach(b => {
+        const w = b.style.width; b.style.width = '0';
+        setTimeout(() => b.style.width = w, 100);
+      });
+      barIo.unobserve(e.target);
+    }
+  }), { threshold: 0.3 });
+  document.querySelectorAll('.challenges').forEach(el => barIo.observe(el));
+
+  // Lang dropdown
+  const ldrop = document.getElementById('ldrop'), llbl = document.getElementById('llbl');
+  function tgL(e){ e.stopPropagation(); ldrop.classList.toggle('open'); }
+  function setL(lang){
+    llbl.textContent = lang.toUpperCase(); ldrop.classList.remove('open');
+    document.querySelectorAll('[data-lang]').forEach(el => el.classList.toggle('act', el.dataset.lang === lang));
+    document.querySelectorAll('.lopt').forEach(b => b.style.display = b.textContent.trim().toLowerCase() === lang ? 'none' : 'block');
+    document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+  }
+  document.addEventListener('click', () => ldrop.classList.remove('open'));
+  document.querySelector('.lopt').style.display = 'none';
+
+  // Mobile menu
+  const mob = document.getElementById('mob-menu');
+  function toggleMob() { mob.style.display = mob.style.display === 'flex' ? 'none' : 'flex'; }
+  function closeMob()  { mob.style.display = 'none'; }
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'axiumsquare-dashboard.html' : 'axiumsquare-login.html';
+      btn.querySelector('.auth-label-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      btn.querySelector('.auth-label-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      btn.querySelector('.auth-label-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      var svgPath = btn.querySelector('svg path');
+      if (svgPath) svgPath.setAttribute('d', isLogged
+        ? 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9'
+        : 'M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3');
+      if (isLogged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.reload(); };
+      } else { btn.onclick = null; }
+    }
+    if (mobBtn) {
+      mobBtn.href = isLogged ? 'axiumsquare-dashboard.html' : 'axiumsquare-login.html';
+      mobBtn.querySelector('.mob-auth-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      mobBtn.querySelector('.mob-auth-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      mobBtn.querySelector('.mob-auth-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        mobBtn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.reload(); };
+      } else { mobBtn.onclick = null; }
+    }
+  }
+  setAuthUI(!!logged);
+})();
+</script>
+</body>
+</html>
