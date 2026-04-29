@@ -276,44 +276,59 @@
       font-size: .88em;
     }
     .hero-h1-img {
-      width: clamp(160px, 18vw, 260px);
-      aspect-ratio: 3/4;
+      width: clamp(180px, 20vw, 270px);
       flex-shrink: 0;
-      position: relative; overflow: hidden;
+      position: relative;
       border: 1px solid var(--border);
-      background: linear-gradient(160deg, rgba(22,18,12,.98) 0%, rgba(10,9,7,.99) 100%);
+      background: rgba(10,9,8,.82);
+      backdrop-filter: blur(14px);
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: .7rem;
-    }
-    .hero-h1-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; inset: 0; opacity: .8;
+      overflow: hidden;
     }
     .hero-h1-img::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold-bright) 60%, transparent);
     }
     .hero-h1-img::after {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(184,151,90,.1), transparent 65%);
-      pointer-events: none;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 40%; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(184,151,90,.07), transparent 70%);
     }
-    .hero-h1-img-inner {
-      position: relative; z-index: 1;
+    .h1-achiev-header {
+      font-family: var(--font-mono); font-size: .55rem; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 1.1rem 1.4rem .8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .h1-achiev-header::before {
+      content: ''; width: 4px; height: 4px;
+      background: var(--gold); border-radius: 50%;
+      animation: pulse-dot 2s ease infinite;
+    }
+    .h1-achiev-list {
       display: flex; flex-direction: column;
-      align-items: center; gap: .8rem; padding: 1.5rem;
-      text-align: center;
+      flex: 1;
     }
-    .hero-h1-img-icon {
-      width: 44px; height: 44px;
-      border: 1px solid rgba(184,151,90,.25);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); opacity: .7;
+    .h1-achiev-item {
+      padding: .85rem 1.4rem;
+      border-bottom: 1px solid var(--border-2);
+      display: flex; flex-direction: column; gap: .18rem;
+      transition: background .2s;
     }
-    .hero-h1-img-label {
-      font-family: var(--font-mono); font-size: .52rem;
-      letter-spacing: .3em; color: var(--text-3);
-      text-transform: uppercase; line-height: 1.6;
+    .h1-achiev-item:last-child { border-bottom: none; }
+    .h1-achiev-item:hover { background: rgba(184,151,90,.03); }
+    .h1-achiev-num {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 300; line-height: 1;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .h1-achiev-label {
+      font-family: var(--font-mono); font-size: .56rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--text-3); line-height: 1.4;
     }
 
     .hero-sub {
@@ -1011,13 +1026,12 @@
       .hero { padding: 0 1.2rem 3rem; }
       .hero-body { padding-top: 8rem; }
 
-      /* H1 + image block */
+      /* H1 + achievements block */
       .hero-h1-wrap { grid-template-columns: 1fr; gap: 1.2rem; }
       .hero-h1 { font-size: clamp(2.2rem, 9vw, 3.4rem); }
-      .hero-h1-img {
-        width: 100%;
-        aspect-ratio: 16/6;
-        order: -1;
+      .hero-h1-img { width: 100%; }
+      .h1-achiev-list {
+        display: grid; grid-template-columns: 1fr 1fr;
       }
 
       /* Carousel */
@@ -1051,7 +1065,7 @@
     }
     @media (max-width: 480px) {
       .hero-h1 { font-size: clamp(1.9rem, 8vw, 2.5rem); }
-      .hero-h1-img { aspect-ratio: 16/7; }
+      .h1-achiev-list { grid-template-columns: 1fr 1fr; }
       .hero-stats { flex-direction: column; gap: 1.5rem; }
       .hnc-img { height: 130px; }
       .hnc-title { font-size: .82rem; }
@@ -1588,16 +1602,52 @@
       </h1>
 
       <div class="hero-h1-img">
-        <!-- Заменить на <img src="hero-main.jpg" alt="..."> -->
-        <div class="hero-h1-img-inner">
-          <div class="hero-h1-img-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="3" y="3" width="18" height="18" rx="1"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
+        <div class="h1-achiev-header">
+          <span data-lang="ru" class="active">Достижения</span>
+          <span data-lang="ua">Досягнення</span>
+          <span data-lang="en">Achievements</span>
+        </div>
+        <div class="h1-achiev-list">
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">8+</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">лет на NYSE & NASDAQ</span>
+              <span data-lang="ua">років на NYSE & NASDAQ</span>
+              <span data-lang="en">years on NYSE & NASDAQ</span>
+            </div>
           </div>
-          <span class="hero-h1-img-label">AXIUMSQUARE<br>IMAGE</span>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">$1M+</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">активов под управлением</span>
+              <span data-lang="ua">активів під управлінням</span>
+              <span data-lang="en">assets under management</span>
+            </div>
+          </div>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">500+</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">учеников академии</span>
+              <span data-lang="ua">учнів академії</span>
+              <span data-lang="en">academy students</span>
+            </div>
+          </div>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">+28%</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">доходность портфеля Q1</span>
+              <span data-lang="ua">дохідність портфеля Q1</span>
+              <span data-lang="en">portfolio return Q1 2026</span>
+            </div>
+          </div>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">3</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">офлайн-бизнеса в портфеле</span>
+              <span data-lang="ua">офлайн-бізнеси у портфелі</span>
+              <span data-lang="en">offline businesses in portfolio</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
