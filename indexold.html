@@ -238,7 +238,7 @@
     .hero-body {
       display: flex; flex-direction: column; justify-content: center;
       padding-top: 9rem; position: relative;
-      max-width: 100%;
+      max-width: 900px;
     }
 
     .hero-eyebrow {
@@ -250,75 +250,24 @@
     }
     .hero-eyebrow::before { content:''; width: 2rem; height: 1px; background: var(--gold); }
 
-    /* ── Hero H1 block with image ── */
-    .hero-h1-wrap {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2.5rem;
-      align-items: center;
-      margin-bottom: 2.5rem;
-      opacity: 0; animation: fadeUp .9s ease .5s forwards;
-    }
     .hero-h1 {
       font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 6vw, 6rem);
-      font-weight: 300; line-height: .96; letter-spacing: -.02em;
+      font-size: clamp(3.2rem, 8vw, 7.5rem);
+      font-weight: 300; line-height: .95; letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .9s ease .5s forwards;
     }
     .hero-h1 em {
       font-style: italic;
       background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 50%, #8a6830 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      display: block;
     }
-    .hero-h1 .line3 {
-      display: block;
-      color: var(--text-2);
-      font-size: .88em;
-    }
-    .hero-h1-img {
-      width: clamp(160px, 18vw, 260px);
-      aspect-ratio: 3/4;
-      flex-shrink: 0;
-      position: relative; overflow: hidden;
-      border: 1px solid var(--border);
-      background: linear-gradient(160deg, rgba(22,18,12,.98) 0%, rgba(10,9,7,.99) 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: .7rem;
-    }
-    .hero-h1-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; inset: 0; opacity: .8;
-    }
-    .hero-h1-img::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .hero-h1-img::after {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(184,151,90,.1), transparent 65%);
-      pointer-events: none;
-    }
-    .hero-h1-img-inner {
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column;
-      align-items: center; gap: .8rem; padding: 1.5rem;
-      text-align: center;
-    }
-    .hero-h1-img-icon {
-      width: 44px; height: 44px;
-      border: 1px solid rgba(184,151,90,.25);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); opacity: .7;
-    }
-    .hero-h1-img-label {
-      font-family: var(--font-mono); font-size: .52rem;
-      letter-spacing: .3em; color: var(--text-3);
-      text-transform: uppercase; line-height: 1.6;
-    }
+    .hero-h1 .line2 { display: block; padding-left: clamp(2rem, 8vw, 8rem); }
+    .hero-h1 .line3 { display: block; padding-left: clamp(4rem, 16vw, 16rem); }
 
     .hero-sub {
       font-size: clamp(.9rem, 1.4vw, 1.05rem); color: var(--text-2);
-      max-width: 72ch; line-height: 1.85; margin-bottom: 3rem;
+      max-width: 46ch; line-height: 1.85; margin-bottom: 3rem;
       font-weight: 300;
       opacity: 0; animation: fadeUp .9s ease .7s forwards;
     }
@@ -351,141 +300,6 @@
       transition: border-color .2s, background .2s;
     }
     .btn-secondary:hover { border-color: var(--gold); background: rgba(184,151,90,.06); }
-
-    /* ── Hero News Carousel ── */
-    .hero-news-carousel {
-      margin: 0 0 2.8rem;
-      max-width: 100%;
-      opacity: 0; animation: fadeUp .9s ease .66s forwards;
-    }
-    .hnc-overflow { overflow: hidden; }
-    .hnc-track {
-      display: flex;
-      transition: transform .55s cubic-bezier(.22,.68,0,1.15);
-    }
-    .hnc-slide {
-      min-width: 100%; flex-shrink: 0;
-      border: 1px solid var(--border);
-      background: rgba(10,9,8,.72);
-      backdrop-filter: blur(10px);
-      display: flex; flex-direction: row;
-      position: relative;
-      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-      overflow: hidden;
-    }
-    .hnc-img {
-      width: 220px; flex-shrink: 0;
-      position: relative; overflow: hidden;
-      background:
-        linear-gradient(145deg, rgba(20,17,12,.95) 0%, rgba(12,10,7,.98) 100%);
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .7rem;
-    }
-    .hnc-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      position: absolute; inset: 0;
-      opacity: .85;
-    }
-    .hnc-img-placeholder {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: .6rem; padding: 1.5rem; text-align: center;
-      position: relative; z-index: 1;
-    }
-    .hnc-img-icon {
-      width: 40px; height: 40px;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); opacity: .6;
-    }
-    .hnc-img-brand {
-      font-family: var(--font-mono); font-size: .52rem;
-      letter-spacing: .3em; color: var(--text-3);
-      text-transform: uppercase;
-    }
-    /* ambient gold glow in image area */
-    .hnc-img::after {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 80%, rgba(184,151,90,.07), transparent 70%);
-      pointer-events: none;
-    }
-    .hnc-content {
-      flex: 1; padding: 1.4rem 1.8rem 1.5rem;
-      position: relative;
-    }
-    .hnc-content::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%;
-      background: linear-gradient(to bottom, var(--gold), transparent 90%);
-    }
-    .hnc-meta {
-      display: flex; align-items: center; gap: 1rem;
-      margin-bottom: .75rem;
-    }
-    .hnc-badge {
-      font-family: var(--font-mono); font-size: .55rem; letter-spacing: .22em;
-      text-transform: uppercase; color: #000;
-      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
-      padding: .18rem .55rem;
-    }
-    .hnc-date { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .15em; color: var(--text-3); }
-    .hnc-title {
-      font-size: .88rem; font-weight: 500; color: var(--text);
-      line-height: 1.55; margin-bottom: .5rem;
-    }
-    .hnc-excerpt { font-size: .77rem; color: var(--text-2); line-height: 1.75; font-weight: 300; }
-    .hnc-read-more {
-      display: inline-flex; align-items: center; gap: .5rem;
-      margin-top: 1rem;
-      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--gold);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(184,151,90,.3);
-      padding-bottom: .2rem;
-      transition: color .2s, border-color .2s, gap .2s;
-    }
-    .hnc-read-more:hover { color: var(--gold-bright); border-color: var(--gold); gap: .75rem; }
-    .hnc-read-more svg { width: 10px; height: 10px; transition: transform .2s; }
-    .hnc-read-more:hover svg { transform: translateX(3px); }
-    .hnc-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 1.1rem;
-    }
-    .hnc-controls { display: flex; align-items: center; gap: .6rem; }
-    .hnc-arrow {
-      font-family: var(--font-mono); font-size: .72rem; line-height: 1;
-      background: transparent; border: 1px solid rgba(184,151,90,.2);
-      color: var(--text-3); width: 26px; height: 26px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: border-color .2s, color .2s, background .2s;
-    }
-    .hnc-arrow:hover { border-color: var(--gold); color: var(--gold); background: rgba(184,151,90,.06); }
-    .hnc-dots { display: flex; gap: .45rem; align-items: center; }
-    .hnc-dot {
-      width: 16px; height: 1px; background: var(--text-3);
-      cursor: pointer; transition: background .25s, width .3s ease;
-      border: none;
-    }
-    .hnc-dot.active { background: var(--gold); width: 26px; }
-    .hnc-progress {
-      font-family: var(--font-mono); font-size: .58rem;
-      letter-spacing: .15em; color: var(--text-3);
-    }
-    .hnc-progress span { color: var(--gold); }
-    .hnc-timer-bar {
-      height: 1px; background: var(--border);
-      margin-top: .9rem; position: relative; overflow: hidden;
-    }
-    .hnc-timer-fill {
-      position: absolute; top: 0; left: 0; height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--gold-bright));
-      width: 0%; transition: none;
-    }
-    .hnc-timer-fill.running {
-      width: 100%;
-      transition: width 4.5s linear;
-    }
 
     /* stats row inside hero */
     .hero-stats {
@@ -1008,31 +822,11 @@
       .h-nav { display: none; }
       .h-burger { display: flex; }
 
-      .hero { padding: 0 1.2rem 3rem; }
+      .hero { padding: 0 1.5rem 3rem; }
       .hero-body { padding-top: 8rem; }
-
-      /* H1 + image block */
-      .hero-h1-wrap { grid-template-columns: 1fr; gap: 1.2rem; }
-      .hero-h1 { font-size: clamp(2.2rem, 9vw, 3.4rem); }
-      .hero-h1-img {
-        width: 100%;
-        aspect-ratio: 16/6;
-        order: -1;
-      }
-
-      /* Carousel */
-      .hnc-slide { flex-direction: column; }
-      .hnc-img {
-        width: 100%;
-        height: 160px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        aspect-ratio: unset;
-      }
-      .hnc-img-placeholder { flex-direction: row; gap: 1rem; padding: 1rem 1.5rem; }
-      .hnc-img-brand { display: block; font-size: .6rem; }
-      .hnc-content { padding: 1.2rem 1.2rem 1.4rem; }
-
+      .hero-h1 { font-size: clamp(2.8rem,12vw,4.5rem); }
+      .hero-h1 .line2 { padding-left: clamp(1.5rem,5vw,4rem); }
+      .hero-h1 .line3 { padding-left: clamp(3rem,10vw,8rem); }
       .hero-stats { gap: 2rem; }
       .hero-actions { flex-direction: column; align-items: flex-start; }
       .btn-primary, .btn-secondary { width: 100%; justify-content: center; clip-path: none; }
@@ -1046,16 +840,15 @@
       .why-inner { grid-template-columns: 1fr; gap: 3rem; }
       .footer-cta { padding: 5rem 1.5rem; }
       footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      /* Disable card hover lifts and overflow orbs on mobile */
+      .vcard:hover { transform: none; }
       .prem-card:hover { transform: none; }
       .prem-card::after { display: none; }
+      .vcard::after { display: none; }
     }
     @media (max-width: 480px) {
-      .hero-h1 { font-size: clamp(1.9rem, 8vw, 2.5rem); }
-      .hero-h1-img { aspect-ratio: 16/7; }
+      .hero-h1 { font-size: 2.5rem; }
       .hero-stats { flex-direction: column; gap: 1.5rem; }
-      .hnc-img { height: 130px; }
-      .hnc-title { font-size: .82rem; }
-      .hnc-excerpt { font-size: .73rem; }
     }
 
     /* ══ PREMIUM SERVICES SECTION ══ */
@@ -1439,168 +1232,23 @@
       <span data-lang="en">Professional Trading</span>
     </div>
 
-    <!-- ── News Carousel ── -->
-    <div class="hero-news-carousel">
-      <div class="hnc-overflow">
-        <div class="hnc-track" id="hncTrack">
-
-          <!-- Slide 1 -->
-          <div class="hnc-slide">
-            <div class="hnc-img">
-              <!-- Заменить на <img src="news-1.jpg" alt="..."> -->
-              <div class="hnc-img-placeholder">
-                <div class="hnc-img-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
-                </div>
-                <span class="hnc-img-brand">AXIUMSQUARE</span>
-              </div>
-            </div>
-            <div class="hnc-content">
-              <div class="hnc-meta">
-                <span class="hnc-badge">AXIUMSQUARE</span>
-                <span class="hnc-date">29 Apr · 2026</span>
-              </div>
-              <div class="hnc-title">
-                <span data-lang="ru" class="active">AXIUMSQUARE открывает новый поток отбора в Trading Insider Club</span>
-                <span data-lang="ua">AXIUMSQUARE відкриває новий потік відбору до Trading Insider Club</span>
-                <span data-lang="en">AXIUMSQUARE Opens New Intake for Trading Insider Club</span>
-              </div>
-              <div class="hnc-excerpt">
-                <span data-lang="ru" class="active">Закрытое сообщество профессиональных трейдеров принимает заявки. Ежедневные вотчлисты, бизнес-нетворкинг и прямой доступ к аналитике команды.</span>
-                <span data-lang="ua">Закрита спільнота приймає заявки. Щоденні вотчлісти, бізнес-нетворкінг і прямий доступ до аналітики команди.</span>
-                <span data-lang="en">The closed community of professional traders is now accepting applications. Daily watchlists, business networking and direct team analytics access.</span>
-              </div>
-              <a href="axiumsquare-club.html" class="hnc-read-more">
-                <span data-lang="ru" class="active">Подробнее</span>
-                <span data-lang="ua">Детальніше</span>
-                <span data-lang="en">Read more</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="hnc-slide">
-            <div class="hnc-img">
-              <!-- Заменить на <img src="news-2.jpg" alt="..."> -->
-              <div class="hnc-img-placeholder">
-                <div class="hnc-img-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
-                <span class="hnc-img-brand">AXIUMSQUARE</span>
-              </div>
-            </div>
-            <div class="hnc-content">
-              <div class="hnc-meta">
-                <span class="hnc-badge">АКАДЕМИЯ</span>
-                <span class="hnc-date">28 Apr · 2026</span>
-              </div>
-              <div class="hnc-title">
-                <span data-lang="ru" class="active">Новый курс AXIUMSQUARE Academy: AI-стратегии в трейдинге 2026</span>
-                <span data-lang="ua">Новий курс AXIUMSQUARE Academy: AI-стратегії у трейдингу 2026</span>
-                <span data-lang="en">New AXIUMSQUARE Academy Course: AI Trading Strategies 2026</span>
-              </div>
-              <div class="hnc-excerpt">
-                <span data-lang="ru" class="active">Продвинутый курс охватывает интеграцию машинного обучения в торговые системы, алгоритмический скрининг и управление рисками с помощью ИИ.</span>
-                <span data-lang="ua">Просунутий курс охоплює інтеграцію машинного навчання у торгові системи, алгоритмічний скринінг та управління ризиками за допомогою ШІ.</span>
-                <span data-lang="en">The advanced course covers machine learning integration in trading systems, algorithmic screening and AI-driven risk management.</span>
-              </div>
-              <a href="axiumsquare-academy.html" class="hnc-read-more">
-                <span data-lang="ru" class="active">Подробнее</span>
-                <span data-lang="ua">Детальніше</span>
-                <span data-lang="en">Read more</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div class="hnc-slide">
-            <div class="hnc-img">
-              <!-- Заменить на <img src="news-3.jpg" alt="..."> -->
-              <div class="hnc-img-placeholder">
-                <div class="hnc-img-icon">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                </div>
-                <span class="hnc-img-brand">AXIUMSQUARE</span>
-              </div>
-            </div>
-            <div class="hnc-content">
-              <div class="hnc-meta">
-                <span class="hnc-badge">ИНВЕСТИЦИИ</span>
-                <span class="hnc-date">27 Apr · 2026</span>
-              </div>
-              <div class="hnc-title">
-                <span data-lang="ru" class="active">AXIUMSQUARE Capital: портфель Q1 2026 показал доходность +28%</span>
-                <span data-lang="ua">AXIUMSQUARE Capital: портфель Q1 2026 показав дохідність +28%</span>
-                <span data-lang="en">AXIUMSQUARE Capital: Q1 2026 Portfolio Delivered +28% Return</span>
-              </div>
-              <div class="hnc-excerpt">
-                <span data-lang="ru" class="active">Управляемые портфели AXIUMSQUARE превысили рыночные бенчмарки в первом квартале. Ключевыми позициями стали NVDA, MSFT и сектор полупроводников.</span>
-                <span data-lang="ua">Управляємі портфелі AXIUMSQUARE перевищили ринкові бенчмарки у першому кварталі. Ключовими позиціями стали NVDA, MSFT та сектор напівпровідників.</span>
-                <span data-lang="en">AXIUMSQUARE managed portfolios outperformed market benchmarks in Q1. Key positions included NVDA, MSFT and the semiconductor sector.</span>
-              </div>
-              <a href="axiumsquare-investments.html" class="hnc-read-more">
-                <span data-lang="ru" class="active">Подробнее</span>
-                <span data-lang="ua">Детальніше</span>
-                <span data-lang="en">Read more</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Controls -->
-      <div class="hnc-footer">
-        <div class="hnc-controls">
-          <button class="hnc-arrow" id="hncPrev">&#8592;</button>
-          <div class="hnc-dots">
-            <button class="hnc-dot active" data-idx="0"></button>
-            <button class="hnc-dot" data-idx="1"></button>
-            <button class="hnc-dot" data-idx="2"></button>
-          </div>
-          <button class="hnc-arrow" id="hncNext">&#8594;</button>
-        </div>
-        <div class="hnc-progress"><span id="hncCurNum">01</span> / 03</div>
-      </div>
-      <div class="hnc-timer-bar"><div class="hnc-timer-fill" id="hncFill"></div></div>
-    </div>
-
-    <div class="hero-h1-wrap">
-      <h1 class="hero-h1">
-        <span data-lang="ru" class="active">
-          Трейдинг
-          <em>как фундамент.</em>
-          <span class="line3">Бизнес — опора.</span>
-        </span>
-        <span data-lang="ua">
-          Трейдинг
-          <em>як фундамент.</em>
-          <span class="line3">Бізнес — опора.</span>
-        </span>
-        <span data-lang="en">
-          Trading
-          <em>as foundation.</em>
-          <span class="line3">Business — the pillar.</span>
-        </span>
-      </h1>
-
-      <div class="hero-h1-img">
-        <!-- Заменить на <img src="hero-main.jpg" alt="..."> -->
-        <div class="hero-h1-img-inner">
-          <div class="hero-h1-img-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="3" y="3" width="18" height="18" rx="1"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-          </div>
-          <span class="hero-h1-img-label">AXIUMSQUARE<br>IMAGE</span>
-        </div>
-      </div>
-    </div>
+    <h1 class="hero-h1">
+      <span data-lang="ru" class="active">
+        Трейдинг
+        <em class="line2">как фундамент.</em>
+        <span class="line3">Бизнес — опора.</span>
+      </span>
+      <span data-lang="ua">
+        Трейдинг
+        <em class="line2">як фундамент.</em>
+        <span class="line3">Бізнес — опора.</span>
+      </span>
+      <span data-lang="en">
+        Trading
+        <em class="line2">as foundation.</em>
+        <span class="line3">Business — the pillar.</span>
+      </span>
+    </h1>
 
     <p class="hero-sub">
       <span data-lang="ru" class="active">Опыт на NYSE и NASDAQ, синергия финансовых рынков с реальным бизнесом. Профессиональное управление капиталом для тех, кто мыслит масштабно.</span>
@@ -1658,7 +1306,43 @@
     </div>
   </div>
 
-
+  <!-- Floating card -->
+  <div class="hero-card">
+    <div class="hero-card-label">
+      <span class="hc-dot"></span>
+      <span data-lang="ru" class="active">Портфель · Live</span>
+      <span data-lang="ua">Портфель · Live</span>
+      <span data-lang="en">Portfolio · Live</span>
+    </div>
+    <div class="hero-card-row">
+      <span class="hcr-ticker">NVDA</span>
+      <span class="hcr-val up">+3.15%</span>
+    </div>
+    <div class="hero-card-row">
+      <span class="hcr-ticker">AAPL</span>
+      <span class="hcr-val up">+1.24%</span>
+    </div>
+    <div class="hero-card-row">
+      <span class="hcr-ticker">MSFT</span>
+      <span class="hcr-val up">+0.62%</span>
+    </div>
+    <div class="hero-card-row">
+      <span class="hcr-ticker">META</span>
+      <span class="hcr-val down">−1.03%</span>
+    </div>
+    <div class="hero-card-row">
+      <span class="hcr-ticker">TSLA</span>
+      <span class="hcr-val down">−0.87%</span>
+    </div>
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.06);">
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:#4a4640;margin-bottom:.4rem;">
+        <span data-lang="ru" class="active">ДНЕВНОЙ ИТОГ</span>
+        <span data-lang="ua">ДЕННИЙ ПІДСУМОК</span>
+        <span data-lang="en">DAY P&L</span>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:1.3rem;color:#5dbf8a;">+$4,218</div>
+    </div>
+  </div>
 
   <!-- Bottom bar -->
   <div class="hero-bottom">
@@ -2618,81 +2302,6 @@
   }
   function openMob()  { mob.style.display = 'flex'; }
   function closeMob() { mob.style.display = 'none'; }
-
-  // ── Hero News Carousel ──
-  (function() {
-    const track   = document.getElementById('hncTrack');
-    const dots    = document.querySelectorAll('.hnc-dot');
-    const fill    = document.getElementById('hncFill');
-    const curNum  = document.getElementById('hncCurNum');
-    const total   = 3;
-    let current   = 0;
-    let timer, fillTimer;
-
-    function goTo(n) {
-      current = (n + total) % total;
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
-      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
-      curNum.textContent = (current + 1).toString().padStart(2, '0');
-      resetFill();
-    }
-
-    function resetFill() {
-      fill.classList.remove('running');
-      fill.style.transition = 'none';
-      fill.style.width = '0%';
-      void fill.offsetWidth; // force reflow
-      fill.classList.add('running');
-    }
-
-    function startTimer() {
-      timer = setInterval(function() { goTo(current + 1); }, 4500);
-    }
-
-    function restartTimer() {
-      clearInterval(timer);
-      startTimer();
-    }
-
-    document.getElementById('hncNext').addEventListener('click', function() {
-      goTo(current + 1); restartTimer();
-    });
-    document.getElementById('hncPrev').addEventListener('click', function() {
-      goTo(current - 1); restartTimer();
-    });
-    dots.forEach(function(d) {
-      d.addEventListener('click', function() {
-        goTo(parseInt(d.dataset.idx)); restartTimer();
-      });
-    });
-
-    // pause on hover
-    const carousel = document.querySelector('.hero-news-carousel');
-    carousel.addEventListener('mouseenter', function() {
-      clearInterval(timer);
-      fill.classList.remove('running');
-    });
-    carousel.addEventListener('mouseleave', function() {
-      restartTimer();
-    });
-
-    goTo(0);
-    startTimer();
-
-    // Touch swipe
-    let touchStartX = 0;
-    const ov = document.querySelector('.hnc-overflow');
-    ov.addEventListener('touchstart', function(e) {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-    ov.addEventListener('touchend', function(e) {
-      const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) {
-        diff > 0 ? goTo(current + 1) : goTo(current - 1);
-        restartTimer();
-      }
-    }, { passive: true });
-  })();
 </script>
 
 <script>
