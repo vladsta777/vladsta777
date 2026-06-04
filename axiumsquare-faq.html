@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — AXIUMSQUARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:        #2c4a2c;
+      --gold-bright: #3d6a3d;
+      --gold-pale:   #c0d4c0;
+      --gold-dim:    rgba(44,74,44,.10);
+      --text:        #18180e;
+      --text-2:      #585848;
+      --text-3:      #9a9880;
+      --border:      rgba(44,74,44,.14);
+      --border-2:    rgba(44,74,44,.07);
+      --surface:     rgba(255,253,246,.96);
+      --font-serif:  'Cormorant Garamond', Georgia, serif;
+      --font-sans:   'Outfit', sans-serif;
+      --font-mono:   'Outfit', sans-serif;
+      --accent:      #2c4a2c;
+      --accent-b:    #3d6a3d;
+      --accent-d:    #182e18;
+      --btn-bg:      linear-gradient(135deg,#3d6a3d 0%,#2c4a2c 100%);
+      --btn-txt:     #f2ede4;
+      --up: #2a6b2a;
+      --dn: #8b2020;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(44,74,44,.06) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 0% 100%, rgba(44,74,44,.05) 0%, transparent 55%),
+        #f2ede4;
+      background-attachment: fixed;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, opacity .2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(44,74,44,.4); border-radius: 50%;
+      pointer-events: none; z-index: 99998;
+      transform: translate(-50%,-50%);
+      transition: width .35s ease, height .35s ease, transform .1s ease;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: #2c4a2c; }
+
+    /* ── Grid overlay ── */
+    #grid {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(44,74,44,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44,74,44,.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── Preloader ── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 99999; background: #f2ede4;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      transition: opacity .8s ease;
+    }
+    #preloader.out { opacity: 0; pointer-events: none; }
+    .pre-logo {
+      font-family: var(--font-mono); font-size: clamp(.85rem,2vw,1rem);
+      letter-spacing: .5em; color: var(--gold);
+      animation: flicker 1.4s ease infinite alternate;
+    }
+    .pre-line { width: 180px; height: 1px; background: var(--border); overflow: hidden; }
+    .pre-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); animation: fill 1.2s ease forwards; }
+    @keyframes fill { from{width:0} to{width:100%} }
+    @keyframes flicker { from{opacity:.25} to{opacity:1} }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9500;
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(248,244,238,.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s;
+      box-shadow: 0 1px 20px rgba(0,0,0,.04);
+    }
+    header.scrolled { padding: 1rem 3rem; }
+    .h-logo {
+      font-family: var(--font-mono); font-size: .8rem;
+      letter-spacing: .45em; color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .h-logo-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+
+    .h-nav { display: flex; align-items: center; gap: 2.5rem; }
+    .h-nav a {
+      font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-2); text-decoration: none; transition: color .25s;
+      position: relative;
+    }
+    .h-nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width .3s ease;
+    }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav a:hover::after { width: 100%; }
+    .h-nav a.active-page { color: var(--gold); }
+    .h-nav a.active-page::after { width: 100%; }
+
+    .h-nav-club {
+      border: 1px solid rgba(44,74,44,.3) !important;
+      padding: .3rem .85rem !important;
+      background: rgba(44,74,44,.05) !important;
+      color: #2c4a2c !important;
+      transition: border-color .2s, background .2s, box-shadow .2s !important;
+    }
+    .h-nav-club::after { display: none !important; }
+    .h-nav-club:hover { border-color: #2c4a2c !important; background: rgba(44,74,44,.08) !important; }
+
+    .lang-drop { position: relative; }
+    .lang-current {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #2c4a2c;
+      background: transparent;
+      border: 1px solid rgba(44,74,44,.25);
+      padding: .7rem 1rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: border-color .2s, background .2s;
+      user-select: none;
+    }
+    .lang-current:hover { border-color: #2c4a2c; background: rgba(44,74,44,.05); }
+    .lang-current svg { width: 10px; height: 10px; transition: transform .25s; }
+    .lang-drop.open .lang-current svg { transform: rotate(180deg); }
+    .lang-menu {
+      position: absolute; top: calc(100% + .5rem); right: 0;
+      background: rgba(248,244,238,.98); backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity .2s ease, transform .2s ease;
+      min-width: 80px;
+    }
+    .lang-drop.open .lang-menu { opacity: 1; pointer-events: all; transform: none; }
+    .lang-opt {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .18em;
+      text-transform: uppercase; color: #9a9880;
+      background: none; border: none; border-bottom: 1px solid var(--border);
+      width: 100%; padding: .6rem 1rem; cursor: pointer; text-align: left;
+      transition: color .15s, background .15s;
+      display: block;
+    }
+    .lang-opt:last-child { border-bottom: none; }
+    .lang-opt:hover { color: #2c4a2c; background: rgba(44,74,44,.05); }
+
+    @media (max-width: 900px) {
+      .lang-drop { display: flex; }
+      .lang-current { padding: .55rem .8rem; clip-path: none; }
+    }
+
+    .h-cta {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #f2ede4;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      border: none; padding: .7rem 1.6rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: none; border-radius: 0;
+      font-weight: 600;
+      transition: opacity .2s, transform .15s;
+    }
+    .h-cta:hover { opacity: .85; transform: translateY(-1px); }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); transition: all .3s; }
+
+    /* ── Theme toggle ── */
+    .theme-toggle {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .12em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(44,74,44,.25);
+      color: #585848;
+      padding: .55rem .9rem;
+      cursor: pointer;
+      clip-path: none;
+      transition: border-color .25s, color .25s, background .25s;
+      white-space: nowrap;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-toggle:hover { border-color: #2c4a2c; color: #2c4a2c; background: rgba(44,74,44,.05); }
+    .theme-toggle .tt-icon { width: 14px; height: 14px; flex-shrink: 0; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+    .theme-toggle:hover .tt-icon { transform: rotate(20deg) scale(1.15); }
+    .theme-toggle .tt-dark { display: flex; }
+    .theme-toggle .tt-light { display: none; }
+    [data-theme="dark"] .theme-toggle .tt-dark { display: none; }
+    [data-theme="dark"] .theme-toggle .tt-light { display: flex; }
+    [data-theme="dark"] .theme-toggle { border-color: rgba(44,74,44,.2); color: #3A5A80; }
+    [data-theme="dark"] .theme-toggle:hover { border-color: #1A73C8; color: #1A73C8; background: rgba(26,115,200,.06); }
+
+    /* Language switching */
+    [data-lang] { display: none; }
+    [data-lang].active { display: block; }
+    span[data-lang] { display: none; }
+    span[data-lang].active { display: inline; }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+
+    /* ══════════════════════════════════════════
+       FAQ PAGE HERO
+    ══════════════════════════════════════════ */
+    .faq-hero {
+      padding: 10rem 3rem 5rem;
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-hero-orb {
+      position: absolute; top: -20%; right: -5%;
+      width: clamp(300px, 50vw, 700px); height: clamp(300px, 50vw, 700px);
+      background: radial-gradient(circle, rgba(44,74,44,.06) 0%, rgba(44,74,44,.03) 35%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+      animation: orbFloat 8s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat { from{transform:translate(0,0) scale(1)} to{transform:translate(-3%,4%) scale(1.04)} }
+    .faq-hero-line {
+      position: absolute; top: 0; right: 28%;
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(44,74,44,.18) 30%, rgba(44,74,44,.10) 70%, transparent);
+      pointer-events: none;
+    }
+    .faq-hero-inner { position: relative; max-width: 800px; }
+    .faq-eyebrow {
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .45em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: .8rem;
+      margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeUp .8s ease .3s forwards;
+    }
+    .faq-eyebrow::before { content:''; width: 2rem; height: 1px; background: var(--gold); }
+    .faq-h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 600; line-height: .96; letter-spacing: -.02em;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp .9s ease .45s forwards;
+    }
+    .faq-h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d 0%, #2c4a2c 60%, #182e18 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block;
+    }
+    .faq-sub {
+      font-size: clamp(.9rem, 1.4vw, 1.05rem); color: #585848;
+      max-width: 62ch; line-height: 1.85; font-weight: 300;
+      opacity: 0; animation: fadeUp .9s ease .6s forwards;
+    }
+
+    /* ══════════════════════════════════════════
+       FAQ CATEGORY FILTER
+    ══════════════════════════════════════════ */
+    .faq-filter-bar {
+      padding: 3rem 3rem 0;
+      display: flex; gap: .6rem; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,253,246,.6);
+    }
+    .faq-filter-btn {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--text-3);
+      background: transparent; border: 1px solid var(--border);
+      padding: .55rem 1.2rem; cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s;
+      position: relative; bottom: -1px;
+    }
+    .faq-filter-btn:hover { color: var(--text); border-color: rgba(44,74,44,.3); background: rgba(44,74,44,.04); }
+    .faq-filter-btn.active { color: var(--gold); border-color: var(--gold); border-bottom-color: #f2ede4; background: #f2ede4; }
+
+    /* ══════════════════════════════════════════
+       FAQ MAIN BODY
+    ══════════════════════════════════════════ */
+    .faq-body {
+      padding: 5rem 3rem 7rem;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .faq-sidebar {
+      position: sticky; top: 100px;
+    }
+    .faq-sidebar-label {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+      padding-bottom: .7rem; border-bottom: 1px solid rgba(44,74,44,.12);
+    }
+    .faq-sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .faq-sidebar-nav li a {
+      font-size: .82rem; color: var(--text-3); text-decoration: none;
+      display: block; padding: .7rem 0;
+      border-bottom: 1px solid rgba(44,74,44,.06);
+      transition: color .2s, padding-left .2s;
+    }
+    .faq-sidebar-nav li a:hover { color: var(--text); padding-left: .4rem; }
+    .faq-sidebar-nav li a.active-cat { color: var(--gold); padding-left: .4rem; }
+
+    .faq-sidebar-cta {
+      margin-top: 2.5rem; padding: 1.4rem;
+      border: 1px solid var(--border);
+      background: rgba(255,253,246,.97);
+    }
+    .faq-sidebar-cta-title {
+      font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600;
+      line-height: 1.2; margin-bottom: .7rem; color: var(--text);
+    }
+    .faq-sidebar-cta-text {
+      font-size: .8rem; line-height: 1.7; color: var(--text-2); font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+    .btn-primary {
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #f2ede4;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      border: none; padding: .8rem 1.4rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-weight: 600; width: 100%; justify-content: center;
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* FAQ Sections */
+    .faq-sections { display: flex; flex-direction: column; gap: 4rem; }
+
+    .faq-section { }
+    .faq-section-head {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .faq-section-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+    }
+    .faq-section-title {
+      font-family: var(--font-serif); font-size: 1.6rem; font-weight: 600;
+      color: #18180e; line-height: 1.1;
+    }
+    .faq-section-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* Accordion items */
+    .faq-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+    .faq-item {
+      border-bottom: 1px solid var(--border-2);
+      background: rgba(255,253,246,.97);
+      transition: background .2s;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item.open { background: rgba(255,253,246,1); }
+    .faq-q {
+      width: 100%; background: none; border: none; cursor: pointer;
+      padding: 1.4rem 1.6rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      text-align: left;
+    }
+    .faq-q-text {
+      font-size: .92rem; font-weight: 600; color: var(--text); line-height: 1.4;
+      flex: 1;
+    }
+    .faq-q-icon {
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      color: var(--gold); transition: transform .3s ease, border-color .2s;
+    }
+    .faq-item.open .faq-q-icon { transform: rotate(45deg); border-color: var(--gold); }
+    .faq-item:hover .faq-q-icon { border-color: rgba(44,74,44,.3); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .45s cubic-bezier(.4,0,.2,1), padding .3s;
+    }
+    .faq-item.open .faq-a { max-height: 600px; }
+    .faq-a-inner {
+      padding: 0 1.6rem 1.6rem;
+      border-top: 1px solid var(--border-2);
+      padding-top: 1.2rem;
+    }
+    .faq-a-inner p {
+      font-size: .88rem; line-height: 1.9; color: var(--text-2); font-weight: 300;
+      margin-bottom: .8rem;
+    }
+    .faq-a-inner p:last-child { margin-bottom: 0; }
+    .faq-a-inner ul { padding-left: 1.2rem; margin: .6rem 0; }
+    .faq-a-inner ul li { font-size: .86rem; line-height: 1.85; color: var(--text-2); font-weight: 300; margin-bottom: .3rem; }
+    .faq-a-inner a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(44,74,44,.2); transition: border-color .2s; }
+    .faq-a-inner a:hover { border-color: var(--gold); }
+    .faq-tag {
+      display: inline-block;
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(44,74,44,.2); padding: .2rem .55rem;
+      background: rgba(44,74,44,.04); margin-bottom: .8rem;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER CTA STRIP
+    ══════════════════════════════════════════ */
+    .footer-cta {
+      padding: 7rem 3rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .footer-cta-orb {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(44,74,44,.06), transparent 65%);
+      pointer-events: none;
+    }
+    .fc-label { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .fc-title {
+      font-family: var(--font-serif); font-size: clamp(2.5rem,6vw,5.5rem);
+      font-weight: 600; line-height: 1; letter-spacing: -.02em;
+      margin-bottom: 2rem; position: relative;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+    .fc-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .fc-sub { font-size: .95rem; color: #585848; max-width: 52ch; margin: 0 auto 2.8rem; line-height: 1.85; font-weight: 300; }
+    .fc-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-secondary {
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #2c4a2c;
+      background: transparent; border: 1px solid rgba(44,74,44,.3);
+      padding: .9rem 2.2rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-weight: 500;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: #2c4a2c; background: rgba(44,74,44,.06); }
+    .btn-fc-primary {
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #f2ede4;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      border: none; padding: .9rem 2.2rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-weight: 600;
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-fc-primary:hover { opacity: .88; transform: translateY(-2px); }
+
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
+    .site-footer {
+      background: rgba(236,231,220,.97);
+      border-top: 1px solid var(--border);
+      display: block;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3.5rem;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 1px solid rgba(44,74,44,.1);
+      max-width: 1440px;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .45em; color: var(--gold); text-transform: uppercase; }
+    .footer-logo-link { text-decoration: none; }
+    .footer-tagline { font-size: .78rem; line-height: 1.7; color: var(--text-3); font-weight: 300; }
+    .footer-socials { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .footer-social {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--text-3); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-social:hover { color: var(--gold); }
+    .footer-nav-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; align-content: start; }
+    .footer-col-title {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.2rem; padding-bottom: .7rem;
+      border-bottom: 1px solid rgba(44,74,44,.12);
+    }
+    .footer-col-title--cyan { color: #00d4ff; border-bottom-color: rgba(0,212,255,.2); }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col-links a {
+      font-size: .76rem; line-height: 1.5; color: var(--text-3);
+      text-decoration: none; display: block;
+      transition: color .2s, padding-left .2s;
+    }
+    .footer-col-links a:hover { color: var(--text); padding-left: .35rem; }
+    .footer-risk { display: block; padding: 1.2rem 3rem; border-top: 1px solid rgba(44,74,44,.08); }
+    .footer-risk-text {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .04em;
+      line-height: 1.8; color: var(--text-3); max-width: 1100px;
+    }
+    .footer-risk-text a { color: rgba(44,74,44,.45); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; padding: 1.2rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-bottom-logo { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em; color: rgba(44,74,44,.35); }
+    .footer-bottom-copy { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .06em; color: var(--text-3); }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a {
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--text-3); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-bottom-links a:hover { color: var(--gold); }
+
+    /* ══════════════════════════════════════════
+       DARK THEME
+    ══════════════════════════════════════════ */
+    [data-theme="dark"] {
+      --gold:        #1A73C8;
+      --gold-bright: #4A9FE0;
+      --gold-pale:   #A8D4F5;
+      --gold-dim:    rgba(26,115,200,.12);
+      --text:        #0A1628;
+      --text-2:      #3A5A80;
+      --text-3:      #7090A8;
+      --border:      rgba(26,115,200,.12);
+      --border-2:    rgba(26,115,200,.06);
+      --surface:     rgba(235,244,255,.96);
+      --accent:      #1A73C8;
+      --accent-b:    #4A9FE0;
+      --accent-d:    #0D4F9E;
+      --btn-bg:      linear-gradient(135deg,#1C3A6E 0%,#1A73C8 100%);
+      --btn-txt:     #EEF4FC;
+    }
+    [data-theme="dark"] body {
+      background:
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(26,115,200,.07) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 0% 100%, rgba(26,115,200,.06) 0%, transparent 55%),
+        #EEF4FC;
+    }
+    [data-theme="dark"] #preloader { background: #EEF4FC; }
+    [data-theme="dark"] header { background: rgba(235,244,255,.97); }
+    [data-theme="dark"] .h-logo { color: #1A73C8; }
+    [data-theme="dark"] .h-logo-dot { background: #1A73C8; }
+    [data-theme="dark"] .h-nav a { color: #3A5A80; }
+    [data-theme="dark"] .h-nav a:hover { color: #0A1628; }
+    [data-theme="dark"] .h-nav a::after { background: #1A73C8; }
+    [data-theme="dark"] .h-nav a.active-page { color: #1A73C8; }
+    [data-theme="dark"] .h-nav-club { border-color: rgba(26,115,200,.3) !important; background: rgba(26,115,200,.06) !important; color: #1A73C8 !important; }
+    [data-theme="dark"] .h-cta { background: linear-gradient(135deg,#1C3A6E,#1A73C8); color: #EEF4FC; }
+    [data-theme="dark"] .h-burger span { background: #3A5A80; }
+    [data-theme="dark"] .lang-current { color: #1A73C8; border-color: rgba(26,115,200,.25); }
+    [data-theme="dark"] .lang-menu { background: rgba(235,244,255,.98); }
+    [data-theme="dark"] .lang-opt { color: #7090A8; }
+    [data-theme="dark"] .lang-opt:hover { color: #1A73C8; background: rgba(26,115,200,.05); }
+    [data-theme="dark"] .faq-hero { border-bottom-color: rgba(26,115,200,.1); }
+    [data-theme="dark"] .faq-eyebrow { color: #1A73C8; }
+    [data-theme="dark"] .faq-eyebrow::before { background: #1A73C8; }
+    [data-theme="dark"] .faq-h1 { color: #0A1628; -webkit-text-fill-color: #0A1628; }
+    [data-theme="dark"] .faq-sub { color: #3A5A80; }
+    [data-theme="dark"] .faq-filter-bar { background: rgba(235,244,255,.5); border-bottom-color: rgba(26,115,200,.1); }
+    [data-theme="dark"] .faq-filter-btn { color: #7090A8; border-color: rgba(26,115,200,.12); }
+    [data-theme="dark"] .faq-filter-btn:hover { color: #0A1628; border-color: rgba(26,115,200,.3); background: rgba(26,115,200,.05); }
+    [data-theme="dark"] .faq-filter-btn.active { color: #1A73C8; border-color: #1A73C8; border-bottom-color: #EEF4FC; background: #EEF4FC; }
+    [data-theme="dark"] .faq-sidebar-label { color: #1A73C8; border-bottom-color: rgba(26,115,200,.12); }
+    [data-theme="dark"] .faq-sidebar-nav li a { color: #7090A8; border-bottom-color: rgba(26,115,200,.06); }
+    [data-theme="dark"] .faq-sidebar-nav li a:hover { color: #0A1628; }
+    [data-theme="dark"] .faq-sidebar-nav li a.active-cat { color: #1A73C8; }
+    [data-theme="dark"] .faq-sidebar-cta { background: rgba(235,244,255,.97); border-color: rgba(26,115,200,.12); }
+    [data-theme="dark"] .faq-sidebar-cta-title { color: #0A1628; }
+    [data-theme="dark"] .faq-sidebar-cta-text { color: #3A5A80; }
+    [data-theme="dark"] .btn-primary { background: linear-gradient(135deg,#1C3A6E,#1A73C8); color: #EEF4FC; }
+    [data-theme="dark"] .faq-section-icon { border-color: rgba(26,115,200,.15); color: #1A73C8; }
+    [data-theme="dark"] .faq-section-title { color: #0A1628; }
+    [data-theme="dark"] .faq-list { border-color: rgba(26,115,200,.12); }
+    [data-theme="dark"] .faq-item { background: rgba(235,244,255,.92); border-bottom-color: rgba(26,115,200,.06); }
+    [data-theme="dark"] .faq-item.open { background: rgba(235,244,255,1); }
+    [data-theme="dark"] .faq-q-text { color: #0A1628; }
+    [data-theme="dark"] .faq-q-icon { border-color: rgba(26,115,200,.15); color: #1A73C8; }
+    [data-theme="dark"] .faq-item.open .faq-q-icon { border-color: #1A73C8; }
+    [data-theme="dark"] .faq-a-inner p { color: #3A5A80; }
+    [data-theme="dark"] .faq-a-inner ul li { color: #3A5A80; }
+    [data-theme="dark"] .faq-a-inner a { color: #1A73C8; border-bottom-color: rgba(26,115,200,.2); }
+    [data-theme="dark"] .faq-a-inner a:hover { border-bottom-color: #1A73C8; }
+    [data-theme="dark"] .faq-tag { color: #1A73C8; border-color: rgba(26,115,200,.2); background: rgba(26,115,200,.05); }
+    [data-theme="dark"] .footer-cta-orb { background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(26,115,200,.06), transparent 65%); }
+    [data-theme="dark"] .fc-title { color: #0A1628; -webkit-text-fill-color: #0A1628; }
+    [data-theme="dark"] .fc-label { color: #1A73C8; }
+    [data-theme="dark"] .fc-sub { color: #3A5A80; }
+    [data-theme="dark"] .btn-fc-primary { background: linear-gradient(135deg,#1C3A6E,#1A73C8); }
+    [data-theme="dark"] .btn-secondary { color: #1A73C8; border-color: rgba(26,115,200,.3); }
+    [data-theme="dark"] .btn-secondary:hover { border-color: #1A73C8; background: rgba(26,115,200,.06); }
+    [data-theme="dark"] .site-footer { background: rgba(220,235,250,.97); border-top-color: rgba(26,115,200,.12); }
+    [data-theme="dark"] .footer-inner { border-bottom-color: rgba(26,115,200,.1); }
+    [data-theme="dark"] .footer-logo { color: #1A73C8; }
+    [data-theme="dark"] .footer-tagline { color: #7090A8; }
+    [data-theme="dark"] .footer-social { color: #7090A8; }
+    [data-theme="dark"] .footer-social:hover { color: #1A73C8; }
+    [data-theme="dark"] .footer-col-title { color: #1A73C8; border-bottom-color: rgba(26,115,200,.15); }
+    [data-theme="dark"] .footer-col-title--cyan { color: #0090CC; }
+    [data-theme="dark"] .footer-col-links a { color: #7090A8; }
+    [data-theme="dark"] .footer-col-links a:hover { color: #0A1628; }
+    [data-theme="dark"] .footer-risk { border-top-color: rgba(26,115,200,.08); }
+    [data-theme="dark"] .footer-risk-text { color: #7090A8; }
+    [data-theme="dark"] .footer-risk-text a { color: rgba(26,115,200,.45); }
+    [data-theme="dark"] .footer-risk-text a:hover { color: #1A73C8; }
+    [data-theme="dark"] .footer-bottom { border-top-color: rgba(26,115,200,.1); }
+    [data-theme="dark"] .footer-bottom-logo { color: rgba(26,115,200,.35); }
+    [data-theme="dark"] .footer-bottom-copy { color: #7090A8; }
+    [data-theme="dark"] .footer-bottom-links a { color: #7090A8; }
+    [data-theme="dark"] .footer-bottom-links a:hover { color: #1A73C8; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .footer-nav-cols { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      header { padding: 1rem 1.5rem; }
+      header.scrolled { padding: .8rem 1.5rem; }
+      .h-nav { display: none; }
+      .h-burger { display: flex; }
+      .faq-hero { padding: 8rem 1.5rem 3.5rem; }
+      .faq-filter-bar { padding: 2rem 1.5rem 0; }
+      .faq-body { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem 5rem; }
+      .faq-sidebar { position: static; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2rem; }
+      .footer-nav-cols { grid-template-columns: repeat(2, 1fr) !important; gap: 1.8rem; }
+      .footer-risk { padding: 1rem 1.5rem; }
+      .footer-bottom { padding: 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      .footer-bottom-links { gap: 1rem; }
+      .footer-cta { padding: 5rem 1.5rem; }
+    }
+    @media (max-width: 480px) {
+      .footer-nav-cols { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Fixed grid -->
+<div id="grid"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pre-logo">AXIUMSQUARE</div>
+  <div class="pre-line"><div class="pre-fill"></div></div>
+</div>
+
+<!-- Mobile menu overlay -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(242,237,228,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="axiumsquare-services.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="axiumsquare-club.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#2c4a2c;text-decoration:none;border:1px solid rgba(44,74,44,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="axiumsquare-academy.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="axiumsquare-invest.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Консалтинг</span><span data-lang="ua">Консалтинг</span><span data-lang="en">Consulting</span></a>
+    <a href="axiumsquare-blog.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="axiumsquare-news.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+    <a href="axiumsquare-faq.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">FAQ</span><span data-lang="ua">FAQ</span><span data-lang="en">FAQ</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="axiumsquare-login.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#3d6a3d,#2c4a2c);color:#f2ede4;padding:.6rem 2rem;display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.3em;color:#2c4a2c;background:none;border:1px solid rgba(44,74,44,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    AXIUMSQUARE
+  </a>
+
+  <nav class="h-nav">
+    <a href="axiumsquare-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="axiumsquare-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="axiumsquare-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="axiumsquare-invest.html">
+      <span data-lang="ru" class="active">Консалтинг</span><span data-lang="ua">Консалтинг</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="axiumsquare-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="axiumsquare-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+    <a href="axiumsquare-faq.html" class="active-page">
+      <span data-lang="ru" class="active">FAQ</span><span data-lang="ua">FAQ</span><span data-lang="en">FAQ</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+      <svg class="tt-icon tt-dark" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="tt-icon tt-light" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+    <a href="axiumsquare-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════
+     FAQ HERO
+══════════════════════════════════ -->
+<section class="faq-hero">
+  <div class="faq-hero-orb"></div>
+  <div class="faq-hero-line"></div>
+  <div class="faq-hero-inner">
+    <div class="faq-eyebrow">
+      <span data-lang="ru" class="active">Часто задаваемые вопросы</span>
+      <span data-lang="ua">Часті питання</span>
+      <span data-lang="en">Frequently Asked Questions</span>
+    </div>
+    <h1 class="faq-h1">
+      <span data-lang="ru" class="active">Ответы на<br><em>ваши вопросы</em></span>
+      <span data-lang="ua">Відповіді на<br><em>ваші питання</em></span>
+      <span data-lang="en">Answers to<br><em>your questions</em></span>
+    </h1>
+    <p class="faq-sub">
+      <span data-lang="ru" class="active">Собрали всё самое важное об экосистеме AXIUMSQUARE — о клубе, обучении, услугах и партнёрстве. Если не нашли ответ — напишите нам напрямую.</span>
+      <span data-lang="ua">Зібрали найважливіше про екосистему AXIUMSQUARE — клуб, навчання, послуги та партнерство. Не знайшли відповідь — напишіть нам напряму.</span>
+      <span data-lang="en">Everything you need to know about the AXIUMSQUARE ecosystem — club, education, services and partnerships. Didn't find what you need? Reach out directly.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CATEGORY FILTER
+══════════════════════════════════ -->
+<div class="faq-filter-bar" id="faqFilterBar">
+  <button class="faq-filter-btn active" data-cat="all">
+    <span data-lang="ru" class="active">Все</span><span data-lang="ua">Усі</span><span data-lang="en">All</span>
+  </button>
+  <button class="faq-filter-btn" data-cat="general">
+    <span data-lang="ru" class="active">Общее</span><span data-lang="ua">Загальне</span><span data-lang="en">General</span>
+  </button>
+  <button class="faq-filter-btn" data-cat="club">
+    <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+  </button>
+  <button class="faq-filter-btn" data-cat="academy">
+    <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+  </button>
+  <button class="faq-filter-btn" data-cat="services">
+    <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+  </button>
+  <button class="faq-filter-btn" data-cat="payment">
+    <span data-lang="ru" class="active">Оплата</span><span data-lang="ua">Оплата</span><span data-lang="en">Payment</span>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════
+     FAQ BODY
+══════════════════════════════════ -->
+<div class="faq-body">
+
+  <!-- Sidebar -->
+  <aside class="faq-sidebar">
+    <div class="faq-sidebar-label">
+      <span data-lang="ru" class="active">Разделы</span>
+      <span data-lang="ua">Розділи</span>
+      <span data-lang="en">Sections</span>
+    </div>
+    <ul class="faq-sidebar-nav">
+      <li><a href="#section-general" class="active-cat">
+        <span data-lang="ru" class="active">Общие вопросы</span>
+        <span data-lang="ua">Загальні питання</span>
+        <span data-lang="en">General Questions</span>
+      </a></li>
+      <li><a href="#section-club">
+        <span data-lang="ru" class="active">Клуб</span>
+        <span data-lang="ua">Клуб</span>
+        <span data-lang="en">Club</span>
+      </a></li>
+      <li><a href="#section-academy">
+        <span data-lang="ru" class="active">Академия трейдинга</span>
+        <span data-lang="ua">Академія трейдингу</span>
+        <span data-lang="en">Trading Academy</span>
+      </a></li>
+      <li><a href="#section-services">
+        <span data-lang="ru" class="active">Услуги и консалтинг</span>
+        <span data-lang="ua">Послуги та консалтинг</span>
+        <span data-lang="en">Services & Consulting</span>
+      </a></li>
+      <li><a href="#section-payment">
+        <span data-lang="ru" class="active">Оплата и возврат</span>
+        <span data-lang="ua">Оплата та повернення</span>
+        <span data-lang="en">Payment & Refund</span>
+      </a></li>
+    </ul>
+
+    <div class="faq-sidebar-cta">
+      <div class="faq-sidebar-cta-title">
+        <span data-lang="ru" class="active">Остались вопросы?</span>
+        <span data-lang="ua">Залишились питання?</span>
+        <span data-lang="en">Still have questions?</span>
+      </div>
+      <p class="faq-sidebar-cta-text">
+        <span data-lang="ru" class="active">Напишите нам в Telegram — ответим в течение нескольких часов.</span>
+        <span data-lang="ua">Напишіть нам у Telegram — відповімо протягом кількох годин.</span>
+        <span data-lang="en">Write to us on Telegram — we respond within a few hours.</span>
+      </p>
+      <a href="https://t.me/axiumsquare" target="_blank" class="btn-primary">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+        Telegram
+      </a>
+    </div>
+  </aside>
+
+  <!-- FAQ Sections -->
+  <div class="faq-sections">
+
+    <!-- GENERAL -->
+    <div class="faq-section reveal" id="section-general" data-cat="general">
+      <div class="faq-section-head">
+        <div class="faq-section-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h2 class="faq-section-title">
+          <span data-lang="ru" class="active">Общие <em>вопросы</em></span>
+          <span data-lang="ua">Загальні <em>питання</em></span>
+          <span data-lang="en">General <em>Questions</em></span>
+        </h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Что такое AXIUMSQUARE и чем вы отличаетесь от обычных курсов?</span>
+              <span data-lang="ua">Що таке AXIUMSQUARE і чим ви відрізняєтесь від звичайних курсів?</span>
+              <span data-lang="en">What is AXIUMSQUARE and how do you differ from regular courses?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">AXIUMSQUARE — это закрытая экосистема для трейдеров и предпринимателей, которая объединяет образование, клуб единомышленников, консалтинг и инвестиционные инструменты под одной крышей. Мы не просто учим торговать — мы создаём среду, в которой участники развиваются, обмениваются идеями и масштабируют капитал вместе.</span>
+                <span data-lang="ua">AXIUMSQUARE — це закрита екосистема для трейдерів та підприємців, що об'єднує освіту, клуб однодумців, консалтинг та інвестиційні інструменти. Ми не просто навчаємо торгувати — ми створюємо середовище, в якому учасники розвиваються та масштабують капітал разом.</span>
+                <span data-lang="en">AXIUMSQUARE is a closed ecosystem for traders and entrepreneurs that combines education, a like-minded club, consulting, and investment tools under one roof. We don't just teach trading — we create an environment where participants grow, exchange ideas, and scale capital together.</span>
+              </p>
+              <p>
+                <span data-lang="ru" class="active">В отличие от разрозненных курсов, здесь вы получаете доступ к живому сообществу, практикующим менторам с реальными торговыми счетами и инструментам для роста бизнеса.</span>
+                <span data-lang="ua">На відміну від розрізнених курсів, тут ви отримуєте доступ до живого спільноти, практикуючих менторів та інструментів для зростання бізнесу.</span>
+                <span data-lang="en">Unlike standalone courses, here you gain access to a live community, practicing mentors with real trading accounts, and business growth tools.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Для кого предназначена эта экосистема?</span>
+              <span data-lang="ua">Для кого призначена ця екосистема?</span>
+              <span data-lang="en">Who is this ecosystem designed for?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">AXIUMSQUARE подходит для трёх типов участников:</span>
+                <span data-lang="ua">AXIUMSQUARE підходить для трьох типів учасників:</span>
+                <span data-lang="en">AXIUMSQUARE is suitable for three types of participants:</span>
+              </p>
+              <ul>
+                <li><span data-lang="ru" class="active"><strong>Новичок в трейдинге</strong> — ускоренный, системный путь к профессиональному уровню без воды и лишних теорий.</span><span data-lang="ua"><strong>Новачок у трейдингу</strong> — прискорений системний шлях до професійного рівня.</span><span data-lang="en"><strong>Trading beginner</strong> — a fast, systematic path to professional level without fluff.</span></li>
+                <li><span data-lang="ru" class="active"><strong>Опытный трейдер</strong> — свежий взгляд на рынок, дополнение к стратегии, среда для роста и обмена опытом.</span><span data-lang="ua"><strong>Досвідчений трейдер</strong> — свіжий погляд на ринок, доповнення до стратегії.</span><span data-lang="en"><strong>Experienced trader</strong> — fresh market perspective, strategy complement, growth environment.</span></li>
+                <li><span data-lang="ru" class="active"><strong>Предприниматель</strong> — понятные инструменты диверсификации капитала и новые идеи для бизнеса через сеть клуба.</span><span data-lang="ua"><strong>Підприємець</strong> — зрозумілі інструменти диверсифікації капіталу та нові ідеї для бізнесу.</span><span data-lang="en"><strong>Entrepreneur</strong> — clear capital diversification tools and new business ideas through the club network.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Нужен ли опыт торговли, чтобы начать?</span>
+              <span data-lang="ua">Чи потрібен досвід торгівлі, щоб почати?</span>
+              <span data-lang="en">Do I need trading experience to start?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Нет. Академия AXIUMSQUARE выстроена так, чтобы принять участника с нулевого уровня и провести его к системной, стабильной торговле. Базовые курсы начинаются с основ рынка, анализа и риск-менеджмента. Никаких предварительных требований нет.</span>
+                <span data-lang="ua">Ні. Академія AXIUMSQUARE побудована так, щоб прийняти учасника з нульового рівня та провести його до системної торгівлі. Базові курси починаються з основ ринку, аналізу та ризик-менеджменту.</span>
+                <span data-lang="en">No. The AXIUMSQUARE Academy is structured to take a participant from zero and guide them to systematic, stable trading. Foundation courses start with market basics, analysis, and risk management. No prerequisites required.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Как связаться с командой AXIUMSQUARE?</span>
+              <span data-lang="ua">Як зв'язатися з командою AXIUMSQUARE?</span>
+              <span data-lang="en">How can I contact the AXIUMSQUARE team?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Основной канал связи — Telegram <a href="https://t.me/axiumsquare" target="_blank">@axiumsquare</a>. Отвечаем в рабочее время в течение нескольких часов. Для срочных вопросов по действующим контрактам ответ приходит быстрее.</span>
+                <span data-lang="ua">Основний канал зв'язку — Telegram <a href="https://t.me/axiumsquare" target="_blank">@axiumsquare</a>. Відповідаємо у робочий час протягом кількох годин.</span>
+                <span data-lang="en">Primary contact channel is Telegram <a href="https://t.me/axiumsquare" target="_blank">@axiumsquare</a>. We respond during business hours within a few hours. For urgent matters regarding active contracts, response times are faster.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CLUB -->
+    <div class="faq-section reveal reveal-d1" id="section-club" data-cat="club">
+      <div class="faq-section-head">
+        <div class="faq-section-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h2 class="faq-section-title">
+          <span data-lang="ru" class="active">Trading Insider <em>&amp; Business Club</em></span>
+          <span data-lang="ua">Trading Insider <em>&amp; Business Club</em></span>
+          <span data-lang="en">Trading Insider <em>&amp; Business Club</em></span>
+        </h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Что входит в членство Клуба?</span>
+              <span data-lang="ua">Що входить до членства Клубу?</span>
+              <span data-lang="en">What is included in Club membership?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Члены Клуба получают закрытый доступ к:</span>
+                <span data-lang="ua">Члени Клубу отримують закритий доступ до:</span>
+                <span data-lang="en">Club members get exclusive access to:</span>
+              </p>
+              <ul>
+                <li><span data-lang="ru" class="active">Торговым сигналам и разборам сделок в реальном времени от практикующих трейдеров NYSE/NASDAQ</span><span data-lang="ua">Торговим сигналам та розборам угод у реальному часі від практикуючих трейдерів</span><span data-lang="en">Live trading signals and deal breakdowns from practicing NYSE/NASDAQ traders</span></li>
+                <li><span data-lang="ru" class="active">Закрытым вебинарам и стратегическим сессиям</span><span data-lang="ua">Закритим вебінарам та стратегічним сесіям</span><span data-lang="en">Private webinars and strategy sessions</span></li>
+                <li><span data-lang="ru" class="active">Бизнес-нетворкингу и партнёрским возможностям внутри экосистемы</span><span data-lang="ua">Бізнес-нетворкингу та партнерським можливостям всередині екосистеми</span><span data-lang="en">Business networking and partnership opportunities within the ecosystem</span></li>
+                <li><span data-lang="ru" class="active">Базе знаний, аналитике и инсайдерским материалам</span><span data-lang="ua">Базі знань, аналітиці та інсайдерським матеріалам</span><span data-lang="en">Knowledge base, analytics, and insider materials</span></li>
+                <li><span data-lang="ru" class="active">Скидкам на все продукты экосистемы</span><span data-lang="ua">Знижкам на всі продукти екосистеми</span><span data-lang="en">Discounts on all ecosystem products</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Какие тарифы есть в Клубе?</span>
+              <span data-lang="ua">Які тарифи є в Клубі?</span>
+              <span data-lang="en">What pricing plans does the Club offer?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Клуб предлагает несколько уровней доступа — от базового месячного до годового тарифа с расширенными привилегиями. Подробные условия и актуальные цены доступны на странице <a href="axiumsquare-club.html#pricing">Тарифы Клуба</a>.</span>
+                <span data-lang="ua">Клуб пропонує кілька рівнів доступу — від базового місячного до річного тарифу з розширеними привілеями. Детальні умови доступні на сторінці <a href="axiumsquare-club.html#pricing">Тарифи Клубу</a>.</span>
+                <span data-lang="en">The Club offers multiple access tiers — from a basic monthly to an annual plan with expanded privileges. Full details and current pricing are available on the <a href="axiumsquare-club.html#pricing">Club Pricing</a> page.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Можно ли отменить членство в любой момент?</span>
+              <span data-lang="ua">Чи можна скасувати членство у будь-який момент?</span>
+              <span data-lang="en">Can I cancel my membership at any time?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Да, месячная подписка не автопродлевается без вашего согласия. При годовом тарифе отмена прекращает доступ по истечении оплаченного периода. Возврат за неиспользованный период регулируется нашей <a href="axiumsquare-refund.html">политикой возвратов</a>.</span>
+                <span data-lang="ua">Так, місячна підписка не поновлюється автоматично без вашої згоди. Деталі щодо повернень — у нашій <a href="axiumsquare-refund.html">політиці повернень</a>.</span>
+                <span data-lang="en">Yes, monthly subscriptions do not auto-renew without your consent. Annual plans cease access at the end of the paid period. Refunds for unused periods are governed by our <a href="axiumsquare-refund.html">refund policy</a>.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Клуб работает онлайн или есть офлайн-мероприятия?</span>
+              <span data-lang="ua">Клуб працює онлайн чи є офлайн-заходи?</span>
+              <span data-lang="en">Does the Club operate online only, or are there offline events?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Клуб работает преимущественно онлайн — закрытые чаты, вебинары, аналитика. Периодически организуются офлайн-встречи и мастермайнды для участников высших тарифов. О мероприятиях сообщается участникам заблаговременно.</span>
+                <span data-lang="ua">Клуб працює переважно онлайн — закриті чати, вебінари, аналітика. Час від часу організовуються офлайн-зустрічі та мастермайнди для учасників вищих тарифів.</span>
+                <span data-lang="en">The Club operates primarily online — private chats, webinars, analytics. Periodic offline meetups and masterminds are organized for higher-tier members. Events are announced to participants in advance.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ACADEMY -->
+    <div class="faq-section reveal" id="section-academy" data-cat="academy">
+      <div class="faq-section-head">
+        <div class="faq-section-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h2 class="faq-section-title">
+          <span data-lang="ru" class="active">Академия <em>трейдинга</em></span>
+          <span data-lang="ua">Академія <em>трейдингу</em></span>
+          <span data-lang="en">Trading <em>Academy</em></span>
+        </h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Сколько курсов в академии и что они охватывают?</span>
+              <span data-lang="ua">Скільки курсів в академії і що вони охоплюють?</span>
+              <span data-lang="en">How many courses are in the academy and what do they cover?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <div class="faq-tag">7 курсов</div>
+              <p>
+                <span data-lang="ru" class="active">Академия включает 7 курсов, охватывающих полный путь трейдера: от основ технического анализа и фундаментального подхода — до продвинутых стратегий, психологии торговли, управления рисками и построения торговых систем. Курсы доступны по отдельности или единым пакетом со скидкой.</span>
+                <span data-lang="ua">Академія включає 7 курсів, що охоплюють повний шлях трейдера: від основ технічного аналізу до просунутих стратегій, психології торгівлі та ризик-менеджменту. Курси доступні окремо або єдиним пакетом зі знижкою.</span>
+                <span data-lang="en">The Academy includes 7 courses covering the full trader journey: from technical analysis fundamentals and fundamental approach — to advanced strategies, trading psychology, risk management, and building trading systems. Courses are available individually or as a discounted bundle.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">В каком формате проходит обучение?</span>
+              <span data-lang="ua">У якому форматі проходить навчання?</span>
+              <span data-lang="en">What format does the training take?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Обучение ведётся в асинхронном формате — вы учитесь в удобное для вас время. Все материалы доступны в личном кабинете сразу после оплаты. Курсы содержат видеоуроки, практические задания и торговые шаблоны. Для курсов с сопровождением предусмотрены живые созвоны с ментором.</span>
+                <span data-lang="ua">Навчання ведеться в асинхронному форматі — ви навчаєтесь у зручний для вас час. Всі матеріали доступні в особистому кабінеті одразу після оплати. Курси містять відеоуроки, практичні завдання та торгові шаблони.</span>
+                <span data-lang="en">Training is asynchronous — you learn at your own pace. All materials are accessible in your dashboard immediately after payment. Courses include video lessons, practical assignments, and trading templates. Mentored courses include live calls with a mentor.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Как долго сохраняется доступ к купленным курсам?</span>
+              <span data-lang="ua">Як довго зберігається доступ до куплених курсів?</span>
+              <span data-lang="en">How long does access to purchased courses last?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Доступ к купленным курсам сохраняется бессрочно, включая все будущие обновления данного курса. Вы можете возвращаться к материалам в любое время и пересматривать их столько раз, сколько нужно.</span>
+                <span data-lang="ua">Доступ до куплених курсів зберігається безстроково, включаючи всі майбутні оновлення даного курсу. Ви можете повертатися до матеріалів у будь-який час.</span>
+                <span data-lang="en">Access to purchased courses is lifetime, including all future updates to that course. You can return to the materials at any time and revisit them as many times as needed.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Выдаётся ли сертификат после прохождения курса?</span>
+              <span data-lang="ua">Чи видається сертифікат після проходження курсу?</span>
+              <span data-lang="en">Is a certificate issued upon course completion?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Да, после успешного завершения курса и выполнения практических заданий выдаётся сертификат AXIUMSQUARE. Он подтверждает полученные знания и может быть добавлен в ваш профессиональный профиль.</span>
+                <span data-lang="ua">Так, після успішного завершення курсу та виконання практичних завдань видається сертифікат AXIUMSQUARE. Він підтверджує отримані знання.</span>
+                <span data-lang="en">Yes, upon successful completion of the course and practical assignments, an AXIUMSQUARE certificate is issued. It confirms the knowledge gained and can be added to your professional profile.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="faq-section reveal reveal-d1" id="section-services" data-cat="services">
+      <div class="faq-section-head">
+        <div class="faq-section-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h2 class="faq-section-title">
+          <span data-lang="ru" class="active">Услуги <em>и консалтинг</em></span>
+          <span data-lang="ua">Послуги <em>та консалтинг</em></span>
+          <span data-lang="en">Services <em>&amp; Consulting</em></span>
+        </h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Чем отличается личное наставничество от курсов академии?</span>
+              <span data-lang="ua">Чим відрізняється особисте наставництво від курсів академії?</span>
+              <span data-lang="en">How does personal mentorship differ from Academy courses?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Курсы академии — это структурированная программа знаний в вашем темпе. Личное наставничество — это работа один-на-один с практикующим трейдером до достижения конкретного результата. Ментор разбирает ваши реальные сделки, адаптирует торговый план под вас и контролирует прогресс на каждом этапе.</span>
+                <span data-lang="ua">Курси академії — структурована програма знань у вашому темпі. Особисте наставництво — це робота один-на-один з практикуючим трейдером до досягнення конкретного результату. Ментор розбирає ваші реальні угоди та адаптує торговий план.</span>
+                <span data-lang="en">Academy courses are a structured knowledge program at your own pace. Personal mentorship is one-on-one work with a practicing trader until a specific result is achieved. The mentor reviews your actual trades, adapts the trading plan to you, and monitors progress at each stage.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Что такое Portfolio Architecture и кому это подходит?</span>
+              <span data-lang="ua">Що таке Portfolio Architecture і кому це підходить?</span>
+              <span data-lang="en">What is Portfolio Architecture and who is it for?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Услуга Portfolio Architecture — индивидуальное построение инвестиционного портфеля с нуля. Подходит инвесторам и предпринимателям, желающим грамотно разместить капитал с учётом личного риск-профиля. В результате вы получаете готовый IPS (Investment Policy Statement) и диверсифицированную стратегию.</span>
+                <span data-lang="ua">Послуга Portfolio Architecture — індивідуальна побудова інвестиційного портфеля з нуля. Підходить інвесторам та підприємцям, що бажають грамотно розмістити капітал з урахуванням особистого ризик-профілю.</span>
+                <span data-lang="en">Portfolio Architecture is an individual investment portfolio construction service from scratch. It is suitable for investors and entrepreneurs who want to allocate capital intelligently based on their personal risk profile. You receive a complete IPS (Investment Policy Statement) and diversified strategy.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Есть ли услуги для клиентов с капиталом от $1 млн?</span>
+              <span data-lang="ua">Чи є послуги для клієнтів з капіталом від $1 млн?</span>
+              <span data-lang="en">Are there services for clients with capital from $1M+?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Да. Для состоятельных клиентов предусмотрен формат Family Office ($1M+) — комплексное управление активами, налоговое структурирование и персональное сопровождение. Для институциональных и крупных частных клиентов также доступна программа Managed Fund. Детали — на странице <a href="axiumsquare-invest.html">Консалтинг</a> или напрямую через Telegram.</span>
+                <span data-lang="ua">Так. Для заможних клієнтів передбачений формат Family Office ($1M+) — комплексне управління активами та персональний супровід. Деталі — на сторінці <a href="axiumsquare-invest.html">Консалтинг</a>.</span>
+                <span data-lang="en">Yes. For high-net-worth clients, there is a Family Office format ($1M+) — comprehensive asset management, tax structuring, and personal guidance. A Managed Fund program is also available for institutional and large private clients. Details on the <a href="axiumsquare-invest.html">Consulting</a> page or directly via Telegram.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Как записаться на разовую экспертную консультацию?</span>
+              <span data-lang="ua">Як записатися на разову експертну консультацію?</span>
+              <span data-lang="en">How do I book a single expert consultation?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Разовая сессия (Expert Consultation) — 60–90 минут с практикующим специалистом + письменные рекомендации по итогу. Запись производится через Telegram или форму на странице <a href="axiumsquare-services.html#premium">Услуги</a>. Стоимость — от $150/час.</span>
+                <span data-lang="ua">Разова сесія (Expert Consultation) — 60–90 хвилин з практикуючим спеціалістом + письмові рекомендації. Запис через Telegram або форму на сторінці <a href="axiumsquare-services.html#premium">Послуги</a>. Вартість — від $150/год.</span>
+                <span data-lang="en">A single session (Expert Consultation) is 60–90 minutes with a practicing specialist + written recommendations afterward. Booking via Telegram or the form on the <a href="axiumsquare-services.html#premium">Services</a> page. Starting from $150/hr.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="faq-section reveal" id="section-payment" data-cat="payment">
+      <div class="faq-section-head">
+        <div class="faq-section-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <h2 class="faq-section-title">
+          <span data-lang="ru" class="active">Оплата <em>и возврат</em></span>
+          <span data-lang="ua">Оплата <em>та повернення</em></span>
+          <span data-lang="en">Payment <em>&amp; Refund</em></span>
+        </h2>
+      </div>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Какие способы оплаты принимаются?</span>
+              <span data-lang="ua">Які способи оплати приймаються?</span>
+              <span data-lang="en">What payment methods are accepted?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Принимаем банковские карты Visa / Mastercard, USDT / USDC (TRC-20, ERC-20), а также банковский перевод для корпоративных клиентов. Оплата происходит через защищённый платёжный шлюз. Все транзакции зашифрованы.</span>
+                <span data-lang="ua">Приймаємо банківські картки Visa / Mastercard, USDT / USDC (TRC-20, ERC-20), а також банківський переказ для корпоративних клієнтів. Всі транзакції зашифровані.</span>
+                <span data-lang="en">We accept Visa / Mastercard bank cards, USDT / USDC (TRC-20, ERC-20), and bank transfers for corporate clients. Payment is processed via a secure payment gateway. All transactions are encrypted.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Предусмотрен ли возврат средств?</span>
+              <span data-lang="ua">Чи передбачено повернення коштів?</span>
+              <span data-lang="en">Is a refund available?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Да. Для курсов академии и некоторых услуг предусмотрен период возврата при наличии обоснованных причин. Полные условия описаны в нашей <a href="axiumsquare-refund.html">Политике возвратов</a>. Для консультационных и менторских программ условия возврата оговариваются индивидуально до начала работ.</span>
+                <span data-lang="ua">Так. Для курсів академії та деяких послуг передбачений період повернення. Повні умови описані в нашій <a href="axiumsquare-refund.html">Політиці повернень</a>. Для консультаційних програм умови повернення обговорюються індивідуально.</span>
+                <span data-lang="en">Yes. For Academy courses and certain services, a refund window is available with valid reasons. Full terms are described in our <a href="axiumsquare-refund.html">Refund Policy</a>. For consulting and mentorship programs, refund terms are agreed individually before work begins.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Можно ли оплатить в рассрочку?</span>
+              <span data-lang="ua">Чи можна оплатити в розстрочку?</span>
+              <span data-lang="en">Is installment payment available?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Рассрочка доступна для наставнических программ и пакетных предложений при оплате от определённой суммы. Условия рассрочки обсуждаются индивидуально — напишите нам в Telegram, и мы подберём оптимальный вариант.</span>
+                <span data-lang="ua">Розстрочка доступна для наставницьких програм та пакетних пропозицій. Умови обговорюються індивідуально — напишіть нам у Telegram.</span>
+                <span data-lang="en">Installment payment is available for mentorship programs and bundle packages above a certain amount. Terms are discussed individually — write to us on Telegram and we will find the optimal option.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">
+              <span data-lang="ru" class="active">Предоставляется ли финансовый документ после оплаты?</span>
+              <span data-lang="ua">Чи надається фінансовий документ після оплати?</span>
+              <span data-lang="en">Is a financial document provided after payment?</span>
+            </span>
+            <span class="faq-q-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>
+                <span data-lang="ru" class="active">Да, после каждой транзакции автоматически формируется квитанция, которая отправляется на указанный email. Для корпоративных клиентов, которым необходим инвойс для бухгалтерии, документы предоставляются по запросу через Telegram.</span>
+                <span data-lang="ua">Так, після кожної транзакції автоматично формується квитанція, яка надсилається на вказаний email. Для корпоративних клієнтів документи надаються за запитом через Telegram.</span>
+                <span data-lang="en">Yes, after each transaction a receipt is automatically generated and sent to the provided email. For corporate clients who need an invoice for accounting, documents are provided on request via Telegram.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     FOOTER CTA
+══════════════════════════════════ -->
+<section class="footer-cta reveal">
+  <div class="footer-cta-orb"></div>
+  <div class="fc-label">AXIUMSQUARE</div>
+  <h2 class="fc-title">
+    <span data-lang="ru" class="active">Не нашли<br><em>ответа?</em></span>
+    <span data-lang="ua">Не знайшли<br><em>відповіді?</em></span>
+    <span data-lang="en">Didn't find<br><em>the answer?</em></span>
+  </h2>
+  <p class="fc-sub">
+    <span data-lang="ru" class="active">Напишите нам напрямую — обсудим ваш запрос и подберём оптимальное решение в экосистеме AXIUMSQUARE.</span>
+    <span data-lang="ua">Напишіть нам напряму — обговоримо ваш запит та підберемо оптимальне рішення в екосистемі AXIUMSQUARE.</span>
+    <span data-lang="en">Write to us directly — we'll discuss your request and find the optimal solution within the AXIUMSQUARE ecosystem.</span>
+  </p>
+  <div class="fc-actions">
+    <a href="https://t.me/axiumsquare" class="btn-fc-primary" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+      Telegram
+    </a>
+    <a href="axiumsquare-services.html" class="btn-secondary">
+      <span data-lang="ru" class="active">Все услуги</span>
+      <span data-lang="ua">Всі послуги</span>
+      <span data-lang="en">All Services</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo-link">
+        <div class="footer-logo">AXIUMSQUARE</div>
+      </a>
+      <p class="footer-tagline">
+        <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+        <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+        <span data-lang="en">Trading. Business. Capital.</span>
+      </p>
+      <div class="footer-socials">
+        <a href="https://t.me/axiumsquare" target="_blank" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          Telegram
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#030A18"/></svg>
+          YouTube
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-nav-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Обучение</span>
+          <span data-lang="ua">Навчання</span>
+          <span data-lang="en">Education</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-academy.html"><span data-lang="ru" class="active">Академия трейдинга</span><span data-lang="ua">Академія трейдингу</span><span data-lang="en">Trading Academy</span></a></li>
+          <li><a href="axiumsquare-academy.html#promo-all"><span data-lang="ru" class="active">Все 7 курсов — пакет</span><span data-lang="ua">Усі 7 курсів — пакет</span><span data-lang="en">All 7 Courses Bundle</span></a></li>
+          <li><a href="axiumsquare-academy.html#filter=base"><span data-lang="ru" class="active">Базовые курсы</span><span data-lang="ua">Базові курси</span><span data-lang="en">Foundation Courses</span></a></li>
+          <li><a href="axiumsquare-academy.html#filter=adv"><span data-lang="ru" class="active">Продвинутые курсы</span><span data-lang="ua">Просунуті курси</span><span data-lang="en">Advanced Courses</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title footer-col-title--cyan">
+          ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-club.html">Trading Insider &amp; Business Club</a></li>
+          <li><a href="axiumsquare-club.html#inside"><span data-lang="ru" class="active">Что внутри клуба</span><span data-lang="ua">Що всередині клубу</span><span data-lang="en">What's Inside</span></a></li>
+          <li><a href="axiumsquare-club.html#pricing"><span data-lang="ru" class="active">Тарифы клуба</span><span data-lang="ua">Тарифи клубу</span><span data-lang="en">Club Pricing</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Услуги &amp; Консалтинг</span>
+          <span data-lang="ua">Послуги &amp; Консалтинг</span>
+          <span data-lang="en">Services &amp; Consulting</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-services.html"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a></li>
+          <li><a href="axiumsquare-services.html#mentorship"><span data-lang="ru" class="active">Наставничество</span><span data-lang="ua">Наставництво</span><span data-lang="en">Mentorship</span></a></li>
+          <li><a href="axiumsquare-invest.html"><span data-lang="ru" class="active">Консалтинг</span><span data-lang="ua">Консалтинг</span><span data-lang="en">Consulting</span></a></li>
+          <li><a href="axiumsquare-invest.html#family-office">Family Office · $1M+</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Медиа</span>
+          <span data-lang="ua">Медіа</span>
+          <span data-lang="en">Media</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-blog.html"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a></li>
+          <li><a href="axiumsquare-news.html"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a></li>
+          <li><a href="axiumsquare-faq.html"><span data-lang="ru" class="active">FAQ</span><span data-lang="ua">FAQ</span><span data-lang="en">FAQ</span></a></li>
+          <li><a href="axiumsquare-login.html"><span data-lang="ru" class="active">Войти / Регистрация</span><span data-lang="ua">Увійти / Реєстрація</span><span data-lang="en">Sign In / Register</span></a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Правовая информация</span>
+          <span data-lang="ua">Правова інформація</span>
+          <span data-lang="en">Legal</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="axiumsquare-privacy.html">Privacy &amp; Cookies</a></li>
+          <li><a href="axiumsquare-financial-disclaimer.html"><span data-lang="ru" class="active">Предупреждение о рисках</span><span data-lang="ua">Попередження про ризики</span><span data-lang="en">Risk Disclaimer</span></a></li>
+          <li><a href="axiumsquare-refund.html"><span data-lang="ru" class="active">Политика возвратов</span><span data-lang="ua">Політика повернень</span><span data-lang="en">Refund Policy</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="axiumsquare-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів. Минулі результати не гарантують майбутніх. <a href="axiumsquare-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="axiumsquare-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">AXIUMSQUARE</div>
+    <div class="footer-bottom-copy">
+      © 2026 AXIUMSQUARE ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="axiumsquare-terms.html">Terms</a>
+      <a href="axiumsquare-privacy.html">Privacy</a>
+      <a href="axiumsquare-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="axiumsquare-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="axiumsquare-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('out'), 1000);
+  });
+
+  // Custom cursor
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  document.addEventListener('mousemove', e => {
+    cur.style.left  = e.clientX + 'px';
+    cur.style.top   = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+  });
+
+  // Header shrink
+  const hdr = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Language dropdown
+  let currentLang = 'ru';
+  const drop = document.getElementById('lang-drop');
+  const label = document.getElementById('lang-label');
+  function toggleLang(e) { e.stopPropagation(); drop.classList.toggle('open'); }
+  function setLang(lang) {
+    currentLang = lang;
+    label.textContent = lang.toUpperCase();
+    drop.classList.remove('open');
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+    document.querySelectorAll('.lang-opt').forEach(btn => {
+      btn.style.display = btn.textContent.trim().toLowerCase() === lang ? 'none' : 'block';
+    });
+  }
+  document.addEventListener('click', () => drop.classList.remove('open'));
+  document.querySelector('.lang-opt').style.display = 'none';
+
+  // Mobile menu
+  const mob = document.getElementById('mob-menu');
+  function toggleMob() { mob.style.display === 'flex' ? closeMob() : openMob(); }
+  function openMob()  { mob.style.display = 'flex'; }
+  function closeMob() { mob.style.display = 'none'; }
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all in same list
+    item.closest('.faq-list').querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Category filter
+  document.querySelectorAll('.faq-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.faq-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('.faq-section').forEach(sec => {
+        if (cat === 'all' || sec.dataset.cat === cat) {
+          sec.style.display = '';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Theme toggle
+  (function() {
+    var saved = localStorage.getItem('axium_theme') || 'dark';
+    applyTheme(saved);
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('axium_theme', t);
+    }
+    window.toggleTheme = function() {
+      var current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    };
+  })();
+
+  // Auth button
+  (function() {
+    var logged = localStorage.getItem('ksa_logged');
+    var btn = document.getElementById('hdr-auth-btn');
+    if (btn) {
+      btn.href = logged ? 'axiumsquare-dashboard.html' : 'axiumsquare-login.html';
+      var svgLogin  = '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>';
+      var svgLogout = '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>';
+      btn.querySelector('svg').innerHTML = logged ? svgLogout : svgLogin;
+      document.getElementById('auth-label-ru').textContent = logged ? 'Выйти' : 'Войти';
+      document.getElementById('auth-label-ua').textContent = logged ? 'Вийти' : 'Увійти';
+      document.getElementById('auth-label-en').textContent = logged ? 'Sign Out' : 'Sign In';
+      if (logged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.href='index.html'; };
+      }
+    }
+  })();
+</script>
+</body>
+</html>
