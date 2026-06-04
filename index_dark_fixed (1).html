@@ -1,0 +1,3632 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXIUMSQUARE — Trading. Business. Capital.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* ── Quiet Luxury palette ── */
+      --gold:        #2c4a2c;
+      --gold-bright: #3d6a3d;
+      --gold-pale:   #c0d4c0;
+      --gold-dim:    rgba(44,74,44,.10);
+      --text:        #18180e;
+      --text-2:      #585848;
+      --text-3:      #9a9880;
+      --border:      rgba(44,74,44,.14);
+      --border-2:    rgba(44,74,44,.07);
+      --surface:     rgba(255,253,246,.96);
+      --font-serif:  'Cormorant Garamond', Georgia, serif;
+      --font-sans:   'Outfit', sans-serif;
+      --font-mono:   'Outfit', sans-serif;
+      /* accent variants */
+      --accent:      #2c4a2c;
+      --accent-b:    #3d6a3d;
+      --accent-d:    #182e18;
+      --btn-bg:      linear-gradient(135deg,#3d6a3d 0%,#2c4a2c 100%);
+      --btn-txt:     #f2ede4;
+      --up: #2a6b2a;
+      --dn: #8b2020;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(44,74,44,.06) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 0% 100%, rgba(44,74,44,.05) 0%, transparent 55%),
+        #f2ede4;
+      background-attachment: fixed;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 8px; height: 8px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, opacity .2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(44,74,44,.4); border-radius: 50%;
+      pointer-events: none; z-index: 99998;
+      transform: translate(-50%,-50%);
+      transition: width .35s ease, height .35s ease, transform .1s ease;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: #2c4a2c; }
+
+    /* ── Minimal grid overlay ── */
+    #grid {
+      position: fixed; inset: 0; z-index: 9000; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(44,74,44,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44,74,44,.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── Preloader ── */
+    #preloader {
+      position: fixed; inset: 0; z-index: 99999; background: #f2ede4;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+      transition: opacity .8s ease;
+    }
+    #preloader.out { opacity: 0; pointer-events: none; }
+    .pre-logo {
+      font-family: var(--font-mono); font-size: clamp(.85rem,2vw,1rem);
+      letter-spacing: .5em; color: var(--gold);
+      animation: flicker 1.4s ease infinite alternate;
+    }
+    .pre-line { width: 180px; height: 1px; background: var(--border); overflow: hidden; }
+    .pre-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); animation: fill 1.2s ease forwards; }
+    @keyframes fill { from{width:0} to{width:100%} }
+    @keyframes flicker { from{opacity:.25} to{opacity:1} }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9500;
+      padding: 1.4rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(248,244,238,.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s;
+      box-shadow: 0 1px 20px rgba(0,0,0,.04);
+    }
+    header.scrolled { padding: 1rem 3rem; }
+    .h-logo {
+      font-family: var(--font-mono); font-size: .8rem;
+      letter-spacing: .45em; color: var(--gold); text-decoration: none;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .h-logo-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s ease infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.6)} }
+
+    .h-nav { display: flex; align-items: center; gap: 2.5rem; }
+    .h-nav a {
+      font-size: .75rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--text-2); text-decoration: none; transition: color .25s;
+      position: relative;
+    }
+    .h-nav a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--gold); transition: width .3s ease;
+    }
+    .h-nav a:hover { color: var(--text); }
+    .h-nav a:hover::after { width: 100%; }
+
+    /* Club nav link — highlighted in home style */
+    .h-nav-club {
+      border: 1px solid rgba(44,74,44,.3) !important;
+      padding: .3rem .85rem !important;
+      background: rgba(44,74,44,.05) !important;
+      color: #2c4a2c !important;
+      transition: border-color .2s, background .2s, box-shadow .2s !important;
+    }
+    .h-nav-club::after { display: none !important; }
+    .h-nav-club:hover { border-color: #2c4a2c !important; background: rgba(44,74,44,.08) !important; }
+
+    /* ── Language dropdown — in header, matches h-cta style ── */
+    .lang-drop {
+      position: relative;
+    }
+    .lang-current {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #2c4a2c;
+      background: transparent;
+      border: 1px solid rgba(44,74,44,.25);
+      padding: .7rem 1rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: border-color .2s, background .2s;
+      user-select: none;
+    }
+    .lang-current:hover { border-color: #2c4a2c; background: rgba(44,74,44,.05); }
+    .lang-current svg { width: 10px; height: 10px; transition: transform .25s; }
+    .lang-drop.open .lang-current svg { transform: rotate(180deg); }
+
+    .lang-menu {
+      position: absolute; top: calc(100% + .5rem); right: 0;
+      background: rgba(248,244,238,.98); backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      clip-path: none;
+      overflow: hidden;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity .2s ease, transform .2s ease;
+      min-width: 80px;
+    }
+    .lang-drop.open .lang-menu { opacity: 1; pointer-events: all; transform: none; }
+    .lang-opt {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .18em;
+      text-transform: uppercase; color: #9a9880;
+      background: none; border: none; border-bottom: 1px solid var(--border);
+      width: 100%; padding: .6rem 1rem; cursor: pointer; text-align: left;
+      transition: color .15s, background .15s;
+      display: block;
+    }
+    .lang-opt:last-child { border-bottom: none; }
+    .lang-opt:hover { color: #2c4a2c; background: rgba(44,74,44,.05); }
+
+    @media (max-width: 900px) {
+      .lang-drop { display: flex; }
+      .lang-current { padding: .55rem .8rem; clip-path: none; }
+      .lang-menu { clip-path: none; }
+    }
+
+    .h-cta {
+      font-family: var(--font-mono); font-size: .7rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #f2ede4;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      border: none; padding: .7rem 1.6rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      clip-path: none; border-radius: 0;
+      font-weight: 600;
+      transition: opacity .2s, transform .15s;
+    }
+    .h-cta:hover { opacity: .85; transform: translateY(-1px); }
+    .h-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: .5rem; }
+    .h-burger span { display: block; width: 22px; height: 1px; background: var(--text-2); transition: all .3s; }
+
+    /* ══════════════════════════════════════════
+       HERO SECTION
+    ══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding: 0 3rem 4rem;
+      position: relative; overflow: hidden;
+    }
+
+    /* large ambient orb */
+    .hero-orb {
+      position: absolute; top: -20%; right: -10%;
+      width: clamp(400px, 60vw, 900px); height: clamp(400px, 60vw, 900px);
+      background: radial-gradient(circle, rgba(44,74,44,.06) 0%, rgba(44,74,44,.03) 35%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+      animation: orbFloat 8s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat { from{transform:translate(0,0) scale(1)} to{transform:translate(-3%,4%) scale(1.04)} }
+
+    /* diagonal accent line */
+    .hero-line {
+      position: absolute; top: 0; right: 28%;
+      width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(44,74,44,.18) 30%, rgba(44,74,44,.10) 70%, transparent);
+      pointer-events: none;
+    }
+
+    /* ticker tape at very top */
+    .hero-ticker-wrap {
+      position: absolute; top: 88px; left: 0; right: 0;
+      overflow: hidden; border-bottom: 1px solid var(--border);
+      background: rgba(242,237,228,.85);
+    }
+    .hero-ticker-track {
+      display: flex; width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    .hero-ticker-item {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .2em;
+      white-space: nowrap; padding: .45rem 2rem;
+      border-right: 1px solid var(--border);
+    }
+    .ticker-up   { color: #5dbf8a; }
+    .ticker-down { color: #cf6060; }
+    .ticker-neu  { color: var(--text-3); }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* main hero content */
+    .hero-body {
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 9rem; position: relative;
+      max-width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .45em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: .8rem;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp .8s ease .3s forwards;
+    }
+    .hero-eyebrow::before { content:''; width: 2rem; height: 1px; background: var(--gold); }
+
+    /* ── Hero H1 block with image ── */
+    .hero-h1-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp .9s ease .5s forwards;
+    }
+    .hero-h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 6vw, 6.5rem);
+      font-weight: 600; line-height: .94; letter-spacing: -.02em;
+      color: #18180e;
+      -webkit-text-fill-color: #18180e;
+    }
+    .hero-h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d 0%, #2c4a2c 60%, #182e18 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block;
+    }
+    .hero-h1 .line3 {
+      display: block;
+      color: #585848;
+      -webkit-text-fill-color: #585848;
+      font-size: .88em; font-weight: 500;
+    }
+    .hero-h1-img {
+      width: clamp(180px, 20vw, 270px);
+      flex-shrink: 0;
+      position: relative;
+      border: 1px solid var(--border);
+      background: rgba(255,253,246,.97);
+      backdrop-filter: blur(14px);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.07);
+    }
+    .hero-h1-img::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold-bright) 60%, transparent);
+    }
+    .hero-h1-img::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 40%; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(44,74,44,.04), transparent 70%);
+    }
+    .h1-achiev-header {
+      font-family: var(--font-mono); font-size: .55rem; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 1.1rem 1.4rem .8rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .h1-achiev-header::before {
+      content: ''; width: 4px; height: 4px;
+      background: var(--gold); border-radius: 50%;
+      animation: pulse-dot 2s ease infinite;
+    }
+    .h1-achiev-list {
+      display: flex; flex-direction: column;
+      flex: 1;
+    }
+    .h1-achiev-item {
+      padding: .85rem 1.4rem;
+      border-bottom: 1px solid var(--border-2);
+      display: flex; flex-direction: column; gap: .18rem;
+      transition: background .2s;
+    }
+    .h1-achiev-item:last-child { border-bottom: none; }
+    .h1-achiev-item:hover { background: rgba(44,74,44,.03); }
+    .h1-achiev-num {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 600; line-height: 1;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .h1-achiev-label {
+      font-family: var(--font-mono); font-size: .56rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--text-3); line-height: 1.4;
+    }
+
+    .hero-sub {
+      font-size: clamp(.9rem, 1.4vw, 1.05rem); color: #585848;
+      max-width: 72ch; line-height: 1.85; margin-bottom: 3rem;
+      font-weight: 300;
+      opacity: 0; animation: fadeUp .9s ease .7s forwards;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .9s ease .9s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #f2ede4;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      border: none; padding: .9rem 2.2rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .6rem;
+      clip-path: none; border-radius: 0;
+      box-shadow: none;
+      font-weight: 600;
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-2px); }
+    .btn-primary svg { width: 14px; height: 14px; }
+
+    .btn-secondary {
+      font-family: var(--font-mono); font-size: .72rem; letter-spacing: .15em;
+      text-transform: uppercase; color: #2c4a2c;
+      background: transparent; border: 1px solid rgba(44,74,44,.3);
+      padding: .9rem 2.2rem; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .6rem;
+      clip-path: none; border-radius: 0;
+      font-weight: 500;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-secondary:hover { border-color: #2c4a2c; background: rgba(44,74,44,.06); }
+
+    /* ── Hero News Carousel ── */
+    .hero-news-carousel {
+      margin: 0 0 2.8rem;
+      max-width: 100%;
+      opacity: 0; animation: fadeUp .9s ease .66s forwards;
+    }
+    .hnc-overflow {
+      overflow: hidden; border-radius: 0;
+      box-shadow:
+        0 0 0 1px rgba(44,74,44,.14),
+        0 8px 32px rgba(0,0,0,.07),
+        0 0 40px rgba(44,74,44,.04);
+    }
+    .hnc-track {
+      display: flex;
+      transition: transform .55s cubic-bezier(.22,.68,0,1.15);
+    }
+    .hnc-slide {
+      min-width: 100%; flex-shrink: 0;
+      border: 1px solid rgba(44,74,44,.14);
+      background: rgba(255,253,246,.97);
+      backdrop-filter: blur(14px);
+      display: flex; flex-direction: row;
+      position: relative;
+      clip-path: none;
+      border-radius: 0;
+      overflow: hidden;
+      box-shadow: 0 2px 0 rgba(44,74,44,.05) inset;
+    }
+    .hnc-img {
+      width: 220px; flex-shrink: 0;
+      position: relative; overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(242,237,228,.95) 0%, rgba(236,231,220,.98) 100%);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .7rem;
+    }
+    .hnc-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      position: absolute; inset: 0;
+      opacity: .85;
+    }
+    .hnc-img-placeholder {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .6rem; padding: 1.5rem; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .hnc-img-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); opacity: .6;
+    }
+    .hnc-img-brand {
+      font-family: var(--font-mono); font-size: .52rem;
+      letter-spacing: .3em; color: var(--text-3);
+      text-transform: uppercase;
+    }
+    /* ambient gold glow in image area */
+    .hnc-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, rgba(44,74,44,.04), transparent 70%);
+      pointer-events: none;
+    }
+    .hnc-content {
+      flex: 1; padding: 1.4rem 1.8rem 1.5rem;
+      position: relative;
+    }
+    .hnc-content::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), transparent 90%);
+    }
+    .hnc-meta {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: .75rem;
+    }
+    .hnc-badge {
+      font-family: var(--font-mono); font-size: .55rem; letter-spacing: .22em;
+      text-transform: uppercase; color: #f2ede4;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      padding: .18rem .55rem;
+      font-weight: 600;
+    }
+    .hnc-date { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .15em; color: var(--text-3); }
+    .hnc-title {
+      font-size: .95rem; font-weight: 700; line-height: 1.5; margin-bottom: .5rem;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+    .hnc-excerpt { font-size: .77rem; color: #585848; line-height: 1.75; font-weight: 300; }
+    .hnc-read-more {
+      display: inline-flex; align-items: center; gap: .5rem;
+      margin-top: 1rem;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(44,74,44,.2);
+      padding-bottom: .2rem;
+      transition: color .2s, border-color .2s, gap .2s;
+    }
+    .hnc-read-more:hover { color: var(--gold-bright); border-color: var(--gold); gap: .75rem; }
+    .hnc-read-more svg { width: 10px; height: 10px; transition: transform .2s; }
+    .hnc-read-more:hover svg { transform: translateX(3px); }
+    .hnc-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1.1rem;
+    }
+    .hnc-controls { display: flex; align-items: center; gap: .6rem; }
+    .hnc-arrow {
+      font-family: var(--font-mono); font-size: .72rem; line-height: 1;
+      background: transparent; border: 1px solid rgba(44,74,44,.18);
+      color: #9a9880; width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: border-color .2s, color .2s, background .2s;
+    }
+    .hnc-arrow:hover { border-color: #2c4a2c; color: #2c4a2c; background: rgba(44,74,44,.05); }
+    .hnc-dots { display: flex; gap: .45rem; align-items: center; }
+    .hnc-dot {
+      width: 16px; height: 1px; background: var(--text-3);
+      cursor: pointer; transition: background .25s, width .3s ease;
+      border: none;
+    }
+    .hnc-dot.active { background: var(--gold); width: 26px; }
+    .hnc-progress {
+      font-family: var(--font-mono); font-size: .58rem;
+      letter-spacing: .15em; color: var(--text-3);
+    }
+    .hnc-progress span { color: var(--gold); }
+    .hnc-timer-bar {
+      height: 1px; background: rgba(44,74,44,.12);
+      margin-top: .9rem; position: relative; overflow: hidden;
+    }
+    .hnc-timer-fill {
+      position: absolute; top: 0; left: 0; height: 100%;
+      background: linear-gradient(90deg, #2c4a2c, #3d6a3d);
+      width: 0%; transition: none;
+    }
+    .hnc-timer-fill.running {
+      width: 100%;
+      transition: width 4.5s linear;
+    }
+
+    /* stats row inside hero */
+    .hero-stats {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .9s ease 1.1s forwards;
+    }
+    .hstat {}
+    .hstat-num {
+      font-family: var(--font-serif); font-size: clamp(2.2rem,4vw,3.5rem);
+      font-weight: 600; line-height: 1; font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hstat-label {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--text-3); margin-top: .35rem;
+    }
+
+    /* right column — floating card */
+    .hero-card {
+      position: absolute; right: 3rem; top: 50%; transform: translateY(-44%);
+      width: clamp(220px, 22vw, 300px);
+      border: 1px solid var(--border);
+      background: rgba(255,253,246,.97);
+      backdrop-filter: blur(12px);
+      padding: 2rem 1.8rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.09);
+      opacity: 0; animation: fadeLeft .9s ease 1.1s forwards;
+    }
+    .hero-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .hero-card-label {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .hc-dot { width: 6px; height: 6px; background: #5dbf8a; border-radius: 50%; animation: pulse-dot 1.5s ease infinite; }
+    .hero-card-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: .6rem 0; border-bottom: 1px solid var(--border-2);
+      font-size: .82rem; color: #18180e;
+    }
+    .hero-card-row:last-child { border-bottom: none; }
+    .hcr-ticker { font-family: var(--font-mono); color: var(--text-2); font-size: .75rem; letter-spacing: .1em; }
+    .hcr-val { font-family: var(--font-mono); font-size: .78rem; }
+    .up   { color: #5dbf8a; }
+    .down { color: #cf6060; }
+
+    /* bottom bar */
+    .hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      padding-top: 3rem; border-top: 1px solid rgba(44,74,44,.1);
+      opacity: 0; animation: fadeUp .9s ease 1.3s forwards;
+    }
+    .hero-scroll {
+      display: flex; flex-direction: column; align-items: center; gap: .6rem;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--text-3); cursor: pointer;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 1.8s ease infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:.3;transform:scaleY(.5)} }
+
+    .hero-markets {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .15em;
+      color: var(--text-3); text-align: right;
+    }
+    .hero-markets span { color: var(--gold); display: block; font-size: .7rem; margin-bottom: .3rem; }
+
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+    @keyframes fadeLeft { from{opacity:0;transform:translate(20px,-44%)} to{opacity:1;transform:translateY(-44%)} }
+
+    /* ══════════════════════════════════════════
+       ABOUT STRIP
+    ══════════════════════════════════════════ */
+    .about-strip {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--border);
+      background: rgba(255,253,246,.6);
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 5rem; align-items: start;
+    }
+    .as-label { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .as-title {
+      font-family: var(--font-serif); font-size: clamp(2.5rem,5vw,4.5rem);
+      font-weight: 600; line-height: 1.05; letter-spacing: -.01em;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+    .as-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .as-right { display: flex; flex-direction: column; gap: 2rem; }
+    .as-text { font-size: .95rem; line-height: 1.9; color: var(--text-2); font-weight: 300; max-width: 58ch; }
+    .as-lead { font-size: 1.05rem; line-height: 1.85; color: #18180e; font-weight: 300; max-width: 58ch; }
+    .as-badges { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: .5rem; }
+    .as-badge {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid var(--border); padding: .35rem .9rem;
+      background: rgba(44,74,44,.04);
+    }
+    .as-principles { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); background: rgba(255,253,246,.85); }
+    .as-principle {
+      display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; align-items: start;
+      padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border-2);
+      transition: background .2s;
+    }
+    .as-principle:last-child { border-bottom: none; }
+    .as-principle:hover { background: rgba(44,74,44,.04); }
+    .as-p-icon { font-family: var(--font-mono); font-size: .65rem; color: var(--gold); letter-spacing: .1em; white-space: nowrap; padding-top: .15rem; }
+    .as-p-title { font-size: .88rem; font-weight: 700; color: var(--text); margin-bottom: .3rem; }
+    .as-p-text { font-size: .82rem; line-height: 1.75; color: var(--text-2); font-weight: 300; }
+    .as-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(44,74,44,.12); margin-top: .5rem; }
+    .as-pillar {
+      background: #f2ede4; padding: 1.5rem 1.2rem;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .as-pillar-num { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .25em; color: var(--gold); }
+    .as-pillar-title { font-size: .9rem; font-weight: 700; color: var(--text); }
+    .as-pillar-text { font-size: .8rem; line-height: 1.7; color: var(--text-2); font-weight: 300; }
+    .as-quote {
+      border-left: 2px solid #2c4a2c; padding: 1.2rem 1.5rem;
+      background: rgba(44,74,44,.04); margin-top: .5rem;
+    }
+    .as-quote-text { font-family: var(--font-serif); font-size: 1.15rem; font-style: italic; line-height: 1.8; color: #18180e; font-weight: 400; }
+    .as-quote-attr { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .2em; color: var(--gold); margin-top: .6rem; text-transform: uppercase; }
+    .as-audience { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(44,74,44,.12); }
+    .as-aud {
+      background: #f2ede4; padding: 1.2rem 1.2rem;
+      display: flex; flex-direction: column; gap: .4rem;
+    }
+    .as-aud-who { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .15em; color: var(--gold); text-transform: uppercase; }
+    .as-aud-text { font-size: .82rem; line-height: 1.7; color: var(--text-2); font-weight: 300; }
+
+    @media (max-width: 900px) {
+      .about-strip { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+      .as-pillars { grid-template-columns: 1fr; }
+      .as-audience { grid-template-columns: 1fr; }
+    }
+
+    /* ══════════════════════════════════════════
+       THREE VECTORS
+    ══════════════════════════════════════════ */
+    .vectors {
+      padding: 7rem 3rem;
+      background: rgba(236,231,220,.45);
+      position: relative;
+    }
+    .vectors-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 5rem; flex-wrap: wrap; gap: 2rem;
+    }
+    .v-title {
+      font-family: var(--font-serif); font-size: clamp(2rem,4vw,3rem);
+      font-weight: 600; line-height: 1.1;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+    .v-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .vectors-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem;
+    }
+
+    /* ── vcard glass base ── */
+    .vcard {
+      border: 1px solid rgba(44,74,44,.12);
+      background: rgba(255,253,246,.97);
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      padding: 3rem 2.6rem 2.6rem;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      box-shadow:
+        0 8px 40px rgba(0,0,0,.07),
+        0 2px 8px rgba(0,0,0,.04);
+      transition:
+        border-color .4s ease,
+        transform .5s cubic-bezier(.22,.68,0,1.2),
+        box-shadow .5s ease;
+    }
+
+    /* Quiet luxury subtle sheen */
+    .vcard::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg,
+        rgba(255,255,255,.3) 0%,
+        rgba(255,255,255,.1) 30%,
+        transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity .4s;
+    }
+
+    /* Quiet luxury hover glow */
+    .vcard::after {
+      content: ''; position: absolute;
+      top: -40%; left: -20%;
+      width: 140%; height: 140%;
+      background: radial-gradient(ellipse at 30% 0%,
+        rgba(44,74,44,.06) 0%,
+        rgba(44,74,44,.02) 40%,
+        transparent 70%);
+      opacity: 0;
+      transition: opacity .5s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Club card — slightly distinguished but light */
+    .vcard.vcard--club {
+      background: rgba(248,252,248,.97);
+      border: 1px solid rgba(44,74,44,.18);
+      box-shadow:
+        0 8px 40px rgba(0,0,0,.08),
+        0 2px 8px rgba(0,0,0,.04);
+    }
+    .vcard.vcard--club::after {
+      background: radial-gradient(ellipse at 30% 0%,
+        rgba(44,74,44,.08) 0%,
+        rgba(44,74,44,.03) 40%,
+        transparent 70%);
+    }
+    .vcard.vcard--club:hover {
+      border-color: rgba(44,74,44,.35) !important;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.1),
+        0 4px 12px rgba(0,0,0,.06) !important;
+    }
+    .vcard.vcard--club .vcard-num  { color: rgba(44,74,44,.2); }
+    .vcard.vcard--club .vcard-sub  { color: #2c4a2c; }
+    .vcard.vcard--club .vcard-link { color: #2c4a2c; border-top-color: rgba(44,74,44,.12); }
+    .vcard.vcard--club .vcard-link:hover { color: #3d6a3d; border-top-color: rgba(44,74,44,.3); }
+    .vcard.vcard--club .vcard-icon { border-color: rgba(44,74,44,.18); color: #2c4a2c; }
+    .vcard.vcard--club:hover .vcard-icon {
+      border-color: rgba(44,74,44,.45);
+      box-shadow: none;
+    }
+    .vcard.vcard--club:hover .vcard-title { color: #2c4a2c; }
+
+    /* Gold card hover state */
+    .vcard:hover {
+      border-color: rgba(44,74,44,.35);
+      transform: translateY(-12px) scale(1.01);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.07) inset,
+        0 -1px 0 rgba(0,0,0,.6) inset,
+        1px 0 0 rgba(255,255,255,.04) inset,
+        0 24px 64px rgba(0,0,0,.8),
+        0 4px 16px rgba(0,0,0,.6),
+        0 0 40px rgba(44,74,44,.06);
+    }
+    .vcard:hover::before { opacity: 1.5; }
+    .vcard:hover::after  { opacity: 1; }
+
+    /* Quiet luxury border top accent on hover */
+    .vcard-top-line {
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(44,74,44,.3) 25%,
+        rgba(44,74,44,.8) 50%,
+        rgba(44,74,44,.3) 75%,
+        transparent);
+      opacity: 0;
+      transition: opacity .45s ease;
+      z-index: 1;
+    }
+    .vcard:hover .vcard-top-line { opacity: 1; }
+    .vcard.vcard--club .vcard-top-line {
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(44,74,44,.35) 25%,
+        rgba(44,74,44,.85) 50%,
+        rgba(44,74,44,.35) 75%,
+        transparent);
+    }
+
+    /* Number */
+    .vcard-num {
+      position: absolute; top: 2.2rem; right: 2.2rem;
+      font-family: var(--font-mono); font-size: .58rem;
+      letter-spacing: .3em; color: rgba(44,74,44,.18);
+      transition: color .35s;
+      z-index: 1;
+    }
+    .vcard:hover .vcard-num { color: rgba(44,74,44,.5); }
+
+    /* Icon */
+    .vcard-icon {
+      width: 72px; height: 72px; margin-bottom: 2.4rem;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    /* Icon backing plate — glass tile */
+    .vcard-icon::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(44,74,44,.08) 0%, rgba(44,74,44,.03) 60%, transparent 100%);
+      border: 1px solid rgba(44,74,44,.18);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.05) inset,
+        0 6px 20px rgba(0,0,0,.5),
+        0 2px 6px rgba(0,0,0,.4),
+
+      transition: box-shadow .4s, border-color .4s, background .4s;
+    }
+    .vcard:hover .vcard-icon::before {
+      border-color: rgba(44,74,44,.4);
+      background: linear-gradient(145deg, rgba(44,74,44,.12) 0%, rgba(44,74,44,.05) 60%, transparent 100%);
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.08) inset,
+        0 8px 28px rgba(0,0,0,.55),
+
+    }
+    .vcard-icon svg { position: relative; z-index: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,.6)); }
+
+    /* Club icon overrides */
+    .vcard.vcard--club .vcard-icon::before {
+      background: linear-gradient(145deg, rgba(0,212,255,.12) 0%, rgba(0,212,255,.04) 60%, rgba(0,0,0,.2) 100%);
+      border-color: rgba(0,212,255,.2);
+      box-shadow:
+        0 2px 0 rgba(0,212,255,.07) inset,
+        0 6px 20px rgba(0,0,0,.5),
+        0 0 30px rgba(0,212,255,.06);
+    }
+    .vcard.vcard--club:hover .vcard-icon::before {
+      border-color: rgba(0,212,255,.45);
+      background: linear-gradient(145deg, rgba(0,212,255,.2) 0%, rgba(0,212,255,.07) 60%, rgba(0,0,0,.15) 100%);
+      box-shadow:
+        0 2px 0 rgba(0,212,255,.1) inset,
+        0 8px 28px rgba(0,0,0,.55),
+        0 0 40px rgba(0,212,255,.2),
+        0 0 80px rgba(0,212,255,.08);
+    }
+
+    /* Sub label */
+    .vcard-sub {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .9rem;
+      display: flex; align-items: center; gap: .6rem;
+      position: relative; z-index: 1;
+      font-weight: 600;
+    }
+    .vcard-sub::before {
+      content: ''; width: 1.2rem; height: 1px; background: currentColor; flex-shrink: 0;
+    }
+
+    /* Title */
+    .vcard-title {
+      font-family: var(--font-serif); font-size: 1.7rem; font-weight: 600;
+      margin-bottom: 1rem; line-height: 1.1;
+      transition: color .3s;
+      position: relative; z-index: 1;
+    }
+    .vcard:hover .vcard-title { color: #2c4a2c; }
+
+    /* Text */
+    .vcard-text {
+      font-size: .86rem; line-height: 1.85; color: var(--text-2); font-weight: 300;
+      flex: 1; position: relative; z-index: 1;
+    }
+
+    /* CTA link */
+    .vcard-link {
+      display: inline-flex; align-items: center; gap: .55rem;
+      margin-top: 2rem; font-family: var(--font-mono); font-size: .64rem;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+      text-decoration: none;
+      border-top: 1px solid rgba(44,74,44,.1);
+      padding-top: 1.2rem;
+      width: 100%;
+      position: relative; z-index: 1;
+      transition: gap .25s, color .25s, border-color .25s;
+    }
+    .vcard-link:hover { gap: 1rem; color: #3d6a3d; border-color: rgba(44,74,44,.25); }
+    .vcard-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .vcard-link span { flex: 1; }
+
+    /* ══════════════════════════════════════════
+       WHY US
+    ══════════════════════════════════════════ */
+    .why {
+      padding: 6rem 3rem;
+      background: rgba(255,253,246,.6);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .why-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .why-left {}
+    .why-label { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: .7rem; }
+    .why-label::before { content:''; width:1.5rem; height:1px; background:var(--gold); }
+    .why-title {
+      font-family: var(--font-serif); font-size: clamp(2rem,4vw,3.2rem);
+      font-weight: 600; line-height: 1.1; margin-bottom: 1.8rem;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+    .why-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .why-text { font-size: .95rem; line-height: 1.9; color: #585848; font-weight: 300; margin-bottom: 2.5rem; max-width: 48ch; }
+    .why-right {
+      display: flex; flex-direction: column; gap: 1px;
+      background: rgba(44,74,44,.12);
+    }
+    .why-item {
+      background: #f2ede4;
+      padding: 1.8rem 2rem;
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      transition: background .25s;
+    }
+    .why-item:hover { background: rgba(255,253,246,.99); }
+    .wi-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+    }
+    .wi-title { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; color: #18180e; }
+    .wi-text { font-size: .84rem; line-height: 1.7; color: #585848; font-weight: 300; }
+
+    /* ══════════════════════════════════════════
+       MARQUEE DIVIDER
+    ══════════════════════════════════════════ */
+    .marquee {
+      overflow: hidden; padding: 1rem 0;
+      border-top: 1px solid rgba(44,74,44,.12);
+      border-bottom: 1px solid rgba(44,74,44,.12);
+      background: rgba(242,237,228,.85);
+    }
+    .mq-track { display: flex; width: max-content; animation: mq 25s linear infinite; }
+    .mq-item {
+      font-family: var(--font-mono); font-size: .68rem; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--text-3); white-space: nowrap;
+      padding: 0 3rem; border-right: 1px solid var(--border);
+    }
+    .mq-item.g { color: var(--gold); }
+    @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ══════════════════════════════════════════
+       FOOTER TEASER
+    ══════════════════════════════════════════ */
+    .footer-cta {
+      padding: 7rem 3rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .footer-cta-orb {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(44,74,44,.06), transparent 65%);
+      pointer-events: none;
+    }
+    .fc-label { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .fc-title {
+      font-family: var(--font-serif); font-size: clamp(2.5rem,6vw,5.5rem);
+      font-weight: 600; line-height: 1; letter-spacing: -.02em;
+      margin-bottom: 2rem; position: relative;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+    .fc-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .fc-sub { font-size: .95rem; color: #585848; font-weight: 300; max-width: 44ch; margin: 0 auto 2.5rem; line-height: 1.8; }
+    .fc-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2rem 3rem; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(236,231,220,.97);
+    }
+    /* ════════════════════════════════
+       SITE FOOTER — structured product links
+    ════════════════════════════════ */
+
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .1s; }
+    .reveal-d2 { transition-delay: .2s; }
+    .reveal-d3 { transition-delay: .3s; }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-card { display: none; }
+    }
+    @media (max-width: 900px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      header { padding: .9rem 1.2rem; }
+      header.scrolled { padding: .7rem 1.2rem; }
+      .h-nav { display: none; }
+      .h-burger { display: flex; }
+
+      .hero { padding: 0 1.2rem 3rem; }
+      .hero-body { padding-top: 8rem; }
+
+      /* H1 + achievements block */
+      .hero-h1-wrap { grid-template-columns: 1fr; gap: 1.2rem; }
+      .hero-h1 { font-size: clamp(2.2rem, 9vw, 3.4rem); }
+      .hero-h1-img { width: 100%; }
+      .h1-achiev-list {
+        display: grid; grid-template-columns: 1fr 1fr;
+      }
+
+      /* Carousel */
+      .hnc-slide { flex-direction: column; }
+      .hnc-img {
+        width: 100%;
+        height: 160px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        aspect-ratio: unset;
+      }
+      .hnc-img-placeholder { flex-direction: row; gap: 1rem; padding: 1rem 1.5rem; }
+      .hnc-img-brand { display: block; font-size: .6rem; }
+      .hnc-content { padding: 1.2rem 1.2rem 1.4rem; }
+
+      .hero-stats { gap: 2rem; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; clip-path: none; }
+
+      .about-strip { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 1.5rem; }
+      .vectors { padding: 4rem 1.5rem; }
+      .vectors-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .vcard:hover { transform: none; }
+      .vcard::after { display: none; }
+      .why { padding: 4rem 1.5rem; }
+      .why-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-cta { padding: 5rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .prem-card:hover { transform: none; }
+      .prem-card::after { display: none; }
+    }
+    @media (max-width: 480px) {
+      .hero-h1 { font-size: clamp(1.9rem, 8vw, 2.5rem); }
+      .h1-achiev-list { grid-template-columns: 1fr 1fr; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+      .hnc-img { height: 130px; }
+      .hnc-title { font-size: .82rem; }
+      .hnc-excerpt { font-size: .73rem; }
+    }
+
+    /* ══ PREMIUM SERVICES SECTION ══ */
+    .prem-sec {
+      background: rgba(242,237,228,.5);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .prem-group {
+      padding: 4.5rem 3rem 3rem;
+      border-bottom: 1px solid rgba(44,74,44,.1);
+    }
+    .prem-group:last-child { border-bottom: none; padding-bottom: 4.5rem; }
+    .prem-group-head { margin-bottom: 2.5rem; }
+    .prem-eyebrow {
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .4em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: .7rem; margin-bottom: .8rem;
+    }
+    .prem-eyebrow::before { content:''; width:1.5rem; height:1px; background:var(--gold); }
+    .prem-title {
+      font-family: var(--font-serif); font-size: clamp(1.6rem,3vw,2.4rem);
+      font-weight: 600; line-height: 1.05; letter-spacing: -.01em;
+      color: #18180e; -webkit-text-fill-color: #18180e;
+    }
+
+    /* 3-column premium cards */
+    .prem-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem;
+    }
+    .prem-card {
+      border: 1px solid rgba(44,74,44,.15);
+      background: rgba(255,253,246,.92); backdrop-filter: blur(4px);
+      padding: 2rem 1.8rem;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: transform .4s cubic-bezier(.22,.68,0,1.2), border-color .35s, box-shadow .35s;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06), 0 1px 0 rgba(44,74,44,.06) inset;
+    }
+    .prem-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(44,74,44,.35) 30%, #3d6a3d 50%, rgba(44,74,44,.35) 70%, transparent);
+      opacity: .5; transition: opacity .35s;
+    }
+    .prem-card::after {
+      content:''; position:absolute; top:-50px; right:-50px; width:150px; height:150px;
+      background: radial-gradient(circle, rgba(44,74,44,.06), transparent 65%); pointer-events:none;
+    }
+    .prem-card:hover { transform: translateY(-7px); border-color: rgba(44,74,44,.35); box-shadow: 0 16px 48px rgba(0,0,0,.1), 0 1px 0 rgba(44,74,44,.12) inset; }
+    .prem-card:hover::before { opacity: 1; }
+
+    .prem-card-icon {
+      width: 40px; height: 40px; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .prem-card-label {
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .6rem;
+    }
+    .prem-card-title {
+      font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600;
+      line-height: 1.15; margin-bottom: .8rem;
+    }
+    .prem-card-desc {
+      font-size: .84rem; line-height: 1.78; color: #585848;
+      font-weight: 300; flex: 1; margin-bottom: 1.3rem;
+    }
+    .prem-card-price {
+      font-family: var(--font-serif); font-size: 1.6rem; font-weight: 600; font-style: italic;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: .8rem; line-height: 1;
+    }
+    .prem-card-price span { font-size: 1rem; color: #9a9880; -webkit-text-fill-color: #9a9880; }
+    .prem-card-link {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold); text-decoration: none;
+      transition: gap .2s; margin-top: auto;
+    }
+    .prem-card-link:hover { gap: .7rem; }
+    .prem-card-link svg { width: 11px; height: 11px; }
+
+    /* tools wide card */
+    .prem-tools-card {
+      border: 1px solid rgba(44,74,44,.18);
+      background: rgba(255,253,246,.92); backdrop-filter: blur(4px);
+      padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
+      position: relative; overflow: hidden;
+      box-shadow: 0 6px 28px rgba(0,0,0,.07), 0 1px 0 rgba(44,74,44,.1) inset;
+      transition: border-color .35s, box-shadow .35s;
+    }
+    .prem-tools-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(44,74,44,.4) 25%, #3d6a3d 50%, rgba(44,74,44,.4) 75%, transparent);
+      opacity: .65;
+    }
+    .prem-tools-card::after {
+      content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px;
+      background: radial-gradient(circle, rgba(44,74,44,.06), transparent 65%); pointer-events:none;
+    }
+    .prem-tools-card:hover { border-color: rgba(44,74,44,.38); box-shadow: 0 14px 40px rgba(0,0,0,.1), 0 1px 0 rgba(44,74,44,.18) inset; }
+    .prem-tools-left { display: flex; gap: 1.5rem; align-items: flex-start; position: relative; }
+    .prem-tools-icon {
+      width: 48px; height: 48px; border: 1px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; color: var(--gold);
+    }
+    .prem-tools-terms { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .prem-term {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .1em;
+      border: 1px solid rgba(44,74,44,.18); padding: .25rem .65rem;
+      color: #585848; background: rgba(44,74,44,.04);
+    }
+    .prem-tools-right { text-align: right; flex-shrink: 0; position: relative; }
+    .prem-tools-price {
+      font-family: var(--font-serif); font-size: 3rem; font-weight: 600; font-style: italic; line-height: 1;
+      background: linear-gradient(135deg, #3d6a3d, #2c4a2c);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: .3rem;
+    }
+    .prem-tools-note {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .1em;
+      color: #9a9880; margin-bottom: .3rem;
+    }
+
+    @media (max-width: 900px) {
+      .prem-group { padding: 3rem 1.5rem 2.5rem; }
+      .prem-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .prem-card { display: block; }
+      .prem-tools-card { grid-template-columns: 1fr; gap: 2rem; padding: 1.8rem; }
+      .prem-tools-left { flex-direction: column; }
+      .prem-tools-right { text-align: left; }
+      .prem-tools-price { font-size: 2.4rem; }
+      .prem-tools-card:hover { transform: none; }
+      .prem-tools-card::after { display: none; }
+    }
+
+    /* Language switching */
+    [data-lang] { display: none; }
+    [data-lang].active { display: block; }
+    span[data-lang] { display: none; }
+    span[data-lang].active { display: inline; }
+        /* ══ FOOTER ══════════════════════════════════════════ */
+    .site-footer {
+      background: rgba(236,231,220,.97);
+      border-top: 1px solid var(--border);
+      display: block;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3.5rem;
+      padding: 4rem 3rem 3rem;
+      border-bottom: 1px solid rgba(44,74,44,.1);
+      max-width: 1440px;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo {
+      font-family: var(--font-mono); font-size: .75rem; letter-spacing: .45em;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .footer-logo-link { text-decoration: none; }
+    .footer-tagline {
+      font-size: .78rem; line-height: 1.7;
+      color: var(--text-3); font-weight: 300;
+    }
+    .footer-socials { display: flex; flex-direction: column; gap: .5rem; margin-top: .5rem; }
+    .footer-social {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--text-3); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-social:hover { color: var(--gold); }
+    .footer-nav-cols {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2rem;
+      align-content: start;
+    }
+    .footer-col-title {
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.2rem; padding-bottom: .7rem;
+      border-bottom: 1px solid rgba(44,74,44,.12);
+    }
+    .footer-col-title--cyan { color: #00d4ff; border-bottom-color: rgba(0,212,255,.2); }
+    .footer-col-links { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .footer-col-links a {
+      font-size: .76rem; line-height: 1.5; color: var(--text-3);
+      text-decoration: none; display: block;
+      transition: color .2s, padding-left .2s;
+    }
+    .footer-col-links a:hover { color: var(--text); padding-left: .35rem; }
+    /* Risk disclaimer — full width row under main columns */
+    .footer-risk {
+      display: block;
+      padding: 1.2rem 3rem;
+      border-top: 1px solid rgba(44,74,44,.08);
+    }
+    .footer-risk-text {
+      font-family: var(--font-mono);
+      font-size: .6rem;
+      letter-spacing: .04em;
+      line-height: 1.8;
+      color: var(--text-3);
+      max-width: 1100px;
+    }
+    .footer-risk-text a { color: rgba(44,74,44,.45); text-decoration: none; transition: color .2s; }
+    .footer-risk-text a:hover { color: var(--gold); }
+    /* Bottom bar — full width row at very bottom */
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.2rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-bottom-logo {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .4em;
+      color: rgba(44,74,44,.35);
+    }
+    .footer-bottom-copy {
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .06em;
+      color: var(--text-3);
+    }
+    .footer-bottom-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+    .footer-bottom-links a {
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--text-3); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-bottom-links a:hover { color: var(--gold); }
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .footer-nav-cols { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 1.5rem 2rem; }
+      .footer-nav-cols { grid-template-columns: repeat(2, 1fr) !important; gap: 1.8rem; }
+      .footer-risk { padding: 1rem 1.5rem; }
+      .footer-bottom { padding: 1.2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: .8rem; }
+      .footer-bottom-links { gap: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .footer-nav-cols { grid-template-columns: 1fr !important; }
+    }
+
+    /* ══════════════════════════════════════════
+       THEME TOGGLE BUTTON
+    ══════════════════════════════════════════ */
+    .theme-toggle {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--font-mono); font-size: .65rem; letter-spacing: .12em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(44,74,44,.25);
+      color: #585848;
+      padding: .55rem .9rem;
+      cursor: pointer;
+      clip-path: none;
+      transition: border-color .25s, color .25s, background .25s;
+      white-space: nowrap;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-toggle:hover {
+      border-color: #2c4a2c;
+      color: #2c4a2c;
+      background: rgba(44,74,44,.05);
+    }
+    .theme-toggle .tt-icon {
+      width: 14px; height: 14px; flex-shrink: 0;
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+    }
+    .theme-toggle:hover .tt-icon { transform: rotate(20deg) scale(1.15); }
+    .theme-toggle .tt-dark { display: flex; }
+    .theme-toggle .tt-light { display: none; }
+    [data-theme="dark"] .theme-toggle .tt-dark { display: none; }
+    [data-theme="dark"] .theme-toggle .tt-light { display: flex; }
+    [data-theme="dark"] .theme-toggle {
+      border-color: rgba(74,124,74,.2);
+      color: #7a7868;
+    }
+    [data-theme="dark"] .theme-toggle:hover {
+      border-color: #4a7c4a;
+      color: #4a7c4a;
+      background: rgba(74,124,74,.08);
+      box-shadow: 0 0 14px rgba(74,124,74,.12);
+    }
+
+    /* ══════════════════════════════════════════
+       DARK THEME (optional toggle)
+    ══════════════════════════════════════════ */
+    [data-theme="dark"] {
+      --gold:        #4a7c4a;
+      --gold-bright: #5e9e5e;
+      --gold-pale:   #8fc48f;
+      --gold-dim:    rgba(74,124,74,.12);
+      --text:        #e8e4d8;
+      --text-2:      #b8b4a4;
+      --text-3:      #7a7868;
+      --border:      rgba(74,124,74,.18);
+      --border-2:    rgba(74,124,74,.09);
+      --surface:     rgba(26,34,20,.96);
+      --accent:      #4a7c4a;
+      --accent-b:    #5e9e5e;
+      --accent-d:    #3a6a3a;
+      --btn-bg:      linear-gradient(135deg,#5e9e5e,#4a7c4a);
+      --btn-txt:     #e8e4d8;
+    }
+
+    [data-theme="dark"] body {
+      background:
+        radial-gradient(ellipse 80% 60% at 100% 0%,  rgba(74,124,74,.08) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 0% 100%,  rgba(74,124,74,.06) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 50% at 50% 50%,  rgba(30,41,24,.4)   0%, transparent 80%),
+        #0e1209;
+      color: #e8e4d8;
+    }
+
+    /* ── Header ── */
+    [data-theme="dark"] header {
+      background: rgba(20,26,15,.97);
+      border-bottom-color: rgba(74,124,74,.16);
+      box-shadow: 0 2px 24px rgba(0,0,0,.25);
+    }
+    [data-theme="dark"] .h-logo { color: #4a7c4a; }
+    [data-theme="dark"] .h-logo-dot { background: #4a7c4a; }
+    [data-theme="dark"] .h-nav a { color: #7a7868; }
+    [data-theme="dark"] .h-nav a:hover { color: #e8e4d8; }
+    [data-theme="dark"] .h-nav-club {
+      border-color: rgba(74,124,74,.3) !important;
+      background: rgba(74,124,74,.08) !important;
+      color: #5e9e5e !important;
+    }
+    [data-theme="dark"] .h-nav-club:hover {
+      background: rgba(74,124,74,.14) !important;
+      box-shadow: 0 0 14px rgba(74,124,74,.15) !important;
+    }
+    [data-theme="dark"] .lang-current { color: #4a7c4a; border-color: rgba(74,124,74,.25); }
+    [data-theme="dark"] .lang-current:hover { background: rgba(74,124,74,.07); border-color: #4a7c4a; }
+    [data-theme="dark"] .lang-menu { background: rgba(20,26,15,.98); border-color: rgba(74,124,74,.18); }
+    [data-theme="dark"] .lang-opt { color: #7a7868; border-bottom-color: rgba(74,124,74,.1); }
+    [data-theme="dark"] .lang-opt:hover { color: #5e9e5e; background: rgba(74,124,74,.07); }
+    [data-theme="dark"] .h-burger span { background: #7a7868; }
+
+    /* ── Preloader ── */
+    [data-theme="dark"] #preloader { background: #0e1209; }
+    [data-theme="dark"] .pre-logo { color: #4a7c4a; }
+    [data-theme="dark"] .pre-line { background: rgba(74,124,74,.18); }
+
+    /* ── Mobile menu ── */
+    [data-theme="dark"] #mob-menu { background: rgba(14,18,9,.98) !important; }
+
+    /* ── Grid overlay ── */
+    [data-theme="dark"] #grid {
+      background-image:
+        linear-gradient(rgba(74,124,74,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,124,74,.04) 1px, transparent 1px);
+    }
+
+    /* ── Custom cursor ── */
+    [data-theme="dark"] .cursor { background: #4a7c4a; }
+    [data-theme="dark"] .cursor-ring { border-color: rgba(74,124,74,.5); }
+
+    /* ── Hero ── */
+    [data-theme="dark"] .hero-ticker-wrap {
+      background: rgba(14,18,9,.85);
+      border-bottom-color: rgba(74,124,74,.14);
+    }
+    [data-theme="dark"] .hero-orb {
+      background: radial-gradient(circle, rgba(74,124,74,.1) 0%, rgba(74,124,74,.04) 35%, transparent 70%);
+    }
+    [data-theme="dark"] .hero-line {
+      background: linear-gradient(to bottom, transparent, rgba(74,124,74,.22) 30%, rgba(74,124,74,.12) 70%, transparent);
+    }
+
+    /* Hero H1 */
+    [data-theme="dark"] .hero-h1 {
+      background: linear-gradient(140deg, #e8e4d8 0%, #c8d4b8 40%, #8fc48f 75%, #5e9e5e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .hero-h1 em {
+      background: linear-gradient(135deg, #5e9e5e 0%, #3a6a3a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .hero-h1 .line3 {
+      background: linear-gradient(135deg, #b8b4a4 0%, #7a7868 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* Hero eyebrow, sub */
+    [data-theme="dark"] .hero-eyebrow { color: #4a7c4a; }
+    [data-theme="dark"] .hero-eyebrow::before { background: #4a7c4a; }
+    [data-theme="dark"] .hero-sub { color: #b8b4a4; }
+
+    /* Hero stats */
+    [data-theme="dark"] .hstat-num {
+      background: linear-gradient(135deg, #5e9e5e, #3a6a3a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .hstat-label { color: #7a7868; }
+
+    /* Hero bottom bar */
+    [data-theme="dark"] .hero-bottom { border-top-color: rgba(74,124,74,.16); }
+    [data-theme="dark"] .hero-scroll { color: #7a7868; }
+    [data-theme="dark"] .scroll-line { background: linear-gradient(to bottom, #4a7c4a, transparent); }
+    [data-theme="dark"] .hero-markets { color: #7a7868; }
+    [data-theme="dark"] .hero-markets span { color: #4a7c4a; }
+
+    /* Hero card (floating right) */
+    [data-theme="dark"] .hero-card {
+      background: rgba(26,34,20,.95);
+      border-color: rgba(74,124,74,.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.2);
+    }
+    [data-theme="dark"] .hero-card::before {
+      background: linear-gradient(90deg, transparent, #4a7c4a, transparent);
+    }
+    [data-theme="dark"] .hero-card-label { color: #4a7c4a; }
+    [data-theme="dark"] .hero-card-row { border-bottom-color: rgba(74,124,74,.1); color: #e8e4d8; }
+    [data-theme="dark"] .hcr-ticker { color: #7a7868; }
+
+    /* H1 achievements block */
+    [data-theme="dark"] .hero-h1-img {
+      background: rgba(26,34,20,.95);
+      border-color: rgba(74,124,74,.22);
+      box-shadow: 0 8px 28px rgba(0,0,0,.3);
+    }
+    [data-theme="dark"] .hero-h1-img::before {
+      background: linear-gradient(90deg, transparent, #4a7c4a 40%, #5e9e5e 60%, transparent);
+    }
+    [data-theme="dark"] .h1-achiev-header { color: #4a7c4a; border-bottom-color: rgba(74,124,74,.14); }
+    [data-theme="dark"] .h1-achiev-item { border-bottom-color: rgba(74,124,74,.09); }
+    [data-theme="dark"] .h1-achiev-item:hover { background: rgba(74,124,74,.06); }
+    [data-theme="dark"] .h1-achiev-num {
+      background: linear-gradient(135deg, #5e9e5e, #3a6a3a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .h1-achiev-label { color: #7a7868; }
+
+    /* Carousel */
+    [data-theme="dark"] .hnc-overflow {
+      box-shadow: 0 0 0 1px rgba(74,124,74,.2), 0 8px 32px rgba(0,0,0,.3), 0 0 50px rgba(74,124,74,.04);
+    }
+    [data-theme="dark"] .hnc-slide {
+      background: rgba(26,34,20,.96);
+      border-color: rgba(74,124,74,.16);
+      box-shadow: 0 2px 0 rgba(255,255,255,.03) inset;
+    }
+    [data-theme="dark"] .hnc-img {
+      background: linear-gradient(145deg, rgba(20,26,15,.95) 0%, rgba(14,18,9,.98) 100%);
+      border-right-color: rgba(74,124,74,.12);
+    }
+    [data-theme="dark"] .hnc-img-brand { color: #7a7868; }
+    [data-theme="dark"] .hnc-img-icon { color: #4a7c4a; border-color: rgba(74,124,74,.2); }
+    [data-theme="dark"] .hnc-content::before {
+      background: linear-gradient(to bottom, #4a7c4a, transparent 90%);
+    }
+    [data-theme="dark"] .hnc-date { color: #7a7868; }
+    [data-theme="dark"] .hnc-title {
+      background: linear-gradient(120deg, #e8e4d8 0%, #c8d4b8 40%, #8fc48f 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .hnc-excerpt { color: #b8b4a4; }
+    [data-theme="dark"] .hnc-read-more { color: #4a7c4a; border-bottom-color: rgba(74,124,74,.25); }
+    [data-theme="dark"] .hnc-read-more:hover { color: #5e9e5e; border-bottom-color: #4a7c4a; }
+    [data-theme="dark"] .hnc-arrow { border-color: rgba(74,124,74,.18); color: #7a7868; }
+    [data-theme="dark"] .hnc-arrow:hover { border-color: #4a7c4a; color: #5e9e5e; background: rgba(74,124,74,.08); }
+    [data-theme="dark"] .hnc-dot { background: rgba(74,124,74,.3); }
+    [data-theme="dark"] .hnc-dot.active { background: #4a7c4a; }
+    [data-theme="dark"] .hnc-progress { color: #7a7868; }
+    [data-theme="dark"] .hnc-progress span { color: #4a7c4a; }
+    [data-theme="dark"] .hnc-timer-bar { background: rgba(74,124,74,.12); }
+    [data-theme="dark"] .hnc-badge { color: #e8e4d8; }
+
+    /* Buttons */
+    [data-theme="dark"] .btn-primary { color: #e8e4d8; box-shadow: 0 4px 20px rgba(74,124,74,.25); }
+    [data-theme="dark"] .btn-primary:hover { box-shadow: 0 8px 32px rgba(74,124,74,.38); }
+    [data-theme="dark"] .btn-secondary { color: #5e9e5e; border-color: rgba(74,124,74,.3); }
+    [data-theme="dark"] .btn-secondary:hover { background: rgba(74,124,74,.08); border-color: #4a7c4a; }
+
+    /* ── About strip ── */
+    [data-theme="dark"] .about-strip {
+      background: rgba(20,26,15,.7);
+      border-top-color: rgba(74,124,74,.14);
+    }
+    [data-theme="dark"] .as-label { color: #4a7c4a; }
+    [data-theme="dark"] .as-title {
+      background: linear-gradient(135deg, #e8e4d8 0%, #c8d4b8 40%, #8fc48f 75%, #5e9e5e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .as-lead { color: #e8e4d8; }
+    [data-theme="dark"] .as-text { color: #b8b4a4; }
+    [data-theme="dark"] .as-badge { color: #5e9e5e; border-color: rgba(74,124,74,.22); background: rgba(74,124,74,.08); }
+    [data-theme="dark"] .as-principles { background: rgba(26,34,20,.7); border-color: rgba(74,124,74,.14); }
+    [data-theme="dark"] .as-principle { border-bottom-color: rgba(74,124,74,.09); }
+    [data-theme="dark"] .as-principle:hover { background: rgba(74,124,74,.06); }
+    [data-theme="dark"] .as-p-icon { color: #4a7c4a; }
+    [data-theme="dark"] .as-p-title { color: #e8e4d8; }
+    [data-theme="dark"] .as-p-text { color: #b8b4a4; }
+    [data-theme="dark"] .as-pillars { background: rgba(74,124,74,.1); }
+    [data-theme="dark"] .as-pillar { background: rgba(26,34,20,.88); }
+    [data-theme="dark"] .as-pillar-num { color: #4a7c4a; }
+    [data-theme="dark"] .as-pillar-title { color: #e8e4d8; }
+    [data-theme="dark"] .as-pillar-text { color: #b8b4a4; }
+    [data-theme="dark"] .as-quote { background: rgba(74,124,74,.07); border-left-color: #4a7c4a; }
+    [data-theme="dark"] .as-quote-text { color: #e8e4d8; }
+    [data-theme="dark"] .as-quote-attr { color: #4a7c4a; }
+    [data-theme="dark"] .as-audience { background: rgba(74,124,74,.1); }
+    [data-theme="dark"] .as-aud { background: rgba(26,34,20,.88); }
+    [data-theme="dark"] .as-aud-who { color: #4a7c4a; }
+    [data-theme="dark"] .as-aud-text { color: #b8b4a4; }
+
+    /* ── Vectors / 3 cards ── */
+    [data-theme="dark"] .vectors { background: transparent; }
+    [data-theme="dark"] .v-title {
+      background: linear-gradient(135deg, #e8e4d8 0%, #c8d4b8 40%, #8fc48f 75%, #5e9e5e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .vcard {
+      background: linear-gradient(145deg, rgba(26,34,20,.95) 0%, rgba(20,26,15,.98) 100%);
+      border-color: rgba(74,124,74,.16);
+      box-shadow: 0 4px 24px rgba(0,0,0,.3), 0 1px 4px rgba(0,0,0,.2);
+    }
+    [data-theme="dark"] .vcard::before {
+      background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.01) 30%, transparent 60%);
+    }
+    [data-theme="dark"] .vcard::after {
+      background: radial-gradient(ellipse at 30% 0%, rgba(74,124,74,.08) 0%, rgba(74,124,74,.03) 40%, transparent 70%);
+    }
+    [data-theme="dark"] .vcard:hover {
+      border-color: rgba(74,124,74,.38);
+      box-shadow: 0 20px 60px rgba(0,0,0,.4), 0 0 40px rgba(74,124,74,.08);
+    }
+    [data-theme="dark"] .vcard:hover .vcard-title { color: #5e9e5e; }
+    [data-theme="dark"] .vcard-top-line {
+      background: linear-gradient(90deg, transparent, rgba(74,124,74,.3) 25%, rgba(74,124,74,.85) 50%, rgba(74,124,74,.3) 75%, transparent);
+    }
+    [data-theme="dark"] .vcard-num { color: rgba(74,124,74,.18); }
+    [data-theme="dark"] .vcard:hover .vcard-num { color: rgba(74,124,74,.5); }
+    [data-theme="dark"] .vcard-icon::before {
+      background: linear-gradient(145deg, rgba(74,124,74,.1) 0%, rgba(74,124,74,.04) 60%, rgba(0,0,0,.04) 100%);
+      border-color: rgba(74,124,74,.2);
+      box-shadow: 0 2px 0 rgba(255,255,255,.04) inset, 0 4px 14px rgba(0,0,0,.15);
+    }
+    [data-theme="dark"] .vcard:hover .vcard-icon::before {
+      border-color: rgba(74,124,74,.45);
+      background: linear-gradient(145deg, rgba(74,124,74,.18) 0%, rgba(74,124,74,.07) 60%, transparent 100%);
+      box-shadow: 0 2px 0 rgba(255,255,255,.04) inset, 0 0 30px rgba(74,124,74,.12);
+    }
+    [data-theme="dark"] .vcard-sub { color: #4a7c4a; }
+    [data-theme="dark"] .vcard-title { color: #e8e4d8; }
+    [data-theme="dark"] .vcard-text { color: #b8b4a4; }
+    [data-theme="dark"] .vcard-link { color: #4a7c4a; border-top-color: rgba(74,124,74,.1); }
+    [data-theme="dark"] .vcard-link:hover { color: #5e9e5e; border-top-color: rgba(74,124,74,.3); }
+
+    /* Club card dark override */
+    [data-theme="dark"] .vcard.vcard--club {
+      background: linear-gradient(145deg, rgba(30,41,24,.96) 0%, rgba(37,47,30,.98) 100%);
+      border-color: rgba(94,158,94,.2);
+    }
+
+    /* ── Why Us ── */
+    [data-theme="dark"] .why {
+      background: rgba(20,26,15,.6);
+      border-top-color: rgba(74,124,74,.12);
+      border-bottom-color: rgba(74,124,74,.12);
+    }
+    [data-theme="dark"] .why-label { color: #4a7c4a; }
+    [data-theme="dark"] .why-label::before { background: #4a7c4a; }
+    [data-theme="dark"] .why-title {
+      background: linear-gradient(135deg, #e8e4d8 0%, #c8d4b8 40%, #8fc48f 75%, #5e9e5e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .why-text { color: #b8b4a4; }
+    [data-theme="dark"] .why-right { background: rgba(74,124,74,.08); }
+    [data-theme="dark"] .why-item { background: rgba(26,34,20,.88); }
+    [data-theme="dark"] .why-item:hover { background: rgba(30,41,24,.99); }
+    [data-theme="dark"] .wi-icon { border-color: rgba(74,124,74,.2); color: #4a7c4a; }
+    [data-theme="dark"] .wi-title { color: #e8e4d8; }
+    [data-theme="dark"] .wi-text { color: #b8b4a4; }
+
+    /* ── Marquee ── */
+    [data-theme="dark"] .marquee {
+      background: rgba(14,18,9,.7);
+      border-top-color: rgba(74,124,74,.1);
+      border-bottom-color: rgba(74,124,74,.1);
+    }
+    [data-theme="dark"] .mq-item { color: #7a7868; border-right-color: rgba(74,124,74,.1); }
+    [data-theme="dark"] .mq-item.g { color: #4a7c4a; }
+
+    /* ── Premium services ── */
+    [data-theme="dark"] .prem-sec {
+      background: rgba(20,26,15,.5);
+      border-top-color: rgba(74,124,74,.1);
+      border-bottom-color: rgba(74,124,74,.1);
+    }
+    [data-theme="dark"] .prem-group { border-bottom-color: rgba(74,124,74,.1); }
+    [data-theme="dark"] .prem-eyebrow { color: #4a7c4a; }
+    [data-theme="dark"] .prem-eyebrow::before { background: #4a7c4a; }
+    [data-theme="dark"] .prem-title {
+      background: linear-gradient(135deg, #e8e4d8 0%, #c8d4b8 40%, #8fc48f 75%, #5e9e5e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .prem-card {
+      background: rgba(26,34,20,.95);
+      border-color: rgba(74,124,74,.16);
+      box-shadow: 0 4px 20px rgba(0,0,0,.25), 0 1px 0 rgba(74,124,74,.07) inset;
+    }
+    [data-theme="dark"] .prem-card::before {
+      background: linear-gradient(90deg, transparent, rgba(74,124,74,.35) 30%, #5e9e5e 50%, rgba(74,124,74,.35) 70%, transparent);
+    }
+    [data-theme="dark"] .prem-card::after {
+      background: radial-gradient(circle, rgba(74,124,74,.05), transparent 65%);
+    }
+    [data-theme="dark"] .prem-card:hover {
+      border-color: rgba(74,124,74,.4);
+      box-shadow: 0 16px 48px rgba(0,0,0,.35), 0 0 28px rgba(74,124,74,.06), 0 1px 0 rgba(74,124,74,.14) inset;
+    }
+    [data-theme="dark"] .prem-card-icon { color: #4a7c4a; border-color: rgba(74,124,74,.16); }
+    [data-theme="dark"] .prem-card-label { color: #4a7c4a; }
+    [data-theme="dark"] .prem-card-title { color: #e8e4d8; }
+    [data-theme="dark"] .prem-card-desc { color: #b8b4a4; }
+    [data-theme="dark"] .prem-card-price {
+      background: linear-gradient(135deg, #5e9e5e, #3a6a3a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .prem-card-price span { color: #7a7868; -webkit-text-fill-color: #7a7868; }
+    [data-theme="dark"] .prem-card-link { color: #4a7c4a; }
+    [data-theme="dark"] .prem-tools-card {
+      background: rgba(26,34,20,.95);
+      border-color: rgba(74,124,74,.2);
+      box-shadow: 0 6px 28px rgba(0,0,0,.28), 0 1px 0 rgba(74,124,74,.1) inset;
+    }
+    [data-theme="dark"] .prem-tools-card::before {
+      background: linear-gradient(90deg, transparent, rgba(74,124,74,.4) 25%, #5e9e5e 50%, rgba(74,124,74,.4) 75%, transparent);
+    }
+    [data-theme="dark"] .prem-tools-card::after {
+      background: radial-gradient(circle, rgba(74,124,74,.06), transparent 65%);
+    }
+    [data-theme="dark"] .prem-tools-icon { color: #4a7c4a; border-color: rgba(74,124,74,.16); }
+    [data-theme="dark"] .prem-term { color: #b8b4a4; border-color: rgba(74,124,74,.22); background: rgba(74,124,74,.06); }
+    [data-theme="dark"] .prem-tools-price {
+      background: linear-gradient(135deg, #5e9e5e, #3a6a3a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: none;
+    }
+    [data-theme="dark"] .prem-tools-note { color: #7a7868; }
+
+    /* ── Footer CTA ── */
+    [data-theme="dark"] .footer-cta { background: transparent; }
+    [data-theme="dark"] .footer-cta-orb {
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(74,124,74,.07), transparent 65%);
+    }
+    [data-theme="dark"] .fc-label { color: #4a7c4a; }
+    [data-theme="dark"] .fc-title {
+      background: linear-gradient(135deg, #e8e4d8 0%, #c8d4b8 30%, #8fc48f 65%, #5e9e5e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    [data-theme="dark"] .fc-sub { color: #b8b4a4; }
+
+    /* ── Site footer ── */
+    [data-theme="dark"] .site-footer {
+      background: rgba(14,18,9,.98);
+      border-top-color: rgba(74,124,74,.12);
+    }
+    [data-theme="dark"] footer {
+      background: rgba(14,18,9,.98);
+      border-top-color: rgba(74,124,74,.12);
+    }
+    [data-theme="dark"] .footer-inner { border-bottom-color: rgba(74,124,74,.1); }
+    [data-theme="dark"] .footer-logo { color: #4a7c4a; }
+    [data-theme="dark"] .footer-tagline { color: #7a7868; }
+    [data-theme="dark"] .footer-social { color: #7a7868; }
+    [data-theme="dark"] .footer-social:hover { color: #5e9e5e; }
+    [data-theme="dark"] .footer-col-title { color: #4a7c4a; border-bottom-color: rgba(74,124,74,.16); }
+    [data-theme="dark"] .footer-col-title--cyan { color: #5e9e5e; border-bottom-color: rgba(74,124,74,.2); }
+    [data-theme="dark"] .footer-col-links a { color: #7a7868; }
+    [data-theme="dark"] .footer-col-links a:hover { color: #e8e4d8; }
+    [data-theme="dark"] .footer-risk { border-top-color: rgba(74,124,74,.08); }
+    [data-theme="dark"] .footer-risk-text { color: #7a7868; }
+    [data-theme="dark"] .footer-risk-text a { color: rgba(74,124,74,.45); }
+    [data-theme="dark"] .footer-risk-text a:hover { color: #4a7c4a; }
+    [data-theme="dark"] .footer-bottom { border-top-color: rgba(74,124,74,.1); }
+    [data-theme="dark"] .footer-bottom-logo { color: rgba(74,124,74,.3); }
+    [data-theme="dark"] .footer-bottom-copy { color: #7a7868; }
+    [data-theme="dark"] .footer-bottom-links a { color: #7a7868; }
+    [data-theme="dark"] .footer-bottom-links a:hover { color: #4a7c4a; }
+
+    /* ── Ticker ── */
+    [data-theme="dark"] .hero-ticker-item { color: #7a7868; border-right-color: rgba(74,124,74,.1); }
+
+    /* Scroll reveal (no change needed) */
+    </style>
+</head>
+<body>
+
+<!-- Fixed grid -->
+<div id="grid"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pre-logo">AXIUMSQUARE</div>
+  <div class="pre-line"><div class="pre-fill"></div></div>
+</div>
+
+<!-- Mobile menu overlay (hidden) -->
+<div id="mob-menu" style="display:none;position:fixed;inset:0;z-index:9400;background:rgba(242,237,228,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;">
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+    <a href="axiumsquare-services.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a>
+    <a href="axiumsquare-club.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#2c4a2c;text-decoration:none;border:1px solid rgba(44,74,44,.35);padding:.4rem 1.2rem;">◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span></a>
+    <a href="axiumsquare-academy.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span></a>
+    <a href="axiumsquare-invest.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Консалтинг</span><span data-lang="ua">Консалтинг</span><span data-lang="en">Consulting</span></a>
+    <a href="axiumsquare-blog.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a>
+    <a href="axiumsquare-news.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a>
+    <a href="axiumsquare-faq.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:1rem;letter-spacing:.3em;text-transform:uppercase;color:#585848;text-decoration:none;"><span data-lang="ru" class="active">FAQ</span><span data-lang="ua">FAQ</span><span data-lang="en">FAQ</span></a>
+  </nav>
+  <a id="mob-auth-btn" href="axiumsquare-login.html" onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;background:linear-gradient(135deg,#3d6a3d,#2c4a2c);color:#f2ede4;padding:.6rem 2rem;clip-path:none;display:inline-block;">
+    <span id="mob-auth-ru">Войти</span><span id="mob-auth-ua" style="display:none;">Увійти</span><span id="mob-auth-en" style="display:none;">Sign In</span>
+  </a>
+  <button onclick="closeMob()" style="font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.3em;color:#2c4a2c;background:none;border:1px solid rgba(44,74,44,.3);padding:.6rem 1.4rem;cursor:pointer;">CLOSE</button>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header id="header">
+  <a href="index.html" class="h-logo">
+    <span class="h-logo-dot"></span>
+    AXIUMSQUARE
+  </a>
+
+  <nav class="h-nav">
+    <a href="axiumsquare-services.html">
+      <span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span>
+    </a>
+    <a href="axiumsquare-club.html" class="h-nav-club">
+      ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+    </a>
+    <a href="axiumsquare-academy.html">
+      <span data-lang="ru" class="active">Академия</span><span data-lang="ua">Академія</span><span data-lang="en">Academy</span>
+    </a>
+    <a href="axiumsquare-invest.html">
+      <span data-lang="ru" class="active">Консалтинг</span><span data-lang="ua">Консалтинг</span><span data-lang="en">Invest</span>
+    </a>
+    <a href="axiumsquare-blog.html">
+      <span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span>
+    </a>
+    <a href="axiumsquare-news.html">
+      <span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span>
+    </a>
+    <a href="axiumsquare-faq.html">
+      <span data-lang="ru" class="active">FAQ</span><span data-lang="ua">FAQ</span><span data-lang="en">FAQ</span>
+    </a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:.8rem;">
+    <!-- Theme toggle -->
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+      <!-- dark icon (moon) — shown in dark mode -->
+      <svg class="tt-icon tt-dark" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <!-- light icon (sun) — shown in light mode -->
+      <svg class="tt-icon tt-light" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <!-- Language dropdown -->
+    <div class="lang-drop" id="lang-drop">
+      <button class="lang-current" onclick="toggleLang(event)">
+        <span id="lang-label">RU</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <button class="lang-opt" onclick="setLang('ru')">RU</button>
+        <button class="lang-opt" onclick="setLang('ua')">UA</button>
+        <button class="lang-opt" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
+    <a href="axiumsquare-login.html" class="h-cta" id="hdr-auth-btn">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      <span data-lang="ru" class="active" id="auth-label-ru">Войти</span>
+      <span data-lang="ua" id="auth-label-ua">Увійти</span>
+      <span data-lang="en" id="auth-label-en">Sign In</span>
+    </a>
+    <div class="h-burger" id="h-burger" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-orb"></div>
+  <div class="hero-line"></div>
+
+  <!-- Ticker tape -->
+  <div class="hero-ticker-wrap">
+    <div class="hero-ticker-track">
+      <span class="hero-ticker-item ticker-up">AAPL &nbsp;+1.24%</span>
+      <span class="hero-ticker-item ticker-down">TSLA &nbsp;−0.87%</span>
+      <span class="hero-ticker-item ticker-up">NVDA &nbsp;+3.15%</span>
+      <span class="hero-ticker-item ticker-neu">SPY &nbsp;0.00%</span>
+      <span class="hero-ticker-item ticker-up">MSFT &nbsp;+0.62%</span>
+      <span class="hero-ticker-item ticker-down">META &nbsp;−1.03%</span>
+      <span class="hero-ticker-item ticker-up">AMZN &nbsp;+0.44%</span>
+      <span class="hero-ticker-item ticker-up">GOOG &nbsp;+1.78%</span>
+      <span class="hero-ticker-item ticker-down">NFLX &nbsp;−0.31%</span>
+      <span class="hero-ticker-item ticker-neu">QQQ &nbsp;+0.05%</span>
+      <span class="hero-ticker-item ticker-up">NYSE &nbsp;Open</span>
+      <!-- repeat for seamless loop -->
+      <span class="hero-ticker-item ticker-up">AAPL &nbsp;+1.24%</span>
+      <span class="hero-ticker-item ticker-down">TSLA &nbsp;−0.87%</span>
+      <span class="hero-ticker-item ticker-up">NVDA &nbsp;+3.15%</span>
+      <span class="hero-ticker-item ticker-neu">SPY &nbsp;0.00%</span>
+      <span class="hero-ticker-item ticker-up">MSFT &nbsp;+0.62%</span>
+      <span class="hero-ticker-item ticker-down">META &nbsp;−1.03%</span>
+      <span class="hero-ticker-item ticker-up">AMZN &nbsp;+0.44%</span>
+      <span class="hero-ticker-item ticker-up">GOOG &nbsp;+1.78%</span>
+      <span class="hero-ticker-item ticker-down">NFLX &nbsp;−0.31%</span>
+      <span class="hero-ticker-item ticker-neu">QQQ &nbsp;+0.05%</span>
+      <span class="hero-ticker-item ticker-up">NYSE &nbsp;Open</span>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="hero-body">
+    <div class="hero-eyebrow">
+      <span data-lang="ru" class="active">Фондовый рынок · Цифровые активы · Реальный сектор</span>
+      <span data-lang="ua">Фондовий ринок · Цифрові активи · Реальний сектор</span>
+      <span data-lang="en">Stock market · Digital assets · Real sector</span>
+    </div>
+
+    <!-- ── News Carousel ── -->
+    <div class="hero-news-carousel">
+      <div class="hnc-overflow">
+        <div class="hnc-track" id="hncTrack">
+
+          <!-- Slide 1 -->
+          <div class="hnc-slide">
+            <div class="hnc-img">
+              <!-- Заменить на <img src="news-1.jpg" alt="..."> -->
+              <div class="hnc-img-placeholder">
+                <div class="hnc-img-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+                </div>
+                <span class="hnc-img-brand">AXIUMSQUARE</span>
+              </div>
+            </div>
+            <div class="hnc-content">
+              <div class="hnc-meta">
+                <span class="hnc-badge">AXIUMSQUARE</span>
+                <span class="hnc-date">29 Apr · 2026</span>
+              </div>
+              <div class="hnc-title">
+                <span data-lang="ru" class="active">AXIUMSQUARE открывает новый поток отбора в Trading Insider Club</span>
+                <span data-lang="ua">AXIUMSQUARE відкриває новий потік відбору до Trading Insider Club</span>
+                <span data-lang="en">AXIUMSQUARE Opens New Intake for Trading Insider Club</span>
+              </div>
+              <div class="hnc-excerpt">
+                <span data-lang="ru" class="active">Закрытое сообщество профессиональных трейдеров принимает заявки. Ежедневные вотчлисты, бизнес-нетворкинг и прямой доступ к аналитике команды.</span>
+                <span data-lang="ua">Закрита спільнота приймає заявки. Щоденні вотчлісти, бізнес-нетворкінг і прямий доступ до аналітики команди.</span>
+                <span data-lang="en">The closed community of professional traders is now accepting applications. Daily watchlists, business networking and direct team analytics access.</span>
+              </div>
+              <a href="axiumsquare-club.html" class="hnc-read-more">
+                <span data-lang="ru" class="active">Подробнее</span>
+                <span data-lang="ua">Детальніше</span>
+                <span data-lang="en">Read more</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="hnc-slide">
+            <div class="hnc-img">
+              <!-- Заменить на <img src="news-2.jpg" alt="..."> -->
+              <div class="hnc-img-placeholder">
+                <div class="hnc-img-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <span class="hnc-img-brand">AXIUMSQUARE</span>
+              </div>
+            </div>
+            <div class="hnc-content">
+              <div class="hnc-meta">
+                <span class="hnc-badge">АКАДЕМИЯ</span>
+                <span class="hnc-date">28 Apr · 2026</span>
+              </div>
+              <div class="hnc-title">
+                <span data-lang="ru" class="active">Новый курс AXIUMSQUARE Academy: AI-стратегии в трейдинге 2026</span>
+                <span data-lang="ua">Новий курс AXIUMSQUARE Academy: AI-стратегії у трейдингу 2026</span>
+                <span data-lang="en">New AXIUMSQUARE Academy Course: AI Trading Strategies 2026</span>
+              </div>
+              <div class="hnc-excerpt">
+                <span data-lang="ru" class="active">Продвинутый курс охватывает интеграцию машинного обучения в торговые системы, алгоритмический скрининг и управление рисками с помощью ИИ.</span>
+                <span data-lang="ua">Просунутий курс охоплює інтеграцію машинного навчання у торгові системи, алгоритмічний скринінг та управління ризиками за допомогою ШІ.</span>
+                <span data-lang="en">The advanced course covers machine learning integration in trading systems, algorithmic screening and AI-driven risk management.</span>
+              </div>
+              <a href="axiumsquare-academy.html" class="hnc-read-more">
+                <span data-lang="ru" class="active">Подробнее</span>
+                <span data-lang="ua">Детальніше</span>
+                <span data-lang="en">Read more</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="hnc-slide">
+            <div class="hnc-img">
+              <!-- Заменить на <img src="news-3.jpg" alt="..."> -->
+              <div class="hnc-img-placeholder">
+                <div class="hnc-img-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                </div>
+                <span class="hnc-img-brand">AXIUMSQUARE</span>
+              </div>
+            </div>
+            <div class="hnc-content">
+              <div class="hnc-meta">
+                <span class="hnc-badge">КОНСАЛТИНГ</span>
+                <span class="hnc-date">27 Apr · 2026</span>
+              </div>
+              <div class="hnc-title">
+                <span data-lang="ru" class="active">AXIUMSQUARE Capital: портфель Q1 2026 показал доходность +28%</span>
+                <span data-lang="ua">AXIUMSQUARE Capital: портфель Q1 2026 показав дохідність +28%</span>
+                <span data-lang="en">AXIUMSQUARE Capital: Q1 2026 Portfolio Delivered +28% Return</span>
+              </div>
+              <div class="hnc-excerpt">
+                <span data-lang="ru" class="active">Управляемые портфели AXIUMSQUARE превысили рыночные бенчмарки в первом квартале. Ключевыми позициями стали NVDA, MSFT и сектор полупроводников.</span>
+                <span data-lang="ua">Управляємі портфелі AXIUMSQUARE перевищили ринкові бенчмарки у першому кварталі. Ключовими позиціями стали NVDA, MSFT та сектор напівпровідників.</span>
+                <span data-lang="en">AXIUMSQUARE managed portfolios outperformed market benchmarks in Q1. Key positions included NVDA, MSFT and the semiconductor sector.</span>
+              </div>
+              <a href="axiumsquare-investments.html" class="hnc-read-more">
+                <span data-lang="ru" class="active">Подробнее</span>
+                <span data-lang="ua">Детальніше</span>
+                <span data-lang="en">Read more</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="hnc-footer">
+        <div class="hnc-controls">
+          <button class="hnc-arrow" id="hncPrev">&#8592;</button>
+          <div class="hnc-dots">
+            <button class="hnc-dot active" data-idx="0"></button>
+            <button class="hnc-dot" data-idx="1"></button>
+            <button class="hnc-dot" data-idx="2"></button>
+          </div>
+          <button class="hnc-arrow" id="hncNext">&#8594;</button>
+        </div>
+        <div class="hnc-progress"><span id="hncCurNum">01</span> / 03</div>
+      </div>
+      <div class="hnc-timer-bar"><div class="hnc-timer-fill" id="hncFill"></div></div>
+    </div>
+
+    <div class="hero-h1-wrap">
+      <h1 class="hero-h1">
+        <span data-lang="ru" class="active">
+          Находим то
+          <em>что работает</em>
+          <span class="line3">именно сейчас</span>
+        </span>
+        <span data-lang="ua">
+          Знаходимо те
+          <em>що працює саме зараз</em>
+          <span class="line3">саме зараз</span>
+        </span>
+        <span data-lang="en">
+          We find
+          <em>what works</em>
+          <span class="line3">right now</span>
+        </span>
+      </h1>
+
+      <div class="hero-h1-img">
+        <div class="h1-achiev-header">
+          <span data-lang="ru" class="active">Достижения</span>
+          <span data-lang="ua">Досягнення</span>
+          <span data-lang="en">Achievements</span>
+        </div>
+        <div class="h1-achiev-list">
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">17+</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">лет на NYSE & NASDAQ</span>
+              <span data-lang="ua">років на NYSE & NASDAQ</span>
+              <span data-lang="en">years on NYSE & NASDAQ</span>
+            </div>
+          </div>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">$1M+</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">активов под управлением</span>
+              <span data-lang="ua">активів під управлінням</span>
+              <span data-lang="en">assets under management</span>
+            </div>
+          </div>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">100+</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">обучили студентов</span>
+              <span data-lang="ua">навчили студентів</span>
+              <span data-lang="en">trained students</span>
+            </div>
+          </div>
+          <div class="h1-achiev-item">
+            <div class="h1-achiev-num">3</div>
+            <div class="h1-achiev-label">
+              <span data-lang="ru" class="active">офлайн-бизнеса в портфеле</span>
+              <span data-lang="ua">офлайн-бізнеси у портфелі</span>
+              <span data-lang="en">offline businesses in portfolio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-sub">
+      <span data-lang="ru" class="active">Опыт на NYSE и NASDAQ, синергия финансовых рынков с реальным бизнесом. Профессиональное управление капиталом для тех, кто мыслит масштабно.</span>
+      <span data-lang="ua">Досвід на NYSE та NASDAQ, синергія фінансових ринків з реальним бізнесом. Професійне управління капіталом для тих, хто мислить масштабно.</span>
+      <span data-lang="en">NYSE & NASDAQ expertise, bridging financial markets with real business. Professional capital management for those who think at scale.</span>
+    </p>
+
+    <div class="hero-actions" style="margin-bottom:4rem;">
+      <a href="#vectors" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span data-lang="ru" class="active">Начать сотрудничество</span>
+        <span data-lang="ua">Почати співпрацю</span>
+        <span data-lang="en">Start Collaboration</span>
+      </a>
+      <a href="#why" class="btn-secondary">
+        <span data-lang="ru" class="active">Узнать больше</span>
+        <span data-lang="ua">Дізнатись більше</span>
+        <span data-lang="en">Learn More</span>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-num">17+</div>
+        <div class="hstat-label">
+          <span data-lang="ru" class="active">лет на рынке</span>
+          <span data-lang="ua">років на ринку</span>
+          <span data-lang="en">years in market</span>
+        </div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">$1M+</div>
+        <div class="hstat-label">
+          <span data-lang="ru" class="active">под управлением</span>
+          <span data-lang="ua">під управлінням</span>
+          <span data-lang="en">assets managed</span>
+        </div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">100+</div>
+        <div class="hstat-label">
+          <span data-lang="ru" class="active">студентов</span>
+          <span data-lang="ua">студентів</span>
+          <span data-lang="en">students</span>
+        </div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-num">3</div>
+        <div class="hstat-label">
+          <span data-lang="ru" class="active">офлайн-бизнеса</span>
+          <span data-lang="ua">офлайн-бізнеси</span>
+          <span data-lang="en">offline businesses</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Bottom bar -->
+  <div class="hero-bottom">
+    <div class="hero-scroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+    <div class="hero-markets">
+      <span>NYSE · NASDAQ · S&P500</span>
+      <span data-lang="ru" class="active">Рынок США · Профессиональный подход</span>
+      <span data-lang="ua">Ринок США · Професійний підхід</span>
+      <span data-lang="en">US Markets · Professional Approach</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     THREE VECTORS
+══════════════════════════════════ -->
+<section class="vectors" id="vectors">
+  <div class="vectors-head reveal">
+    <div>
+      <div style="font-family:'Outfit',sans-serif;font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:#2c4a2c;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem;">
+        <span style="width:1.5rem;height:1px;background:#2c4a2c;display:inline-block;"></span>
+        <span data-lang="ru" class="active">Три вектора</span>
+        <span data-lang="ua">Три вектори</span>
+        <span data-lang="en">Three Vectors</span>
+      </div>
+      <h2 class="v-title">
+        <span data-lang="ru" class="active">Обучение. Сообщество.<br><em>Консалтинг.</em></span>
+        <span data-lang="ua">Навчання. Спільнота.<br><em>Консалтинг.</em></span>
+        <span data-lang="en">Education. Community.<br><em>Consulting.</em></span>
+      </h2>
+    </div>
+  </div>
+
+  <div class="vectors-grid">
+    <!-- Card 1 -->
+    <div class="vcard reveal">
+      <div class="vcard-top-line"></div>
+      <div class="vcard-num">01</div>
+      <div class="vcard-icon">
+        <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gAcad1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#f0d49e"/>
+              <stop offset="50%" stop-color="#c8963c"/>
+              <stop offset="100%" stop-color="#8a6020"/>
+            </linearGradient>
+            <linearGradient id="gAcad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e8c870"/>
+              <stop offset="100%" stop-color="#a07030"/>
+            </linearGradient>
+            <filter id="fAcad">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#b8750a" flood-opacity="0.55"/>
+              <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#ffd060" flood-opacity="0.3"/>
+            </filter>
+          </defs>
+          <!-- Cap base / brim -->
+          <polygon points="24,8 46,18 24,28 2,18" fill="url(#gAcad1)" filter="url(#fAcad)"/>
+          <!-- Cap highlight -->
+          <polygon points="24,8 46,18 24,20 2,18" fill="url(#gAcad2)" opacity=".45"/>
+          <!-- Body / mortarboard top -->
+          <rect x="17" y="26" width="14" height="10" rx="1" fill="url(#gAcad1)" filter="url(#fAcad)"/>
+          <rect x="17" y="26" width="14" height="4" rx="1" fill="#f0d49e" opacity=".3"/>
+          <!-- Tassel pole -->
+          <line x1="46" y1="18" x2="46" y2="30" stroke="#c8963c" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Tassel -->
+          <circle cx="46" cy="31" r="3" fill="url(#gAcad1)" filter="url(#fAcad)"/>
+          <line x1="44" y1="34" x2="42" y2="40" stroke="#c8963c" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="46" y1="34" x2="46" y2="41" stroke="#c8963c" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="48" y1="34" x2="50" y2="40" stroke="#c8963c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="vcard-sub">
+        <span data-lang="ru" class="active">Образование</span>
+        <span data-lang="ua">Освіта</span>
+        <span data-lang="en">Education</span>
+      </div>
+      <div class="vcard-title">
+        <span data-lang="ru" class="active">Академия</span>
+        <span data-lang="ua">Академія</span>
+        <span data-lang="en">Academy</span>
+      </div>
+      <p class="vcard-text">
+        <span data-lang="ru" class="active">Обновляемые курсы с персональным фидбеком. От нулевых знаний до профессионала в трейдинге.</span>
+        <span data-lang="ua">Оновлювані курси з персональним фідбеком. Від нульових знань до професіонала у трейдингу.</span>
+        <span data-lang="en">Updated courses with personal feedback. From zero knowledge to a professional in trading.</span>
+      </p>
+      <a href="axiumsquare-academy.html" class="vcard-link">
+        <span data-lang="ru" class="active">К курсам</span>
+        <span data-lang="ua">До курсів</span>
+        <span data-lang="en">View courses</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="vcard vcard--club reveal reveal-d1">
+      <div class="vcard-top-line"></div>
+      <div class="vcard-num">02</div>
+      <div class="vcard-icon">
+        <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gClub1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#80eeff"/>
+              <stop offset="45%" stop-color="#00b8dd"/>
+              <stop offset="100%" stop-color="#006a8a"/>
+            </linearGradient>
+            <linearGradient id="gClub2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#b0f4ff"/>
+              <stop offset="100%" stop-color="#0090b8"/>
+            </linearGradient>
+            <filter id="fClub">
+              <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="#00a0cc" flood-opacity="0.6"/>
+              <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#80eeff" flood-opacity="0.4"/>
+            </filter>
+          </defs>
+          <!-- Left person (back) -->
+          <circle cx="12" cy="16" r="5.5" fill="url(#gClub2)" opacity=".7" filter="url(#fClub)"/>
+          <path d="M2 38 C2 28 8 25 12 25 C15 25 18 26.5 20 29" stroke="url(#gClub2)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".7" filter="url(#fClub)"/>
+          <!-- Right person (back) -->
+          <circle cx="36" cy="16" r="5.5" fill="url(#gClub2)" opacity=".7" filter="url(#fClub)"/>
+          <path d="M46 38 C46 28 40 25 36 25 C33 25 30 26.5 28 29" stroke="url(#gClub2)" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".7" filter="url(#fClub)"/>
+          <!-- Center person (front, full brightness) -->
+          <circle cx="24" cy="13" r="7" fill="url(#gClub1)" filter="url(#fClub)"/>
+          <!-- Head highlight -->
+          <circle cx="22" cy="11" r="2.5" fill="#c8f6ff" opacity=".4"/>
+          <!-- Body -->
+          <path d="M10 44 C10 31 17 27 24 27 C31 27 38 31 38 44" fill="url(#gClub1)" filter="url(#fClub)"/>
+          <!-- Body highlight -->
+          <path d="M16 32 C18 29 21 27.5 24 27.5" stroke="#a0f4ff" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="vcard-sub">
+        <span data-lang="ru" class="active">Сообщество</span>
+        <span data-lang="ua">Спільнота</span>
+        <span data-lang="en">Community</span>
+      </div>
+      <div class="vcard-title">Trading Insider<br>& Business Club</div>
+      <p class="vcard-text">
+        <span data-lang="ru" class="active">Закрытое сообщество с регулярными вотчлистами, бизнес-нетворкингом и прямым доступом к профессиональной аналитике.</span>
+        <span data-lang="ua">Закрита спільнота з регулярними вотчлістами, бізнес-нетворкінгом та прямим доступом до аналітики.</span>
+        <span data-lang="en">Private community with regular watchlists, business networking and direct access to professional analytics.</span>
+      </p>
+      <a href="axiumsquare-club.html" class="vcard-link">
+        <span data-lang="ru" class="active">Вступить</span>
+        <span data-lang="ua">Вступити</span>
+        <span data-lang="en">Join club</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="vcard reveal reveal-d2">
+      <div class="vcard-top-line"></div>
+      <div class="vcard-num">03</div>
+      <div class="vcard-icon">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gInv1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#f5e090"/>
+              <stop offset="50%" stop-color="#c8963c"/>
+              <stop offset="100%" stop-color="#7a5010"/>
+            </linearGradient>
+            <linearGradient id="gInv2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fff8d0"/>
+              <stop offset="100%" stop-color="#d4a040"/>
+            </linearGradient>
+            <radialGradient id="gInvCoin" cx="40%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#ffe878"/>
+              <stop offset="60%" stop-color="#c88030"/>
+              <stop offset="100%" stop-color="#7a5010"/>
+            </radialGradient>
+            <filter id="fInv">
+              <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#b87010" flood-opacity="0.6"/>
+              <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#ffd050" flood-opacity="0.35"/>
+            </filter>
+          </defs>
+          <!-- Coin body -->
+          <ellipse cx="28" cy="28" rx="14" ry="14" fill="url(#gInvCoin)" filter="url(#fInv)"/>
+          <!-- Coin rim -->
+          <ellipse cx="28" cy="28" rx="14" ry="14" fill="none" stroke="#f5c840" stroke-width="1.5" opacity=".5"/>
+          <!-- Coin highlight -->
+          <ellipse cx="24" cy="24" rx="6" ry="4" fill="#ffe878" opacity=".25"/>
+          <!-- Dollar sign -->
+          <text x="28" y="33" text-anchor="middle" font-size="14" font-weight="900" font-family="Georgia,serif" fill="#7a4a00" opacity=".7">$</text>
+          <!-- Growth arrow -->
+          <polyline points="6,36 14,24 20,30 30,14" stroke="url(#gInv1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#fInv)"/>
+          <polygon points="30,14 38,10 34,20" fill="url(#gInv1)" filter="url(#fInv)"/>
+        </svg>
+      </div>
+      <div class="vcard-sub">
+        <span data-lang="ru" class="active">Капитал</span>
+        <span data-lang="ua">Капітал</span>
+        <span data-lang="en">Capital</span>
+      </div>
+      <div class="vcard-title">
+        <span data-lang="ru" class="active">Консалтинг</span>
+        <span data-lang="ua">Консалтинг</span>
+        <span data-lang="en">Consulting</span>
+      </div>
+      <p class="vcard-text">
+        <span data-lang="ru" class="active">Реализация наших идей для вашего роста</span>
+        <span data-lang="ua">Втілення наших ідей для вашого зростання</span>
+        <span data-lang="en">Implementing our ideas for your growth</span>
+      </p>
+      <a href="axiumsquare-invest.html" class="vcard-link">
+        <span data-lang="ru" class="active">Подробнее</span>
+        <span data-lang="ua">Детальніше</span>
+        <span data-lang="en">Learn more</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     MARQUEE
+══════════════════════════════════ -->
+<div class="marquee">
+  <div class="mq-track">
+    <span class="mq-item g">AXIUMSQUARE</span>
+    <span class="mq-item">NYSE · NASDAQ</span>
+    <span class="mq-item g">Trading</span>
+    <span class="mq-item">Consulting</span>
+    <span class="mq-item g">Academy</span>
+    <span class="mq-item">Business Club</span>
+    <span class="mq-item g">Consulting</span>
+    <span class="mq-item">Capital Growth</span>
+    <span class="mq-item g">Risk Management</span>
+    <span class="mq-item">Family Office</span>
+    <span class="mq-item g">AXIUMSQUARE</span>
+    <span class="mq-item">NYSE · NASDAQ</span>
+    <span class="mq-item g">Trading</span>
+    <span class="mq-item">Wealth Management</span>
+    <span class="mq-item g">Academy</span>
+    <span class="mq-item">Business Club</span>
+    <span class="mq-item g">Consulting</span>
+    <span class="mq-item">Capital Growth</span>
+    <span class="mq-item g">Risk Management</span>
+    <span class="mq-item">Family Office</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     ABOUT STRIP
+══════════════════════════════════ -->
+<section class="about-strip" id="about">
+  <div class="reveal">
+    <div class="as-label">
+      <span data-lang="ru" class="active">О нас</span>
+      <span data-lang="ua">Про нас</span>
+      <span data-lang="en">About us</span>
+    </div>
+    <h2 class="as-title">
+      <span data-lang="ru" class="active">Синергия<br>бизнеса реального сектора<br>и<br><em>трейдинга</em></span>
+      <span data-lang="ua">Синергія<br>бізнесу реального сектора<br>та<br><em>трейдингу</em></span>
+      <span data-lang="en">Synergy<br>of real sector business<br>and<br><em>trading</em></span>
+    </h2>
+    <div class="as-badges" style="margin-top:2rem;">
+      <span class="as-badge">NYSE · NASDAQ</span>
+      <span class="as-badge">
+        <span data-lang="ru" class="active">Реальный бизнес</span>
+        <span data-lang="ua">Реальний бізнес</span>
+        <span data-lang="en">Real Business</span>
+      </span>
+      <span class="as-badge">AI · 2026</span>
+      <span class="as-badge">HNWI · Family Office</span>
+    </div>
+  </div>
+
+  <div class="as-right reveal reveal-d1">
+
+    <!-- Lead text -->
+    <p class="as-lead">
+      <span data-lang="ru" class="active">Многие разделяют трейдинг и реальный бизнес. Мы их объединяем. AXIUMSQUARE – это точка сборки для предпринимателей и инвесторов. Мы находим лучшие отрасли сегодня и реализуем их потенциал.</span>
+      <span data-lang="ua">Багато хто розділяє трейдинг та реальний бізнес. Ми їх об'єднуємо. AXIUMSQUARE – це точка збирання для підприємців та інвесторів. Ми знаходимо найкращі галузі сьогодні та реалізуємо їх потенціал</span>
+      <span data-lang="en">Many people share trading and real business. We bring them together. AXIUMSQUARE is a gathering point for entrepreneurs and investors. We find the best industries today and realize their potential</span>
+    </p>
+
+    <!-- Principles -->
+    <div>
+      <div style="font-family:'Outfit',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#2c4a2c;margin-bottom:.8rem;">
+        <span data-lang="ru" class="active">Наши преимущества</span>
+        <span data-lang="ua">Наші переваги</span>
+        <span data-lang="en">Our advantages</span>
+      </div>
+      <div class="as-principles">
+        <div class="as-principle">
+          <div class="as-p-icon">01</div>
+          <div>
+            <div class="as-p-title">
+              <span data-lang="ru" class="active">Прозрачность и открытость</span>
+              <span data-lang="ua">Прозорість та відкритість</span>
+              <span data-lang="en">Transparency and openness</span>
+            </div>
+            <div class="as-p-text">
+              <span data-lang="ru" class="active">Мы не продаём «успешный успех». Мы показываем рынок как он есть: с рисками, волатильностью и жёсткой конкуренцией. Результат — следствие системы, а не удачи.</span>
+              <span data-lang="ua">Ми не продаємо «успішний успіх». Ми показуємо ринок таким, яким він є: з ризиками, волатильністю та жорсткою конкуренцією. Результат — наслідок системи, а не удачі.</span>
+              <span data-lang="en">We don't sell "success porn." We show the market as it is: with risks, volatility, and fierce competition. Results are a product of the system, not luck.</span>
+            </div>
+          </div>
+        </div>
+        <div class="as-principle">
+          <div class="as-p-icon">02</div>
+          <div>
+            <div class="as-p-title">
+              <span data-lang="ru" class="active">Важность образования</span>
+              <span data-lang="ua">Важливість освіти</span>
+              <span data-lang="en">The importance of education</span>
+            </div>
+            <div class="as-p-text">
+              <span data-lang="ru" class="active">Мы учим понимать фундаментальные причины движений, а не просто «гадать по свечам».</span>
+              <span data-lang="ua">Ми вчимо розуміти фундаментальні причини рухів, а не просто «вгадувати по свічках».</span>
+              <span data-lang="en">We teach you to understand the fundamental reasons for moves, not just read candles.</span>
+            </div>
+          </div>
+        </div>
+        <div class="as-principle">
+          <div class="as-p-icon">03</div>
+          <div>
+            <div class="as-p-title">
+              <span data-lang="ru" class="active">Технологическое преимущество</span>
+              <span data-lang="ua">Технологічна перевага</span>
+              <span data-lang="en">Tech Edge</span>
+            </div>
+            <div class="as-p-text">
+              <span data-lang="ru" class="active">В 2026 году торговать без ИИ — значит проигрывать. Мы внедрили нейросети в анализ данных, чтобы освободить время для жизни и собственного развития.</span>
+              <span data-lang="ua">У 2026 році торгувати без ШІ — означає програвати. Ми впровадили нейромережі в аналіз даних, щоб звільнити час для життя та свого розвитку.</span>
+              <span data-lang="en">In 2026, trading without AI means losing. We integrated neural networks into data analysis to free time for life and your development.</span>
+            </div>
+          </div>
+        </div>
+        <div class="as-principle">
+          <div class="as-p-icon">04</div>
+          <div>
+            <div class="as-p-title">
+              <span data-lang="ru" class="active">Офлайн и онлайн синергия</span>
+              <span data-lang="ua">Офлайн і онлайн синергія</span>
+              <span data-lang="en">Offline ×Online Synergy</span>
+            </div>
+            <div class="as-p-text">
+              <span data-lang="ru" class="active">Участники нашего сообщества — владельцы производств, недвижимости и IT-компаний. Прибыль с NASDAQ завтра превращается в новый объект недвижимости или долю в перспективном бизнесе.</span>
+              <span data-lang="ua">Учасники нашого співтовариства — власники виробництв, нерухомості та IT-компаній. Прибуль з NASDAQ завтра перетворюється в новий об'єкт нерухомості або долю в перспективному бізнесі.</span>
+              <span data-lang="en">Our community members are owners of manufacturing, real estate, and IT companies. Profits from NASDAQ tomorrow turn into a new real estate property or a share in a promising business.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why now — 3 pillars -->
+    <div>
+      <div style="font-family:'Outfit',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#2c4a2c;margin-bottom:.8rem;">
+        <span data-lang="ru" class="active">Что мы предлагаем</span>
+        <span data-lang="ua">Що ми пропонуємо</span>
+        <span data-lang="en">Our offers</span>
+      </div>
+      <div class="as-pillars">
+        <div class="as-pillar">
+          <div class="as-pillar-num">01 · <span data-lang="ru" class="active">Навык</span><span data-lang="ua">Навичка</span><span data-lang="en">Skill</span></div>
+          <div class="as-pillar-title">
+            <span data-lang="ru" class="active">Извлекать профит</span>
+            <span data-lang="ua">Отримувати профіт</span>
+            <span data-lang="en">Extract profit</span>
+          </div>
+          <div class="as-pillar-text">
+            <span data-lang="ru" class="active">Умение зарабатывать на рыночных колебаниях из любой точки мира.</span>
+            <span data-lang="ua">Вміння заробляти на ринкових коливаннях з будь-якої точки світу.</span>
+            <span data-lang="en">The ability to profit from market swings from anywhere in the world.</span>
+          </div>
+        </div>
+        <div class="as-pillar">
+          <div class="as-pillar-num">02 · <span data-lang="ru" class="active">Инфраструктура</span><span data-lang="ua">Інфраструктура</span><span data-lang="en">Infrastructure</span></div>
+          <div class="as-pillar-title">
+            <span data-lang="ru" class="active">Среда для масштабирования</span>
+            <span data-lang="ua">Середовище для масштабування</span>
+            <span data-lang="en">Scaling environment</span>
+          </div>
+          <div class="as-pillar-text">
+            <span data-lang="ru" class="active">Готовая экосистема, которая сокращает ваш путь к результату</span>
+            <span data-lang="ua">Готова екосистема, яка скорочує ваш шлях до результату</span>
+            <span data-lang="en">A ready-made ecosystem that shortens your path to results</span>
+          </div>
+        </div>
+        <div class="as-pillar">
+          <div class="as-pillar-num">03 · <span data-lang="ru" class="active">Связи</span><span data-lang="ua">Зв'язки</span><span data-lang="en">Network</span></div>
+          <div class="as-pillar-title">
+            <span data-lang="ru" class="active">Клуб единомышленников</span>
+            <span data-lang="ua">Клуб однодумців</span>
+            <span data-lang="en">Like-minded club</span>
+          </div>
+          <div class="as-pillar-text">
+            <span data-lang="ru" class="active">Энергия, которая открывает двери к сделкам мирового уровня.</span>
+            <span data-lang="ua">Енергія, яка відчиняє двері до угод світового рівня.</span>
+            <span data-lang="en">Energy that opens the door to world-class deals.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <div class="as-quote">
+      <div class="as-quote-text">
+        <span data-lang="ru" class="active">«Наша цель — чтобы вы не только следовали нашему взгялду, но и генерировали собственные идеи во благо себе и всего сообщества»</span>
+        <span data-lang="ua">«Наша мета — щоб ви не тільки дотримувалися нашого погляду, а й генерували власні ідеї на благо собі та всієї спільноти»</span>
+        <span data-lang="en">"Our goal is not only to attract your attention, but also to generate valuable ideas for you that are beneficial for you and your health"</span>
+      </div>
+      <div class="as-quote-attr">— AXIUMSQUARE</div>
+    </div>
+
+    <!-- For whom -->
+    <div>
+      <div style="font-family:'Outfit',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:#2c4a2c;margin-bottom:.8rem;">
+        <span data-lang="ru" class="active">Что это даёт лично вам</span>
+        <span data-lang="ua">Що це дає особисто вам</span>
+        <span data-lang="en">What it gives you</span>
+      </div>
+      <div class="as-audience">
+        <div class="as-aud">
+          <div class="as-aud-who">
+            <span data-lang="ru" class="active">Новичку</span>
+            <span data-lang="ua">Новачку</span>
+            <span data-lang="en">Beginner</span>
+          </div>
+          <div class="as-aud-text">
+            <span data-lang="ru" class="active">Ускоренный путь к профессионализму в трейдинге без лишнего шума.</span>
+            <span data-lang="ua">Прискорений шлях до професіоналізму у трейдингу без зайвого шуму.</span>
+            <span data-lang="en">A fast track to trading professionalism without the fuss.</span>
+          </div>
+        </div>
+        <div class="as-aud">
+          <div class="as-aud-who">
+            <span data-lang="ru" class="active">Профи</span>
+            <span data-lang="ua">Профі</span>
+            <span data-lang="en">Professional</span>
+          </div>
+          <div class="as-aud-text">
+            <span data-lang="ru" class="active">Расширение кругозора, дополнение к вашей стратегии. Свежий взгляд на современный рынок.</span>
+            <span data-lang="ua">Розширення світогляду, доповнення до вашої стратегії. Свіжий погляд на сучасний ринок.</span>
+            <span data-lang="en">Expanding your worldview, complementing your strategy. A fresh perspective on today's market.</span>
+          </div>
+        </div>
+        <div class="as-aud">
+          <div class="as-aud-who">
+            <span data-lang="ru" class="active">Предпринимателю</span>
+            <span data-lang="ua">Підприємцю</span>
+            <span data-lang="en">Entrepreneur</span>
+          </div>
+          <div class="as-aud-text">
+            <span data-lang="ru" class="active">Понятные инструменты диверсификации и новые идеи для бизнеса.</span>
+            <span data-lang="ua">Зрозумілі інструменти диверсифікації та нові ідеї для бізнесу.</span>
+            <span data-lang="en">Understandable diversification tools and new ideas for business.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PREMIUM SERVICES
+══════════════════════════════════ -->
+<section class="prem-sec" id="services">
+
+  <!-- Sub-header: Индивидуальные решения -->
+  <div class="prem-group reveal">
+    <div class="prem-group-head">
+      <div class="prem-eyebrow">
+        <span data-lang="ru" class="active">Индивидуальные решения</span>
+        <span data-lang="ua">Індивідуальні рішення</span>
+        <span data-lang="en">Individual Solutions</span>
+      </div>
+      <h2 class="prem-title">
+        <span data-lang="ru" class="active">Premium</span>
+        <span data-lang="ua">Premium</span>
+        <span data-lang="en">Premium</span>
+      </h2>
+    </div>
+    <div class="prem-grid">
+      <!-- Personal Mentorship -->
+      <div class="prem-card reveal">
+        <div class="prem-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="prem-card-label">Personal Mentorship</div>
+        <div class="prem-card-title">
+          <span data-lang="ru" class="active">Сопровождение до результата</span>
+          <span data-lang="ua">Супровід до результату</span>
+          <span data-lang="en">Guided to Results</span>
+        </div>
+        <p class="prem-card-desc">
+          <span data-lang="ru" class="active">Работа один-на-один до достижения стабильной торговли по системе. Разбор сделок, торговый план и психология под контролем практикующего трейдера NYSE/NASDAQ.</span>
+          <span data-lang="ua">Робота один-на-один до досягнення стабільної торгівлі за системою. Розбір угод та психологія.</span>
+          <span data-lang="en">One-on-one work until achieving stable systematic trading. Trade reviews, trading plan and psychology under a practicing NYSE/NASDAQ trader.</span>
+        </p>
+        <a href="axiumsquare-services.html#mentorship" class="prem-card-link">
+          <span data-lang="ru" class="active">Подробнее</span>
+          <span data-lang="ua">Детальніше</span>
+          <span data-lang="en">Learn more</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <!-- Portfolio Architecture -->
+      <div class="prem-card reveal reveal-d1">
+        <div class="prem-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="prem-card-label">Portfolio Architecture</div>
+        <div class="prem-card-title">
+          <span data-lang="ru" class="active">Архитектура портфеля</span>
+          <span data-lang="ua">Архітектура портфеля</span>
+          <span data-lang="en">Portfolio Architecture</span>
+        </div>
+        <p class="prem-card-desc">
+          <span data-lang="ru" class="active">Индивидуальное построение инвестиционного портфеля с нуля. Фундаментальный подход, анализ риск-профиля и личная инвестиционная декларация (IPS).</span>
+          <span data-lang="ua">Індивідуальна побудова інвестиційного портфеля з нуля. Фундаментальний підхід та особиста декларація IPS.</span>
+          <span data-lang="en">Individual investment portfolio construction from scratch. Fundamental approach, risk profile analysis and personal IPS document.</span>
+        </p>
+        <a href="axiumsquare-services.html#premium" class="prem-card-link">
+          <span data-lang="ru" class="active">Подробнее</span>
+          <span data-lang="ua">Детальніше</span>
+          <span data-lang="en">Learn more</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <!-- Expert Consultation -->
+      <div class="prem-card reveal reveal-d2">
+        <div class="prem-card-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="prem-card-label">Expert Consultation</div>
+        <div class="prem-card-title">
+          <span data-lang="ru" class="active">Разовая сессия</span>
+          <span data-lang="ua">Разова сесія</span>
+          <span data-lang="en">Single Session</span>
+        </div>
+        <p class="prem-card-desc">
+          <span data-lang="ru" class="active">Точечное решение критических узких мест: слив депозита, ошибочная стратегия, выбор брокера или структурирование сделки. 60–90 минут и письменные рекомендации.</span>
+          <span data-lang="ua">Точкове вирішення критичних вузьких місць: злив депозиту, хибна стратегія або структурування угоди.</span>
+          <span data-lang="en">Targeted resolution of critical bottlenecks: deposit loss, flawed strategy, broker selection or deal structuring. 60–90 min + written recommendations.</span>
+        </p>
+        <div class="prem-card-price">$150<span data-lang="ru" class="active">/час</span><span data-lang="ua">/год</span><span data-lang="en">/hr</span></div>
+        <a href="axiumsquare-services.html#premium" class="prem-card-link">
+          <span data-lang="ru" class="active">Записаться</span>
+          <span data-lang="ua">Записатись</span>
+          <span data-lang="en">Book now</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-header: Профессиональный софт -->
+  <div class="prem-group prem-group--tools reveal">
+    <div class="prem-group-head">
+      <div class="prem-eyebrow">
+        <span data-lang="ru" class="active">Профессиональный софт</span>
+        <span data-lang="ua">Професійний софт</span>
+        <span data-lang="en">Professional Tools</span>
+      </div>
+      <h2 class="prem-title">Tools</h2>
+    </div>
+    <div class="prem-tools-card reveal">
+      <div class="prem-tools-left">
+        <div class="prem-tools-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div>
+          <div class="prem-card-label">Professional Presets & Templates</div>
+          <div class="prem-card-title" style="font-size:1.25rem;margin-bottom:.6rem;">
+            <span data-lang="ru" class="active">Пакет настроек для ТОП-терминалов</span>
+            <span data-lang="ua">Пакет налаштувань для ТОП-терміналів</span>
+            <span data-lang="en">TOP-Terminal Presets Package</span>
+          </div>
+          <p class="prem-card-desc" style="margin-bottom:1.2rem;max-width:55ch;">
+            <span data-lang="ru" class="active">Максимальная оптимизация рабочего пространства трейдера. Готовые настройки для TWS, TOS и Trade-Ideas — результат 8+ лет реальной торговли на NYSE/NASDAQ.</span>
+            <span data-lang="ua">Максимальна оптимізація робочого простору трейдера. Готові налаштування для TWS, TOS та Trade-Ideas.</span>
+            <span data-lang="en">Maximum trader workstation optimization. Ready-to-use settings for TWS, TOS and Trade-Ideas — 8+ years of real NYSE/NASDAQ trading distilled.</span>
+          </p>
+          <div class="prem-tools-terms">
+            <span class="prem-term">TWS (Interactive Brokers)</span>
+            <span class="prem-term">Thinkorswim (TOS)</span>
+            <span class="prem-term">Trade-Ideas</span>
+            <span class="prem-term">TradingView</span>
+          </div>
+        </div>
+      </div>
+      <div class="prem-tools-right">
+        <div class="prem-tools-price">$79</div>
+        <div class="prem-tools-note">
+          <span data-lang="ru" class="active">Единовременно · Обновления включены</span>
+          <span data-lang="ua">Одноразово · Оновлення включені</span>
+          <span data-lang="en">One-time · Updates included</span>
+        </div>
+        <a href="axiumsquare-services.html#tools" class="btn-primary" style="margin-top:1.2rem;display:inline-flex;align-items:center;gap:.5rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-lang="ru" class="active">Купить пакет</span>
+          <span data-lang="ua">Купити пакет</span>
+          <span data-lang="en">Buy package</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════
+     WHY US
+══════════════════════════════════ -->
+<section class="why" id="why">
+  <div class="why-inner">
+    <div class="reveal">
+      <div class="why-label">
+        <span data-lang="ru" class="active">Почему мы</span>
+        <span data-lang="ua">Чому ми</span>
+        <span data-lang="en">Why us</span>
+      </div>
+      <h2 class="why-title">
+        <span data-lang="ru" class="active">Система.<br><em>Технологии.</em><br>Окружение.</span>
+        <span data-lang="ua">Система.<br><em>Технології.</em><br>Оточення.</span>
+        <span data-lang="en">System.<br><em>Technology.</em><br>Network.</span>
+      </h2>
+      <p class="why-text">
+        <span data-lang="ru" class="active">Мир стал непредсказуемым. Валюты обесцениваются, а традиционные методы сбережений не успевают за инфляцией. AXIUMSQUARE даёт три опоры: навык, инструментарий и связи.</span>
+        <span data-lang="ua">Світ став непередбачуваним. Валюти знецінюються, а традиційні методи заощаджень не встигають за інфляцією. AXIUMSQUARE дає три опори: навичку, інструментарій і зв'язки.</span>
+        <span data-lang="en">The world has become unpredictable. Currencies devalue and traditional savings can't keep up with inflation. AXIUMSQUARE gives three pillars: skill, toolkit, and network.</span>
+      </p>
+      <a href="#contact" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span data-lang="ru" class="active">Стратегическая сессия</span>
+        <span data-lang="ua">Стратегічна сесія</span>
+        <span data-lang="en">Strategy Session</span>
+      </a>
+    </div>
+
+    <div class="reveal reveal-d1" style="display:flex;flex-direction:column;gap:1px;background:var(--border);">
+      <div class="why-item">
+        <div class="wi-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">
+            <span data-lang="ru" class="active">Радикальная открытость</span>
+            <span data-lang="ua">Радикальна відкритість</span>
+            <span data-lang="en">Radical Transparency</span>
+          </div>
+          <div class="wi-text">
+            <span data-lang="ru" class="active">Мы показываем рынок как он есть: с рисками, волатильностью и жёсткой конкуренцией. Результат — следствие системы, а не удачи.</span>
+            <span data-lang="ua">Ми показуємо ринок таким, яким він є: з ризиками, волатильністю та жорсткою конкуренцією. Результат — наслідок системи, а не удачі.</span>
+            <span data-lang="en">We show the market as it is: with risks, volatility, and fierce competition. Results are a product of the system, not luck.</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="wi-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">
+            <span data-lang="ru" class="active">Твёрдое в основе</span>
+            <span data-lang="ua">Тверде в основі</span>
+            <span data-lang="en">Hard Assets First</span>
+          </div>
+          <div class="wi-text">
+            <span data-lang="ru" class="active">За каждой цифрой на графике стоит реальный бизнес. Мы учим понимать фундаментальные причины движений, а не просто «гадать по свечам».</span>
+            <span data-lang="ua">За кожною цифрою на графіку стоїть реальний бізнес. Ми вчимо розуміти фундаментальні причини рухів, а не просто «вгадувати по свічках».</span>
+            <span data-lang="en">Every chart number has a real business behind it. We teach fundamental reasons for moves, not just candle reading.</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="wi-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">
+            <span data-lang="ru" class="active">Технологическое преимущество</span>
+            <span data-lang="ua">Технологічна перевага</span>
+            <span data-lang="en">Tech Edge</span>
+          </div>
+          <div class="wi-text">
+            <span data-lang="ru" class="active">В 2026 году торговать без ИИ — значит проигрывать. Нейросети в анализе данных освобождают время для стратегических решений.</span>
+            <span data-lang="ua">У 2026 році торгувати без ШІ — означає програвати. Нейромережі в аналізі даних звільняють час для стратегічних рішень.</span>
+            <span data-lang="en">In 2026, trading without AI means losing. Neural networks in data analysis free time for strategic decisions.</span>
+          </div>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="wi-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="wi-title">
+            <span data-lang="ru" class="active">Синергия офлайна и онлайна</span>
+            <span data-lang="ua">Синергія офлайну та онлайну</span>
+            <span data-lang="en">Online × Offline Synergy</span>
+          </div>
+          <div class="wi-text">
+            <span data-lang="ru" class="active">Резиденты — владельцы производств, недвижимости и IT. Прибыль с NASDAQ превращается в реальные активы.</span>
+            <span data-lang="ua">Резиденти — власники виробництв, нерухомості та IT. Прибуток з NASDAQ перетворюється на реальні активи.</span>
+            <span data-lang="en">Residents own factories, real estate, and IT companies. NASDAQ profits turn into real assets.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER CTA
+══════════════════════════════════ -->
+<section class="footer-cta" id="contact">
+  <div class="footer-cta-orb"></div>
+  <div class="reveal">
+    <div class="fc-label">
+      <span data-lang="ru" class="active">Начать сейчас</span>
+      <span data-lang="ua">Почати зараз</span>
+      <span data-lang="en">Get started</span>
+    </div>
+    <h2 class="fc-title">
+      <span data-lang="ru" class="active">Готовы к<br><em>следующему уровню?</em></span>
+      <span data-lang="ua">Готові до<br><em>наступного рівня?</em></span>
+      <span data-lang="en">Ready for<br><em>the next level?</em></span>
+    </h2>
+    <p class="fc-sub">
+      <span data-lang="ru" class="active">Запишитесь на стратегическую сессию. Разберём ваши цели, текущий уровень и выберем оптимальный формат сотрудничества.</span>
+      <span data-lang="ua">Запишіться на стратегічну сесію. Розберемо ваші цілі та оберемо оптимальний формат співпраці.</span>
+      <span data-lang="en">Book a strategy session. We'll review your goals, current level and find the optimal collaboration format.</span>
+    </p>
+    <div class="fc-actions">
+      <a href="https://t.me/axiumsquare" class="btn-primary" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+        Telegram
+      </a>
+      <button class="btn-secondary" onclick="openInquiryModal()">
+        <span data-lang="ru" class="active">Оставить заявку</span>
+        <span data-lang="ua">Залишити заявку</span>
+        <span data-lang="en">Submit inquiry</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer class="site-footer">
+
+  <!-- ── Main nav columns ── -->
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-logo-link">
+        <div class="footer-logo">AXIUMSQUARE</div>
+      </a>
+      <p class="footer-tagline">
+        <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+        <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+        <span data-lang="en">Trading. Business. Capital.</span>
+      </p>
+      <div class="footer-socials">
+        <a href="https://t.me/axiumsquare" target="_blank" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg>
+          Telegram
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0e1209"/></svg>
+          YouTube
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <a href="#" class="footer-social">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-nav-cols">
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Обучение</span>
+          <span data-lang="ua">Навчання</span>
+          <span data-lang="en">Education</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-academy.html"><span data-lang="ru" class="active">Академия трейдинга</span><span data-lang="ua">Академія трейдингу</span><span data-lang="en">Trading Academy</span></a></li>
+          <li><a href="axiumsquare-academy.html#promo-all"><span data-lang="ru" class="active">Все 7 курсов — пакет</span><span data-lang="ua">Усі 7 курсів — пакет</span><span data-lang="en">All 7 Courses Bundle</span></a></li>
+          <li><a href="axiumsquare-academy.html#filter=base"><span data-lang="ru" class="active">Базовые курсы</span><span data-lang="ua">Базові курси</span><span data-lang="en">Foundation Courses</span></a></li>
+          <li><a href="axiumsquare-academy.html#filter=adv"><span data-lang="ru" class="active">Продвинутые курсы</span><span data-lang="ua">Просунуті курси</span><span data-lang="en">Advanced Courses</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title footer-col-title--cyan">
+          ◆ <span data-lang="ru" class="active">Клуб</span><span data-lang="ua">Клуб</span><span data-lang="en">Club</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-club.html">Trading Insider &amp; Business Club</a></li>
+          <li><a href="axiumsquare-club.html#inside"><span data-lang="ru" class="active">Что внутри клуба</span><span data-lang="ua">Що всередині клубу</span><span data-lang="en">What's Inside</span></a></li>
+          <li><a href="axiumsquare-club.html#pricing"><span data-lang="ru" class="active">Тарифы клуба</span><span data-lang="ua">Тарифи клубу</span><span data-lang="en">Club Pricing</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Услуги &amp; Консалтинг</span>
+          <span data-lang="ua">Послуги &amp; Консалтинг</span>
+          <span data-lang="en">Services &amp; Consulting</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-services.html"><span data-lang="ru" class="active">Услуги</span><span data-lang="ua">Послуги</span><span data-lang="en">Services</span></a></li>
+          <li><a href="axiumsquare-services.html#mentorship"><span data-lang="ru" class="active">Наставничество</span><span data-lang="ua">Наставництво</span><span data-lang="en">Mentorship</span></a></li>
+          <li><a href="axiumsquare-invest.html"><span data-lang="ru" class="active">Консалтинг</span><span data-lang="ua">Консалтинг</span><span data-lang="en">Consulting</span></a></li>
+          <li><a href="axiumsquare-invest.html#family-office">Family Office · $1M+</a></li>
+          <li><a href="axiumsquare-invest.html#fund"><span data-lang="ru" class="active">Управляемый фонд</span><span data-lang="ua">Керований фонд</span><span data-lang="en">Managed Fund</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Медиа</span>
+          <span data-lang="ua">Медіа</span>
+          <span data-lang="en">Media</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-blog.html"><span data-lang="ru" class="active">Блог</span><span data-lang="ua">Блог</span><span data-lang="en">Blog</span></a></li>
+          <li><a href="axiumsquare-news.html"><span data-lang="ru" class="active">Новости</span><span data-lang="ua">Новини</span><span data-lang="en">News</span></a></li>
+          <li><a href="axiumsquare-dashboard.html"><span data-lang="ru" class="active">Личный кабинет</span><span data-lang="ua">Особистий кабінет</span><span data-lang="en">Dashboard</span></a></li>
+          <li><a href="axiumsquare-login.html"><span data-lang="ru" class="active">Войти / Регистрация</span><span data-lang="ua">Увійти / Реєстрація</span><span data-lang="en">Sign In / Register</span></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title">
+          <span data-lang="ru" class="active">Правовая информация</span>
+          <span data-lang="ua">Правова інформація</span>
+          <span data-lang="en">Legal</span>
+        </div>
+        <ul class="footer-col-links">
+          <li><a href="axiumsquare-terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="axiumsquare-privacy.html">Privacy &amp; Cookies</a></li>
+          <li><a href="axiumsquare-financial-disclaimer.html"><span data-lang="ru" class="active">Предупреждение о рисках</span><span data-lang="ua">Попередження про ризики</span><span data-lang="en">Risk Disclaimer</span></a></li>
+          <li><a href="axiumsquare-refund.html"><span data-lang="ru" class="active">Политика возвратов</span><span data-lang="ua">Політика повернень</span><span data-lang="en">Refund Policy</span></a></li>
+          <li><a href="axiumsquare-legal-notice.html">Legal Notice / Impressum</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Risk disclaimer — above copyright ── -->
+  <div class="footer-risk">
+    <p class="footer-risk-text">
+      <span data-lang="ru" class="active">⚠ Предупреждение о рисках: Торговля финансовыми инструментами несёт высокий риск потери средств и подходит не всем инвесторам. Прошлые результаты не гарантируют будущих. Весь образовательный контент носит исключительно информационный характер и не является инвестиционным советом. <a href="axiumsquare-financial-disclaimer.html">Подробная информация о рисках →</a></span>
+      <span data-lang="ua">⚠ Попередження про ризики: Торгівля фінансовими інструментами несе високий ризик втрати коштів і підходить не всім інвесторам. Минулі результати не гарантують майбутніх. Весь освітній контент носить виключно інформаційний характер і не є інвестиційною порадою. <a href="axiumsquare-financial-disclaimer.html">Детальна інформація →</a></span>
+      <span data-lang="en">⚠ Risk Warning: Trading financial instruments carries a high risk of loss and is not suitable for all investors. Past performance is not indicative of future results. All educational content is for informational purposes only and does not constitute investment advice. <a href="axiumsquare-financial-disclaimer.html">Full Risk Disclosure →</a></span>
+    </p>
+  </div>
+
+  <!-- ── Bottom bar ── -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-logo">AXIUMSQUARE</div>
+    <div class="footer-bottom-copy">
+      © 2026 AXIUMSQUARE ·
+      <span data-lang="ru" class="active">Трейдинг. Бизнес. Капитал.</span>
+      <span data-lang="ua">Трейдинг. Бізнес. Капітал.</span>
+      <span data-lang="en">Trading. Business. Capital.</span>
+    </div>
+    <div class="footer-bottom-links">
+      <a href="axiumsquare-terms.html">Terms</a>
+      <a href="axiumsquare-privacy.html">Privacy</a>
+      <a href="axiumsquare-financial-disclaimer.html"><span data-lang="ru" class="active">Риски</span><span data-lang="ua">Ризики</span><span data-lang="en">Risk</span></a>
+      <a href="axiumsquare-refund.html"><span data-lang="ru" class="active">Возврат</span><span data-lang="ua">Повернення</span><span data-lang="en">Refunds</span></a>
+      <a href="axiumsquare-legal-notice.html">Impressum</a>
+    </div>
+  </div>
+
+</footer>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('out'), 1000);
+  });
+
+  // Smooth scroll (Lenis)
+  (function() {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lenis/1.0.45/lenis.min.js';
+    s.onload = () => {
+      const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothTouch: false });
+      function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          const el = document.querySelector(a.getAttribute('href'));
+          if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -80, duration: 1.6 }); }
+        });
+      });
+    };
+    document.head.appendChild(s);
+  })();
+
+  // Custom cursor
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  document.addEventListener('mousemove', e => {
+    cur.style.left  = e.clientX + 'px';
+    cur.style.top   = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+  });
+
+  // Header shrink on scroll
+  const hdr = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Language dropdown
+  let currentLang = 'ru';
+  const drop = document.getElementById('lang-drop');
+  const label = document.getElementById('lang-label');
+
+  function toggleLang(e) {
+    e.stopPropagation();
+    drop.classList.toggle('open');
+  }
+  function setLang(lang) {
+    currentLang = lang;
+    label.textContent = lang.toUpperCase();
+    drop.classList.remove('open');
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('active', el.dataset.lang === lang);
+    });
+    document.documentElement.lang = lang === 'ua' ? 'uk' : lang;
+    // hide chosen option in menu, show others
+    document.querySelectorAll('.lang-opt').forEach(btn => {
+      btn.style.display = btn.textContent.trim().toLowerCase() === lang ? 'none' : 'block';
+    });
+  }
+  // close on outside click
+  document.addEventListener('click', () => drop.classList.remove('open'));
+  // init — hide RU (default active)
+  document.querySelector('.lang-opt').style.display = 'none';
+
+  // Mobile menu — burger toggles open/close
+  const mob = document.getElementById('mob-menu');
+  function toggleMob() {
+    if (mob.style.display === 'flex') { closeMob(); } else { openMob(); }
+  }
+  function openMob()  { mob.style.display = 'flex'; }
+  function closeMob() { mob.style.display = 'none'; }
+
+  // ── Hero News Carousel ──
+  (function() {
+    const track   = document.getElementById('hncTrack');
+    const dots    = document.querySelectorAll('.hnc-dot');
+    const fill    = document.getElementById('hncFill');
+    const curNum  = document.getElementById('hncCurNum');
+    const total   = 3;
+    let current   = 0;
+    let timer, fillTimer;
+
+    function goTo(n) {
+      current = (n + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+      curNum.textContent = (current + 1).toString().padStart(2, '0');
+      resetFill();
+    }
+
+    function resetFill() {
+      fill.classList.remove('running');
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      void fill.offsetWidth; // force reflow
+      fill.classList.add('running');
+    }
+
+    function startTimer() {
+      timer = setInterval(function() { goTo(current + 1); }, 4500);
+    }
+
+    function restartTimer() {
+      clearInterval(timer);
+      startTimer();
+    }
+
+    document.getElementById('hncNext').addEventListener('click', function() {
+      goTo(current + 1); restartTimer();
+    });
+    document.getElementById('hncPrev').addEventListener('click', function() {
+      goTo(current - 1); restartTimer();
+    });
+    dots.forEach(function(d) {
+      d.addEventListener('click', function() {
+        goTo(parseInt(d.dataset.idx)); restartTimer();
+      });
+    });
+
+    // pause on hover
+    const carousel = document.querySelector('.hero-news-carousel');
+    carousel.addEventListener('mouseenter', function() {
+      clearInterval(timer);
+      fill.classList.remove('running');
+    });
+    carousel.addEventListener('mouseleave', function() {
+      restartTimer();
+    });
+
+    goTo(0);
+    startTimer();
+
+    // Touch swipe
+    let touchStartX = 0;
+    const ov = document.querySelector('.hnc-overflow');
+    ov.addEventListener('touchstart', function(e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    ov.addEventListener('touchend', function(e) {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        diff > 0 ? goTo(current + 1) : goTo(current - 1);
+        restartTimer();
+      }
+    }, { passive: true });
+  })();
+</script>
+
+<script>
+(function() {
+  var logged = localStorage.getItem('ksa_logged');
+  var btn = document.getElementById('hdr-auth-btn');
+  var mobBtn = document.getElementById('mob-auth-btn');
+  var labels = {ru: ['Войти','Выйти'], ua: ['Увійти','Вийти'], en: ['Sign In','Sign Out']};
+  function setAuthUI(isLogged) {
+    if (btn) {
+      btn.href = isLogged ? 'axiumsquare-dashboard.html' : 'axiumsquare-login.html';
+      var svgLogin = '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>';
+      var svgLogout = '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>';
+      btn.querySelector('svg').innerHTML = isLogged ? svgLogout : svgLogin;
+      document.getElementById('auth-label-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      document.getElementById('auth-label-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      document.getElementById('auth-label-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        btn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.href='index.html'; };
+      } else { btn.onclick = null; }
+    }
+    if (mobBtn) {
+      mobBtn.href = isLogged ? 'axiumsquare-dashboard.html' : 'axiumsquare-login.html';
+      document.getElementById('mob-auth-ru').textContent = isLogged ? 'Выйти' : 'Войти';
+      document.getElementById('mob-auth-ua').textContent = isLogged ? 'Вийти' : 'Увійти';
+      document.getElementById('mob-auth-en').textContent = isLogged ? 'Sign Out' : 'Sign In';
+      if (isLogged) {
+        mobBtn.onclick = function(e){ e.preventDefault(); localStorage.removeItem('ksa_logged'); window.location.href='index.html'; };
+      } else { mobBtn.onclick = function(){ closeMob(); }; }
+    }
+  }
+  setAuthUI(!!logged);
+})();
+</script>
+
+<script>
+  /* ── Theme Toggle ── */
+  (function() {
+    var saved = localStorage.getItem('axium_theme') || 'dark';
+    applyTheme(saved);
+
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('axium_theme', t);
+      // Update preloader bg instantly
+      var pl = document.getElementById('preloader');
+      if (pl) pl.style.background = t === 'light' ? '#EEF4FC' : '#0e1209';
+      // Update mobile menu bg
+      var mob = document.getElementById('mob-menu');
+      if (mob) mob.style.background = 'rgba(242,237,228,.98)';
+    }
+
+    window.toggleTheme = function() {
+      var current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    };
+  })();
+</script>
+<!-- ══════════════════════════════════
+     INQUIRY MODAL
+══════════════════════════════════ -->
+<div id="inquiry-modal" class="iq-overlay" onclick="closeInquiryModal(event)" role="dialog" aria-modal="true" aria-labelledby="iq-title">
+  <div class="iq-modal">
+    <button class="iq-close" onclick="closeInquiryModal()" aria-label="Закрыть">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- State: form -->
+    <div id="iq-form-state">
+      <div class="iq-eyebrow">
+        <span data-lang="ru" class="active">Обратная связь</span>
+        <span data-lang="ua">Зворотній зв'язок</span>
+        <span data-lang="en">Get in touch</span>
+      </div>
+      <h3 class="iq-title" id="iq-title">
+        <span data-lang="ru" class="active">Оставить заявку</span>
+        <span data-lang="ua">Залишити заявку</span>
+        <span data-lang="en">Submit Inquiry</span>
+      </h3>
+      <p class="iq-sub">
+        <span data-lang="ru" class="active">Заполните форму — мы свяжемся с вами в течение 24 часов.</span>
+        <span data-lang="ua">Заповніть форму — ми зв'яжемося з вами протягом 24 годин.</span>
+        <span data-lang="en">Fill in the form — we'll reach out within 24 hours.</span>
+      </p>
+
+      <div class="iq-fields">
+        <div class="iq-row">
+          <div class="iq-field">
+            <label class="iq-label" for="iq-name">
+              <span data-lang="ru" class="active">Имя *</span>
+              <span data-lang="ua">Ім'я *</span>
+              <span data-lang="en">Name *</span>
+            </label>
+            <input id="iq-name" class="iq-input" type="text" autocomplete="given-name"
+              placeholder="Ваше имя" required maxlength="80">
+          </div>
+          <div class="iq-field">
+            <label class="iq-label" for="iq-phone">
+              <span data-lang="ru" class="active">Телефон</span>
+              <span data-lang="ua">Телефон</span>
+              <span data-lang="en">Phone</span>
+            </label>
+            <input id="iq-phone" class="iq-input" type="tel" autocomplete="tel"
+              placeholder="+38 (___) ___-__-__" maxlength="30">
+          </div>
+        </div>
+
+        <div class="iq-field">
+          <label class="iq-label" for="iq-email">
+            <span data-lang="ru" class="active">Email *</span>
+            <span data-lang="ua">Email *</span>
+            <span data-lang="en">Email *</span>
+          </label>
+          <input id="iq-email" class="iq-input" type="email" autocomplete="email"
+            placeholder="your@email.com" required maxlength="120">
+        </div>
+
+        <div class="iq-field">
+          <label class="iq-label" for="iq-topic">
+            <span data-lang="ru" class="active">Тема обращения</span>
+            <span data-lang="ua">Тема звернення</span>
+            <span data-lang="en">Topic</span>
+          </label>
+          <select id="iq-topic" class="iq-input iq-select">
+            <option value="" disabled selected>
+              —
+            </option>
+            <option value="academy">
+              Trading Academy
+            </option>
+            <option value="club">
+              Trading Insider &amp; Business Club
+            </option>
+            <option value="mentorship">
+              Mentorship / Наставничество
+            </option>
+            <option value="consulting">
+              Consulting / Консалтинг
+            </option>
+            <option value="other">
+              Other / Другое
+            </option>
+          </select>
+        </div>
+
+        <div class="iq-field">
+          <label class="iq-label" for="iq-msg">
+            <span data-lang="ru" class="active">Сообщение</span>
+            <span data-lang="ua">Повідомлення</span>
+            <span data-lang="en">Message</span>
+          </label>
+          <textarea id="iq-msg" class="iq-input iq-textarea" rows="3"
+            placeholder="Расскажите кратко о вашем запросе..." maxlength="1000"></textarea>
+        </div>
+
+        <!-- Legal consent -->
+        <label class="iq-consent">
+          <input type="checkbox" id="iq-consent" required>
+          <span class="iq-consent-text">
+            <span data-lang="ru" class="active">Я даю согласие на обработку моих персональных данных в соответствии с <a href="axiumsquare-privacy.html" target="_blank">Политикой конфиденциальности</a> в целях получения обратной связи. *</span>
+            <span data-lang="ua">Я надаю згоду на обробку моїх персональних даних відповідно до <a href="axiumsquare-privacy.html" target="_blank">Політики конфіденційності</a> з метою отримання зворотнього зв'язку. *</span>
+            <span data-lang="en">I consent to the processing of my personal data in accordance with the <a href="axiumsquare-privacy.html" target="_blank">Privacy Policy</a> for the purpose of receiving a callback. *</span>
+          </span>
+        </label>
+
+        <div id="iq-error" class="iq-error-msg" style="display:none;"></div>
+      </div>
+
+      <div class="iq-footer-row">
+        <p class="iq-legal-note">
+          <span data-lang="ru" class="active">* Обязательные поля. Данные хранятся защищённо и не передаются третьим лицам.</span>
+          <span data-lang="ua">* Обов'язкові поля. Дані зберігаються захищено та не передаються третім особам.</span>
+          <span data-lang="en">* Required fields. Data is stored securely and never shared with third parties.</span>
+        </p>
+        <button class="btn-primary iq-submit" onclick="submitInquiry()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <span data-lang="ru" class="active">Отправить</span>
+          <span data-lang="ua">Надіслати</span>
+          <span data-lang="en">Send</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- State: success -->
+    <div id="iq-success-state" style="display:none;" class="iq-success">
+      <div class="iq-success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 class="iq-title">
+        <span data-lang="ru" class="active">Заявка отправлена</span>
+        <span data-lang="ua">Заявку надіслано</span>
+        <span data-lang="en">Inquiry Sent</span>
+      </h3>
+      <p class="iq-sub">
+        <span data-lang="ru" class="active">Спасибо! Мы свяжемся с вами в течение 24 часов.</span>
+        <span data-lang="ua">Дякуємо! Ми зв'яжемося з вами протягом 24 годин.</span>
+        <span data-lang="en">Thank you! We'll be in touch within 24 hours.</span>
+      </p>
+      <button class="btn-secondary" onclick="closeInquiryModal()" style="margin-top:1.5rem;">
+        <span data-lang="ru" class="active">Закрыть</span>
+        <span data-lang="ua">Закрити</span>
+        <span data-lang="en">Close</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── Inquiry Modal ── */
+.iq-overlay {
+  position: fixed; inset: 0; z-index: 99990;
+  background: rgba(14,18,9,.72); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.iq-overlay.open { opacity: 1; pointer-events: all; }
+
+.iq-modal {
+  position: relative;
+  background: var(--surface, rgba(255,253,246,.98));
+  border: 1px solid var(--border, rgba(44,74,44,.14));
+  max-width: 560px; width: 100%;
+  padding: 2.4rem 2.4rem 2rem;
+  box-shadow: 0 32px 80px rgba(0,0,0,.18);
+  max-height: 90vh; overflow-y: auto;
+  transform: translateY(16px);
+  transition: transform .3s ease;
+}
+.iq-overlay.open .iq-modal { transform: translateY(0); }
+
+.iq-close {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  background: none; border: 1px solid var(--border);
+  color: var(--text-2); cursor: pointer;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s, color .2s;
+}
+.iq-close:hover { border-color: var(--gold); color: var(--gold); }
+
+.iq-eyebrow {
+  font-family: var(--font-mono); font-size: .65rem;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .6rem;
+}
+.iq-title {
+  font-family: var(--font-serif); font-size: 1.7rem;
+  font-weight: 600; color: var(--text); line-height: 1.2;
+  margin-bottom: .5rem;
+}
+.iq-sub {
+  font-size: .8rem; color: var(--text-2); line-height: 1.5;
+  margin-bottom: 1.6rem;
+}
+
+.iq-fields { display: flex; flex-direction: column; gap: .9rem; }
+.iq-row { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+@media (max-width: 480px) { .iq-row { grid-template-columns: 1fr; } }
+
+.iq-field { display: flex; flex-direction: column; gap: .35rem; }
+.iq-label {
+  font-family: var(--font-mono); font-size: .63rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-3);
+}
+.iq-input {
+  font-family: var(--font-sans); font-size: .82rem;
+  color: var(--text);
+  background: rgba(44,74,44,.03);
+  border: 1px solid var(--border);
+  padding: .65rem .9rem;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  width: 100%;
+  border-radius: 0;
+  appearance: none;
+}
+.iq-input:focus { border-color: var(--gold); background: rgba(44,74,44,.06); }
+.iq-input::placeholder { color: var(--text-3); }
+.iq-select { cursor: pointer; }
+.iq-textarea { resize: vertical; min-height: 80px; }
+
+/* Consent checkbox */
+.iq-consent {
+  display: flex; align-items: flex-start; gap: .7rem;
+  cursor: pointer; margin-top: .3rem;
+}
+.iq-consent input[type="checkbox"] {
+  flex-shrink: 0; margin-top: .15rem;
+  width: 15px; height: 15px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+.iq-consent-text {
+  font-size: .75rem; color: var(--text-2); line-height: 1.55;
+}
+.iq-consent-text a { color: var(--gold); text-decoration: underline; }
+.iq-consent-text a:hover { opacity: .8; }
+
+.iq-legal-note {
+  font-size: .68rem; color: var(--text-3); line-height: 1.5;
+  max-width: 28ch;
+}
+
+.iq-footer-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin-top: 1.4rem; flex-wrap: wrap;
+}
+
+.iq-error-msg {
+  font-size: .75rem; color: var(--dn, #8b2020);
+  padding: .5rem .8rem; border: 1px solid rgba(139,32,32,.2);
+  background: rgba(139,32,32,.04);
+}
+
+/* Success state */
+.iq-success {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 1rem 0;
+}
+.iq-success-icon {
+  width: 64px; height: 64px; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); margin-bottom: 1.4rem;
+}
+
+/* Dark theme override */
+[data-theme="dark"] .iq-modal {
+  background: rgba(20,24,16,.98);
+  border-color: rgba(44,74,44,.25);
+}
+[data-theme="dark"] .iq-input {
+  background: rgba(44,74,44,.07);
+  border-color: rgba(44,74,44,.2);
+  color: #e8e2d6;
+}
+[data-theme="dark"] .iq-input:focus {
+  background: rgba(44,74,44,.14);
+  border-color: var(--gold-bright);
+}
+[data-theme="dark"] .iq-input::placeholder { color: rgba(232,226,214,.3); }
+</style>
+
+<script>
+function openInquiryModal() {
+  var m = document.getElementById('inquiry-modal');
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(function(){ document.getElementById('iq-name').focus(); }, 320);
+}
+
+function closeInquiryModal(e) {
+  if (e && e.target !== document.getElementById('inquiry-modal')) return;
+  var m = document.getElementById('inquiry-modal');
+  m.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeInquiryModal();
+});
+
+function submitInquiry() {
+  var name    = document.getElementById('iq-name').value.trim();
+  var email   = document.getElementById('iq-email').value.trim();
+  var consent = document.getElementById('iq-consent').checked;
+  var errEl   = document.getElementById('iq-error');
+
+  var msgRu = '', msgUa = '', msgEn = '';
+  var lang  = document.documentElement.lang || 'ru';
+
+  // Validate
+  if (!name) {
+    msgRu = 'Пожалуйста, укажите ваше имя.';
+    msgUa = 'Будь ласка, вкажіть ваше ім\'я.';
+    msgEn = 'Please enter your name.';
+  } else if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msgRu = 'Пожалуйста, введите корректный email.';
+    msgUa = 'Будь ласка, введіть коректний email.';
+    msgEn = 'Please enter a valid email address.';
+  } else if (!consent) {
+    msgRu = 'Необходимо ваше согласие на обработку персональных данных.';
+    msgUa = 'Необхідна ваша згода на обробку персональних даних.';
+    msgEn = 'Please consent to data processing to continue.';
+  }
+
+  if (msgRu) {
+    errEl.style.display = 'block';
+    var msg = lang === 'uk' ? msgUa : (lang === 'en' ? msgEn : msgRu);
+    errEl.textContent = msg;
+    return;
+  }
+
+  errEl.style.display = 'none';
+
+  // Show success (in production: replace with real API call)
+  document.getElementById('iq-form-state').style.display = 'none';
+  document.getElementById('iq-success-state').style.display = 'flex';
+}
+</script>
+
+</body>
+</html>
